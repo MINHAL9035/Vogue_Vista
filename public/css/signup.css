@@ -1,0 +1,91 @@
+/* Reset some default styles */
+body, h1, h2, p, form {
+  margin: 0;
+  padding: 0;
+}
+
+/* Apply a light background gradient to the body */
+body {
+  background: linear-gradient(to right, #ffecd2, rgb(125, 218, 181));
+  font-family: 'Arial', sans-serif;
+}
+
+/* Center the signup container with a transparent background image */
+.signup-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: url('/images/signup3.jpg') center/cover no-repeat, linear-gradient(to right, rgba(255, 236, 210, 0.8), rgba(125, 218, 181, 0.8));
+}
+
+/* Style the form section with a transparent background */
+.form-section {
+  background-color: rgba(247, 228, 228, 0.8); /* Adjust the alpha value for transparency */
+  border-radius: 15px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  padding: 40px;
+  width: 400px;
+}
+
+/* Style the form title */
+.form-section h2 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Style form inputs and buttons */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Apply transparency to form elements */
+form input,
+form label,
+form button {
+  background-color: rgba(255, 255, 255, 0.5); /* Adjust the alpha value for transparency */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 15px;
+  transition: border-color 0.3s ease;
+  color: #333; /* Adjust the text color for readability */
+}
+
+form input:focus,
+form button:focus {
+  outline: none;
+  border-color: #5dd8dc;
+}
+
+/* Style the button */
+button {
+  background-color: rgb(125, 218, 181);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #ff704d;
+}
+
+/* Style success and error messages */
+.success-message, .error-message {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  display: none;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+}
