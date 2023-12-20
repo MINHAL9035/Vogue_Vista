@@ -42,7 +42,6 @@ const verifyLogin = async (req, res) => {
             // res.render('userLogin',{ message: 'User not Found' })
         }
         const passwordMatch = await bcrypt.compare(password, user.password)
-
         if (!passwordMatch) {
             req.flash('message', 'password do not match ')
             res.redirect('/login')
@@ -248,45 +247,6 @@ const logout = async (req, res) => {
     }
 }
 
-// const loadShop = async (req, res) => {
-//     try {
-//         const user = await User.findOne({ _id: req.session.user_id })
-//         const categId = req.query.categid
-//         let products = []
-//         if (categId) {
-//             const categoryId = new mongoose.Types.ObjectId(categId)
-
-//             products = await Products.find({ category: categoryId })
-//         } else {
-//             products = await Products.find({})
-//         }
-
-//         const Categdata = await Category.find({})
-
-//         const listedCategory = Categdata.filter((categ) => categ.is_listed === false)
-//         const listedProduct = products.filter((product) => {
-//             const isProductListed = product.is_listed === false
-
-//             const productCategory = listedCategory.find((category) =>
-//                 category.name === product.category && category.is_listed === false
-
-//             )
-
-//             return isProductListed && productCategory
-
-//         })
-//         console.log(products.length);
-
-//         res.render('shop', {
-//             Categories: listedCategory,
-//             products: listedProduct,
-//             user
-//         })
-
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
 
 const loadShop = async (req, res) => {
     try {

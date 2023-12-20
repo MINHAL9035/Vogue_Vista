@@ -109,7 +109,7 @@ const loadEditProduct = async (req, res) => {
         const data = await product.findOne({ _id: id })
         if (!data) {
             req.flash('message', "product not found")
-            res.redirect('/admin/editProduct')
+            return res.redirect(`/admin/editProduct?productId=${id}`);
         }
         res.render('editProduct', { products: data, categ: categories })
 
@@ -118,6 +118,7 @@ const loadEditProduct = async (req, res) => {
 
     }
 }
+
 
 // const editProduct = async (req, res) => {
 //     try {
@@ -146,6 +147,30 @@ const loadEditProduct = async (req, res) => {
 //     }
 // }
 
+const editProduct = async (req, res) => {
+    try {
+        const id=req.body.id
+        const { productName, description, quantity, price, category, brand } = req.body
+
+        // product exist
+        const existingProduct = await product.findOne({ _id: id })
+        if (existingProduct) {
+            req.flash('message', 'product already exist')
+            return res.redirect('/admin/editProduct')
+        }
+
+        // updtae
+        await product.findByIdAndUpdate({ _id: id }, { name: productName, description, quantity, price, category, brand }, { new: true })
+
+        req.flash('message','product updated successfully')
+        req.redirect('/admin/product')
+
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
 module.exports = {
     loadProducts,
     loadAddProduct,
@@ -153,5 +178,5 @@ module.exports = {
     unList,
     list,
     loadEditProduct,
-    // editProduct
+    editProduct
 }

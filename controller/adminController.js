@@ -4,7 +4,6 @@ const category = require('../model/category')
 
 const adminLogin = async (req, res) => {
     try {
-
         res.render('adminLogin')
 
     } catch (error) {
@@ -175,11 +174,13 @@ const editCateg = async (req, res) => {
     try {
         await category.findByIdAndUpdate({ _id: req.body.id }, { name: req.body.categoryName, description: req.body.description })
         res.redirect('/admin/categ')
-    } catch (error) {
-        console.log(error);
-
     }
+    catch (error) {
+        console.log(error);
+    }
+
 }
+
 
 module.exports = {
     adminLogin,

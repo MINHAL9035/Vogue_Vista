@@ -9,13 +9,13 @@ const nocache = require('nocache')
 const path = require('path')
 const flash = require('express-flash')
 
-
-const app = express()
+ 
+const app = express() 
   
 app.use(express.json()) 
 app.use(express.urlencoded({ extended: true }))
 
-app.use(session({
+app.use(session({ 
     secret: process.env.SECRET, 
     resave: false,   
     saveUninitialized: false
@@ -23,9 +23,9 @@ app.use(session({
 
 app.use(nocache())  
 app.use(flash());
+ 
 
-
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 8080  
 
 // load public     
 app.use(express.static(path.resolve(__dirname, 'public')))

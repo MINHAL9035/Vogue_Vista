@@ -61,7 +61,7 @@ adminRoute.post('/product/list/:id', productController.list)
 
 adminRoute.get('/editProduct', productController.loadEditProduct)
 
-// adminRoute.post('/editProduct', productController.editProduct)
+adminRoute.post('/editProduct', productController.editProduct)
 
 
 
