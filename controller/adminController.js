@@ -158,28 +158,36 @@ const categoryStatus = async (req, res) => {
 
 const loadEditCateg = async (req, res) => {
     try {
-        const id = req.query.categid
-        const data = await category.findOne({ _id: id })
+        const id = req.query.categid;
+        const data = await category.findOne({ _id: id });
+
         if (!data) {
-            return res.status(404).send("Category not found");
+            req.flash('message', 'Category not found');
+            return res.redirect('/admin/editCateg');
         }
-        res.render('editCateg', { categories: data })
+
+        res.render('editCateg', { categories: data });
     } catch (error) {
         console.log(error);
-
     }
-}
+};
+
 
 const editCateg = async (req, res) => {
     try {
-        await category.findByIdAndUpdate({ _id: req.body.id }, { name: req.body.categoryName, description: req.body.description })
-        res.redirect('/admin/categ')
-    }
-    catch (error) {
+        const existingCategory = await category.findOne({ name: req.body.categoryName });
+
+        if (existingCategory && existingCategory._id.toString() !== req.body.id) {
+            req.flash('message', 'Category already exists');
+            return res.redirect('/admin/editCateg?categid=' + req.body.id);
+        }
+
+        await category.findByIdAndUpdate({ _id: req.body.id }, { name: req.body.categoryName, description: req.body.description });
+        res.redirect('/admin/categ');
+    } catch (error) {
         console.log(error);
     }
-
-}
+};
 
 
 module.exports = {
@@ -195,5 +203,4 @@ module.exports = {
     categoryStatus,
     loadEditCateg,
     editCateg,
-
 } 

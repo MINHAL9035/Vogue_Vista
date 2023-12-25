@@ -1,4 +1,4 @@
-// const { ObjectId } = require('mongodb')
+
 const mongoose = require('mongoose')
 
 const productSchema = new mongoose.Schema({
@@ -12,7 +12,7 @@ const productSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: true
+        required: true  
     },
     price: {
         type: Number,
@@ -40,5 +40,6 @@ const productSchema = new mongoose.Schema({
     }
 })
 
-const productModel = mongoose.model('Product', productSchema)
-module.exports = productModel
+
+const product = mongoose.model('product',productSchema)
+module.exports = product

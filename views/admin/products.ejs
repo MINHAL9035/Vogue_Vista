@@ -192,7 +192,6 @@
                                                 <th>Product Name</th>
                                                 <th>Quantity</th>
                                                 <th>Price</th>
-                                                <th>Category</th>
                                                 <th>Brand</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
@@ -203,9 +202,7 @@
                                                 <%for(let i=0;i<products.length;i++){%>
                                                     <tr>
                                                         <td>
-
                                                             <img src="/myImages/<%= products[i].image[0] %>" alt="">
-
                                                         </td>
                                                         <td>
                                                             <%= products[i].name %>
@@ -215,9 +212,6 @@
                                                         </td>
                                                         <td>
                                                             <%= products[i].price %>
-                                                        </td>
-                                                        <td>
-                                                            <%= products[i].category %>
                                                         </td>
                                                         <td>
                                                             <%= products[i].brand %>
@@ -233,7 +227,6 @@
                                                                         <% } %>
                                                             </span>
                                                         </td>
-
                                                         <td>
                                                             <button class="btn btn-inverse-danger   unlist-product"
                                                                 data-product-id="<%= products[i]._id %>">Unlist</button>
@@ -242,9 +235,7 @@
                                                             <button class="btn btn-inverse-primary"><a
                                                                     href="/admin/editProduct?productId=<%= products[i]._id %>">Edit</a></button>
                                                         </td>
-
                                                     </tr>
-
                                                     <%}%>
                                                         <%}else{%>
                                                             <tr>

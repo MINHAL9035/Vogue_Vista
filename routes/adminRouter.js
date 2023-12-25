@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage: storage }).array('image', 4)
-
+//
 
 // load ejs
 adminRoute.set('view engine', 'ejs')
@@ -66,6 +66,11 @@ adminRoute.post('/editProduct', productController.editProduct)
 
 
 module.exports = adminRoute
+
+
+
+
+
 
 
 

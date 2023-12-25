@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 const product = require('../model/product')
 const Category = require('../model/category')
 const sharp = require('sharp')
@@ -149,7 +148,7 @@ const loadEditProduct = async (req, res) => {
 
 const editProduct = async (req, res) => {
     try {
-        const id=req.body.id
+        const id = req.body.id
         const { productName, description, quantity, price, category, brand } = req.body
 
         // product exist
@@ -162,7 +161,7 @@ const editProduct = async (req, res) => {
         // updtae
         await product.findByIdAndUpdate({ _id: id }, { name: productName, description, quantity, price, category, brand }, { new: true })
 
-        req.flash('message','product updated successfully')
+        req.flash('message', 'product updated successfully')
         req.redirect('/admin/product')
 
     } catch (error) {

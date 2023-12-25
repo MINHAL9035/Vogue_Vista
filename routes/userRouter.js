@@ -1,6 +1,7 @@
 const express = require("express")
 const userRoute = express()
 const userController = require('../controller/userController')
+const cartController=require('../controller/cartController')
 const auth = require('../middleware/auth')
 
 
@@ -37,6 +38,10 @@ userRoute.get('/productDetails', userController.loadProduct)
 userRoute.get('/about', userController.loadAbout)
 
 userRoute.get('/contact', userController.loadContact)
+
+userRoute.get('/cart',auth.isLogin,cartController.loadCart)
+
+userRoute.post('/cart',cartController.addCart)
 
 
 

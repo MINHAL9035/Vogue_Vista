@@ -175,14 +175,15 @@
                         <form class="forms-sample" method="post">
                             <div class="form-group">
                                 <label for="exampleInputUsername1">Category Name</label>
-                                <input type="hidden" name="id" value="<%= categories._id %>">
-                                <input type="text" class="form-control" value="<%=categories.name%>" name="categoryName"
-                                    id="exampleInputUsername1" placeholder="category name" required>
+                                <input type="hidden" name="id" value="<%= categories ? categories._id : '' %>">
+                                <input type="text" class="form-control" value="<%= categories ? categories.name : '' %>"
+                                    name="categoryName" id="exampleInputUsername1" placeholder="category name" required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Description</label>
                                 <input type="text" class="form-control" id="exampleInputEmail1" name="description"
-                                    value="<%=categories.description%>" placeholder="description" required>
+                                    value="<%= categories ? categories.description : '' %>" placeholder="description"
+                                    required>
                             </div>
                             <button id="edit" type="submit" class="btn btn-primary mr-2">Submit</button>
                         </form>
@@ -199,14 +200,8 @@
                                     <%= messages.message %>
                                 </div>
                             </div>
-                            <%}%>
+                            <% } %>
                     </div>
                 </div>
-            </div>
 
-            <script>
-                document.getElementById('edit').addEventListener('click', function () {
-                    alert('Category edited successfully')
-                })
-            </script>
-            <%- include('../layouts/adminLayout/footer.ejs') -%>
+                <%- include('../layouts/adminLayout/footer.ejs') -%>

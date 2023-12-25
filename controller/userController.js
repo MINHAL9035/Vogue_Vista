@@ -39,7 +39,7 @@ const verifyLogin = async (req, res) => {
         if (!user) {
             req.flash('message', 'user not found')
             res.redirect('/login')
-            // res.render('userLogin',{ message: 'User not Found' })
+
         }
         const passwordMatch = await bcrypt.compare(password, user.password)
         if (!passwordMatch) {
@@ -139,7 +139,7 @@ const sendOTPVerificationEmail = async ({ email }, res) => {
         const newOtpVerification = await new userOTPVerification({
             email: email,
             otp: hashedOtp,
-            createdAt: new Date(),
+            createdAt: new Date()
         })
 
         // save otp record
@@ -147,12 +147,10 @@ const sendOTPVerificationEmail = async ({ email }, res) => {
         await transporter.sendMail(mailOptions)
 
         res.redirect(`/Otp?email=${email}`)
-
     }
     catch (error) {
         console.log(error.meassage);
         return res.status(500).send('Internal Server Error');
-
     }
 }
 
@@ -280,7 +278,6 @@ const loadShop = async (req, res) => {
             products: listedProduct,
             user,
         });
-
     } catch (error) {
         console.log(error);
     }
@@ -336,4 +333,6 @@ module.exports = {
     loadProduct,
     loadAbout,
     loadContact
-}                    
+}
+
+
