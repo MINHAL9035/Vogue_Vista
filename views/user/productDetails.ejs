@@ -322,7 +322,7 @@
                                             </div>
 
                                             <input class="mtext-104 cl3 txt-center num-product" type="number"
-                                                id="quantity" name="quantity" value="1" max="">
+                                                id="quantity" name="quantity" value="1" max=" <%=products.quantity%>">
 
                                             <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                                                 <i class="fs-16 zmdi zmdi-plus"></i>
@@ -673,7 +673,7 @@
             const quantity = document.getElementById('quantity').value
             const data = { productId: productId, quantity: quantity }
 
-            
+
             $.ajax({
                 method: 'POST',
                 url: 'cart',
@@ -706,5 +706,31 @@
             });
         }
     </script>
+
+    <!-- ================================================ -->
+    <!-- quantity -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const quantityInput = document.getElementById('quantity');
+            const maxQuantity = parseInt(quantityInput.getAttribute('max'));
+
+            quantityInput.addEventListener('change', function () {
+                const enteredQuantity = parseInt(this.value);
+
+                if (enteredQuantity > maxQuantity) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: `Maximum quantity allowed is ${maxQuantity}`,
+                    });
+
+                    // Reset the quantity to the maximum allowed
+                    this.value = maxQuantity;
+                }
+            });
+        });
+    </script>
+    <!-- ================================================ -->
 </body>
+
 </html>

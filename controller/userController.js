@@ -270,9 +270,6 @@ const loadShop = async (req, res) => {
 
             return isProductListed && productCategory;
         });
-
-        console.log(products.length);
-
         res.render('shop', {
             Categories: listedCategory,
             products: listedProduct,

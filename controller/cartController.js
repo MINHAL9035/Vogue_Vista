@@ -28,7 +28,7 @@ const addCart = async (req, res) => {
             const cartData = await cart.findOne({ user_id: user_id })
 
             if (cartData) {
-                const existProduct =  cartData.items.find((x) => x.product_id.toString() === productId)
+                const existProduct = cartData.items.find((x) => x.product_id.toString() === productId)
 
                 if (existProduct) {
                     await cart.findOneAndUpdate(
@@ -39,7 +39,6 @@ const addCart = async (req, res) => {
                                 'items.$.total_price': quantity * existProduct.price
                             }
                         }
-
                     )
                 } else {
                     // add a new product to cart
@@ -59,7 +58,6 @@ const addCart = async (req, res) => {
                 }
             } else {
                 // create a new cart and add product
-
                 const newCart = new cart({
                     user_id: user_id,
                     items: [{
@@ -72,7 +70,6 @@ const addCart = async (req, res) => {
                 await newCart.save()
             }
             res.json({ success: true })
-
         }
     } catch (error) {
         console.log(error);
