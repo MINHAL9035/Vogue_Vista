@@ -1,0 +1,217 @@
+<%- include('../layouts/userLayout/header.ejs') -%>
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.png" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!--===============================================================================================-->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .wallet-card {
+            background-color: #2980b9;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wallet-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            border: 2px solid #fff;
+            /* Add a border to the avatar */
+        }
+
+        .wallet-card-info {
+            flex: 1;
+        }
+
+        .wallet-card h2 {
+            margin-bottom: 5px;
+        }
+
+        .wallet-card p {
+            color: #f0f0f0;
+            margin: 0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .wallet-balance {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .transaction-history {
+            border-top: 2px solid #ddd;
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .transaction-item span {
+            flex: 1;
+        }
+
+        .transaction-amount {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .transaction-date {
+            color: #888;
+        }
+    </style>
+    <%- include('../layouts/userLayout/center.ejs') -%>
+
+        <%- include('../layouts/userLayout/navbar.ejs') -%>
+            <header>
+                <h1>E-commerce Wallet</h1>
+            </header>
+
+            <main>
+                <div class="wallet-card">
+                    <img src="https://via.placeholder.com/150" alt="User Avatar">
+                    <div class="wallet-card-info">
+                        <h2><%=user.username%> Wallet</h2>
+                        <p>Card Ending in 1234</p>
+                    </div>
+                </div>
+
+                <div class="wallet-balance">
+                    <p>Wallet Balance:<%= user.wallet%>
+                    </p>
+                </div>
+
+                <h2>Transaction History</h2>
+                <% user.walletHistory.forEach(History=>{ %>
+                    <div class="transaction-history">
+
+                        <div class="transaction-item">
+                            <span>Date</span>
+                            <span class="transaction-amount">
+                                <%= moment(History.date).format('DD/MM/YYYY')%>
+                            </span>
+                        </div>
+                        <div class="transaction-item">
+                            <span>Refund</span>
+                            <span class="transaction-amount">
+                                <%= History.amount %>
+                            </span>
+                        </div>
+                        <div class="transaction-item">
+                            <span>Reason</span>
+                            <span class="transaction-amount">
+                                <%=History.reason %>
+                            </span>
+                        </div>
+                    </div>
+                    <% }) %>
+            </main>
+            <%- include('../layouts/userLayout/page-footer.ejs') -%>
+
+                <!--===============================================================================================-->
+                <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+                <!--===============================================================================================-->
+                <script src="vendor/animsition/js/animsition.min.js"></script>
+                <!--===============================================================================================-->
+                <script src="vendor/bootstrap/js/popper.js"></script>
+                <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+                <!--===============================================================================================-->
+                <script src="vendor/select2/select2.min.js"></script>
+                <script>
+                    $(".js-select2").each(function () {
+                        $(this).select2({
+                            minimumResultsForSearch: 20,
+                            dropdownParent: $(this).next(".dropDownSelect2"),
+                        });
+                    });
+                </script>
+                <!--===============================================================================================-->
+                <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+                <!--===============================================================================================-->
+                <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+                <script>
+                    $(".js-pscroll").each(function () {
+                        $(this).css("position", "relative");
+                        $(this).css("overflow", "hidden");
+                        var ps = new PerfectScrollbar(this, {
+                            wheelSpeed: 1,
+                            scrollingThreshold: 1000,
+                            wheelPropagation: false,
+                        });
+
+                        $(window).on("resize", function () {
+                            ps.update();
+                        });
+                    });
+                </script>
+                <!--===============================================================================================-->
+                <script
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>
+                <script src="js/map-custom.js"></script>
+                <!--===============================================================================================-->
+                <script src="js/main.js"></script>
+
+                <%- include('../layouts/userLayout/footer.ejs') -%>

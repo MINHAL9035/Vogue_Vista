@@ -1,0 +1,162 @@
+<%- include('../layouts/adminLayout/header.ejs') -%>
+<%- include('../layouts/adminLayout/navbar.ejs') -%>
+            <!-- form -->
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Basic form elements</h4>
+                        <p class="card-description"> Basic form elements </p>
+                        <form class="forms-sample" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="exampleInputName1">Product Name</label>
+                                <input type="text" class="form-control" name="productName" id="exampleInputName1"
+                                    placeholder="Product Name">
+                                <div id="productError" class="text-danger"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail3">Description</label>
+                                <input type="text" class="form-control" name="description" id="exampleInputEmail3"
+                                    placeholder="Description">
+                                <div id="productDescriptionError" class="text-danger"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="quantity">Quantity</label>
+                                <input type="number" class="form-control" name="quantity" id="product_qty"
+                                    placeholder="Quantity">
+                                <div id="quantityError" class="text-danger"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input type="number" class="form-control" name="price" id="product_price"
+                                    placeholder="Price">
+                                <div id="priceError" class="text-danger"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>File upload</label>
+                                <div class="input-group col-xs-12">
+                                    <div class="mb-3">
+                                        <label for="productImage" class="form-label mb-10 "></label>
+                                        <span id="imagePreview" class="mt-2 "></span>
+                                        <input type="file" name="image" id="productImage"
+                                            class="form-control bg-dark text-white file-upload-info"
+                                            placeholder="Upload Image" style="margin-top: 5%;"
+                                            accept=".jpg, .jpeg, .png" multiple>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputCity1">Category</label>
+                                <select class="form-control" name="category" id="exampleInputCity1">
+                                    <% category.forEach(category=>{ %>
+                                        <option>
+                                            <%= category.name %>
+                                        </option>
+                                        <% }) %>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleTextarea1">Brand</label>
+                                <input type="text" class="form-control" name="brand" id="exampleInputCity1"
+                                    placeholder="Brand">
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                            <button class="btn btn-dark">Cancel</button>
+                        </form>
+
+                        <% if (typeof message !=='undefined' ) { %>
+                            <p style="text-align: center; font-size: smaller; color: red">
+                                <%- message %>
+                            </p>
+                            <% } %>
+                    </div>
+                </div>
+            </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const form = document.querySelector(".forms-sample");
+
+                    form.addEventListener("submit", function (event) {
+                        // Validate Product Name
+                        const productName = form.querySelector("[name='productName']").value.trim();
+                        const productError = form.querySelector("#productError");
+                        if (productName === "") {
+                            productError.textContent = "Product Name is required";
+                            event.preventDefault();
+                        } else {
+                            productError.textContent = "";
+                        }
+
+                        // Validate Description
+                        const description = form.querySelector("[name='description']").value.trim();
+                        const productDescriptionError = form.querySelector("#productDescriptionError");
+                        if (description === "") {
+                            productDescriptionError.textContent = "Description is required";
+                            event.preventDefault();
+                        } else {
+                            productDescriptionError.textContent = "";
+                        }
+
+                        // Validate Quantity (should not be negative)
+                        const quantity = parseFloat(form.querySelector("[name='quantity']").value);
+                        const quantityError = form.querySelector("#quantityError");
+                        if (isNaN(quantity) || quantity < 0) {
+                            quantityError.textContent = "Quantity should be a non-negative number";
+                            event.preventDefault();
+                        } else {
+                            quantityError.textContent = "";
+                        }
+
+                        // Validate Price (should not be negative)
+                        const price = parseFloat(form.querySelector("[name='price']").value);
+                        const priceError = form.querySelector("#priceError");
+                        if (isNaN(price) || price < 0) {
+                            priceError.textContent = "Price should be a non-negative number";
+                            event.preventDefault();
+                        } else {
+                            priceError.textContent = "";
+                        }
+
+
+                        // Add event listener to remove leading and trailing spaces from input values
+                        form.querySelectorAll(".form-control").forEach(function (input) {
+                            input.addEventListener("blur", function () {
+                                this.value = this.value.trim();
+                            });
+                        });
+                    });
+                });
+            </script>
+
+
+
+
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Get the file input element
+                    const fileInput = document.getElementById('productImage');
+
+                    // Get the image preview container
+                    const imagePreviewContainer = document.getElementById('imagePreview');
+
+                    // Add an event listener to the file input
+                    fileInput.addEventListener('change', function () {
+                        // Remove existing preview images
+                        imagePreviewContainer.innerHTML = '';
+
+                        // Loop through selected files and create image previews
+                        for (const file of fileInput.files) {
+                            const img = document.createElement('img');
+                            img.src = URL.createObjectURL(file);
+                            img.className = 'img-sm img-thumbnail mr-2';
+                            img.alt = 'Image Preview';
+                            img.style.width = '80px';
+                            img.style.height = '80px';
+                            imagePreviewContainer.appendChild(img);
+                        }
+                    });
+                });
+            </script>
+
+            <%- include('../layouts/adminLayout/footer.ejs') -%>

@@ -1,0 +1,55 @@
+<%- include('../layouts/adminLayout/header.ejs') -%>
+    <style>
+        .mainOd {
+            background-color: rgb(180, 214, 224);
+        }
+    </style>
+
+<%- include('../layouts/adminLayout/navbar.ejs') -%>
+
+
+            <div class="col-11">
+                <div class=" mainOd rounded h-100 p-4" style="margin-top: 100px; margin-left: 100px;">
+                    <% if(order.items && order.items.length> 0) { %>
+                        <% order.items.forEach(item=> { %>
+
+                            <div class="card mainOd">
+                                <div class="card-header mainOd">
+                                    <h4 class="card-title ">
+                                        #Order ID : <%=order.order_id%>
+                                    </h4>
+                                    <hr>
+
+                                    <div class="card-body">
+                                        <img src="/sharpimages/<%=item.product_id.image[0]%>"
+                                            class=" img-thumbnail mb-2" alt="" width="20%" height="50px"><br>
+                                        <span>Price : ₹<%=item.product_id.price%></span><br><br>
+                                        <span>Order Date :<%= moment(order.date).format('DD/MM/YYYY') %>
+                                        </span><br><br>
+                                        <span>Delivery Address:<%=order.delivery_address%></span><br><br>
+                                        <span>Payment Method : <%=order.payment%></span><br><br>
+                                        <span>Expected Delivery :<%=order.expected_delivery%> </span><br><br>
+                                        <span>Quantity :<%=item.quantity%> </span><br><br>
+                                        <span>Status :
+                                            <span style="color: red;">
+                                                <%=item.ordered_status%>
+
+                                            </span>
+                                        </span><br><br>
+
+                                        <% if (item.ordered_status==='Cancelled' || item.ordered_status==='Returned'
+                                            ||item.ordered_status==='request_cancellation'
+                                            ||item.ordered_status==='request_return' ) { %>
+                                            <span style="color: red;">Reason: <%= item.cancellationReason %>
+                                                    </span><br><br>
+                                            <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+                <% }) %>
+                    <% } %>
+            </div>
+
+
+            <%- include('../layouts/adminLayout/footer.ejs') -%>
