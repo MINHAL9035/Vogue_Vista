@@ -9,7 +9,7 @@ require("dotenv").config();
 
 
 const app = express();
-connectDB() 
+connectDB()
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     secret: process.env.SECRET,
-    resave: false, 
+    resave: false,
     saveUninitialized: false,
   })
 );
@@ -49,5 +49,3 @@ app.listen(port, () => {
   console.log(`server is running on http://localhost:${port}`);
 });
 
-
-//helli bro

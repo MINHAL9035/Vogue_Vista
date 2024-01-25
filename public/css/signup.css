@@ -2,43 +2,90 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
-  background: url('/images/limage1.png') no-repeat center center fixed;
+  background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.5)), url('/images/signupPic.jpg') no-repeat center center fixed;
   background-size: cover;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+  /* Add relative positioning to the body */
 }
-.signup-container{
-  border: 1px solid white;
-  width: 25%;
-  margin-right: 6%;
-  height: 50%;
+
+.custom-signup-container {
+  background-color: rgba(255, 255, 255, 0.1);
+  /* Semi-transparent background */
+  border: 1px solid #121111;
+  width: 80%;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 8px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-.sub{
-  color: black;
-    margin-left: 17%;
-    margin-bottom: 9%;
+
+.custom-form-section {
+  text-align: center;
 }
-.heading{
-  margin-left: 33%;
-  color: rgb(0, 5, 0);
-  margin-top: 5%;
-  margin-bottom: 1%;
+
+.custom-heading {
+  color: #333;
+  font-size: 24px;
 }
-.feilds{
-  margin-left:20%;
-  width: 50%;
-  background-color: rgba(255, 255, 255, 0.678);
-  color: black;
-  height: 20%;
+
+.custom-sub {
+  color: #090909;
+  margin-bottom: 20px;
 }
-.submit{
-  margin-top: 3%;
-  margin-left:20%;
+
+.custom-fields {
+  width: calc(100% - 24px);
+  padding: 12px;
+  /* Increased padding for better appearance */
+  margin-bottom: 15px;
+  /* Increased margin for better spacing */
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
 }
-.member{
-  color: black;
-  margin-left:20%;
-  margin-top: 2%;
+
+.custom-submit {
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 18px;
+  /* Increased padding for better appearance */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.custom-submit:hover {
+  background-color: #45a049;
+}
+
+.custom-error-message {
+  color: red;
+  margin-top: 15px;
+  /* Increased margin for better spacing */
+}
+
+.custom-member {
+  color: #555;
+  margin-top: 20px;
+  /* Increased margin for better spacing */
+}
+
+/* Media Query for Tablets and smaller screens */
+@media (max-width: 768px) {
+  .custom-signup-container {
+    width: 90%;
+  }
+}
+
+/* Media Query for smaller mobile screens */
+@media (max-width: 480px) {
+  .custom-signup-container {
+    width: 100%;
+    padding: 15px;
+  }
 }

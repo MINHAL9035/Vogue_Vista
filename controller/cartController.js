@@ -26,7 +26,7 @@ const addCart = async (req, res) => {
     const { user_id } = req.session;
 
     if (!user_id) {
-      res.redirect("/login"); 
+      res.redirect("/login");
     } else {
       const productData = await product.findOne({ _id: productId });
       const cartData = await cart.findOne({ user_id: user_id });

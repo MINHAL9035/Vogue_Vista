@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <title>Otp verification</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<%- include('../layouts/userLayout/header.ejs') -%>
   <!--===============================================================================================-->
-  <link rel="icon" type="image/png" href="images/icons/favicon.png" />
+  <link rel="icon" type="image/png" href="images/icons/logoVV.png" />
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css" />
   <!--===============================================================================================-->
@@ -34,522 +28,90 @@
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="css/util.css" />
   <link rel="stylesheet" type="text/css" href="css/main.css" />
+  <link rel="stylesheet" href="css/otp.css">
   <!--===============================================================================================-->
-  <style>
-    body,
-    h2,
-    form {
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Center the container on the page */
-    .otp-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      font-family: "Arial", sans-serif;
-    }
-
-    /* Style for the OTP form */
-    h2 {
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    form {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
-
-    .otp-input {
-      width: 40px;
-      height: 40px;
-      margin: 0 5px;
-      text-align: center;
-      font-size: 18px;
-      border: 2px solid #3498db;
-      border-radius: 5px;
-      outline: none;
-    }
-
-    /* Highlight the input on focus */
-    .otp-input:focus {
-      border-color: #2ecc71;
-    }
-
-    button {
-      margin-left: 10px;
-      padding: 12px 24px;
-      background-color: #2ecc71;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #27ae60;
-    }
-
-    /* Style for error message */
-    p {
-      margin-top: 10px;
-      color: #e74c3c;
-      font-size: 14px;
-    }
-  </style>
-</head>
-
-<body class="animsition">
-  <!-- Header -->
-  <header class="header-v2">
-    <!-- Header desktop -->
-    <div class="container-menu-desktop trans-03">
-      <div class="wrap-menu-desktop">
-        <nav class="limiter-menu-desktop p-l-45">
-          <!-- Logo desktop -->
-          <a href="#" class="logo">
-            <img src="images/icons/logo-01.png" alt="IMG-LOGO" />
-          </a>
-          <!-- Menu desktop -->
-          <div class="menu-desktop">
-            <ul class="main-menu">
-              <li>
-                <a href="/">Home</a>
-              </li>
-
-              <li class="active-menu">
-                <a href="/shop">Shop</a>
-              </li>
-              <li>
-                <a href="/about">About</a>
-              </li>
-
-              <li>
-                <a href="/contact">Contact</a>
-              </li>
-              <div class="dropdown">
-                <!-- Profile link -->
-                <li>
-                  <a id="login" href="#">
-                    <%= locals.user ? user.username : "Profile" %>
-                  </a>
-                </li>
-                <!-- Dropdown content -->
-                <div class="dropdown-content">
-                  <!-- User Profile link -->
-                  <a href="#">User Profile</a>
-                  <!-- Login link -->
-                  <%if(locals.user) { %>
-                    <a href="/logout">Logout</a>
-                    <%}else{%>
-                      <a href="/login">Login</a>
-                      <%}%>
+  <%- include('../layouts/userLayout/center.ejs') -%>
+    <%- include('../layouts/userLayout/navbar.ejs') -%>
+      <!-- ==============OTP fORM===================================== -->
+      <div class="container height-100 d-flex justify-content-center align-items-center">
+        <div class="position-relative">
+          <div class="card p-2 text-center">
+            <h6>Please enter the otp to verify <br> your account</h6>
+            <% if (email) { %>
+              <div>
+                <span>A code has been sent to</span>
+                <small>
+                  <%= email %>
+                </small>
+              </div>
+              <% } else { %>
+                <div>
+                  <span> Email not provided.please go for signup/login procedure</span>
                 </div>
-              </div>
-            </ul>
-          </div>
-
-          <!-- Icon header -->
-          <div class="wrap-icon-header flex-w flex-r-m h-full">
-            <div class="flex-c-m h-full p-r-24">
-              <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search">
-                <i class="zmdi zmdi-search"></i>
-              </div>
-            </div>
-
-            <div class="flex-c-m h-full p-l-18 p-r-25 bor5">
-              <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
-                <i class="zmdi zmdi-shopping-cart"></i>
-              </div>
-            </div>
-
-            <div class="flex-c-m h-full p-lr-19">
-              <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-sidebar">
-                <i class="zmdi zmdi-menu"></i>
-              </div>
-            </div>
-          </div>
-        </nav>
-      </div>
-    </div>
-
-    <!-- Header Mobile -->
-    <div class="wrap-header-mobile">
-      <!-- Logo moblie -->
-      <div class="logo-mobile">
-        <a href="#"><img src="images/icons/logo-01.png" alt="IMG-LOGO" /></a>
-      </div>
-
-      <!-- Icon header -->
-      <div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
-        <div class="flex-c-m h-full p-r-10">
-          <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search">
-            <i class="zmdi zmdi-search"></i>
-          </div>
-        </div>
-
-        <div class="flex-c-m h-full p-lr-10 bor5">
-          <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
-            <i class="zmdi zmdi-shopping-cart"></i>
+                <% } %>
+                  <form action="" method="post">
+                    <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
+                      <input class="m-2 text-center form-control rounded" type="hidden" value="<%=locals.email%>"
+                        name="email" maxlength="1" />
+                      <input class="m-2 text-center form-control rounded otp-input" type="text" id="first" name="one"
+                        maxlength="1" />
+                      <input class="m-2 text-center form-control rounded otp-input" type="text" id="second" name="two"
+                        maxlength="1" />
+                      <input class="m-2 text-center form-control rounded otp-input" type="text" id="third" name="three"
+                        maxlength="1" />
+                      <input class="m-2 text-center form-control rounded otp-input" type="text" id="fourth" name="four"
+                        maxlength="1" />
+                    </div>
+                     <!-- Add a span element to display the timer -->
+                     <span id="otpTimer" class="otp-timer"></span>
+                    <div class="mt-4">
+                      <button type="submit" class="btn px-4 validate">Validate</button>
+                      <button type="button" id="resendButton" class="btn px-4 validate" onclick="resendOTP()"
+                        disabled>Resend</button>
+                    </div>
+                  </form>
+                  <% if( messages.message ) { %>
+                    <p style="color: red">
+                      <%=messages.message %>
+                    </p>
+                    <%}%>
           </div>
         </div>
       </div>
 
-      <!-- Button show menu -->
-      <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
-        <span class="hamburger-box">
-          <span class="hamburger-inner"></span>
-        </span>
-      </div>
-    </div>
+      <%- include('../layouts/userLayout/page-footer.ejs') -%>
+        <!-- ============================================================================================== -->
+        <script src="js/otpValidation.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/animsition/js/animsition.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/bootstrap/js/popper.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/select2/select2.min.js"></script>
+        <!-- ============================================================================================= -->
+        <script src="vendor/daterangepicker/moment.min.js"></script>
+        <script src="vendor/daterangepicker/daterangepicker.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/slick/slick.min.js"></script>
+        <script src="js/slick-custom.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/parallax100/parallax100.js"></script>
+        <script>
+          $(".parallax100").parallax100();
+        </script>
+        <!--===============================================================================================-->
+        <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/isotope/isotope.pkgd.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/sweetalert/sweetalert.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="js/main.js"></script>
+        </body>
 
-    <!-- Menu Mobile -->
-    <div class="menu-mobile">
-      <ul class="main-menu-m">
-        <li>
-          <a href="/">Home</a>
-        </li>
-
-        <li class="active-menu">
-          <a href="/shop">Shop</a>
-        </li>
-        <li>
-          <a href="#">About</a>
-        </li>
-
-        <li>
-          <a href="#">Contact</a>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Modal Search -->
-    <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
-      <div class="container-search-header">
-        <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-          <img src="images/icons/icon-close2.png" alt="CLOSE" />
-        </button>
-
-        <form class="wrap-search-header flex-w p-l-15">
-          <button class="flex-c-m trans-04">
-            <i class="zmdi zmdi-search"></i>
-          </button>
-          <input class="plh3" type="text" name="search" placeholder="Search..." />
-        </form>
-      </div>
-    </div>
-  </header>
-
-  <div class="otp-container">
-    <% if (messages.message) { %>
-      <div class="alert alert-danger d-flex align-items-center" role="alert" id="error-alert">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-          class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img"
-          aria-label="Warning:">
-          <path
-            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-        </svg>
-        <div>
-          <strong>Hey!</strong>
-          <%= messages.message %>
-        </div>
-      </div>
-      <%}%>
-        <h2>Enter OTP</h2>
-        <form action="" method="post">
-          <input type="hidden" name="email" value="<%=locals.email%>" />
-          <input type="text" class="otp-input" maxlength="1" name="one" required />
-          <input type="text" class="otp-input" maxlength="1" name="two" required />
-          <input type="text" class="otp-input" maxlength="1" name="three" required />
-          <input type="text" class="otp-input" maxlength="1" name="four" required />
-          <br /><br />
-          <button type="submit">Verify OTP</button>
-        </form>
-  </div>
-
-  <!-- Footer -->
-  <footer class="bg3 p-t-75 p-b-32">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-6 col-lg-3 p-b-50">
-          <h4 class="stext-301 cl0 p-b-30">Categories</h4>
-
-          <ul>
-            <li class="p-b-10">
-              <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> Men </a>
-            </li>
-
-            <li class="p-b-10">
-              <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> Women </a>
-            </li>
-
-            <li class="p-b-10">
-              <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> Kids </a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="col-sm-6 col-lg-3 p-b-50">
-          <h4 class="stext-301 cl0 p-b-30">Help</h4>
-
-          <ul>
-            <li class="p-b-10">
-              <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                Track Order
-              </a>
-            </li>
-
-            <li class="p-b-10">
-              <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> Returns </a>
-            </li>
-
-            <li class="p-b-10">
-              <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                Shipping
-              </a>
-            </li>
-
-            <li class="p-b-10">
-              <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> FAQs </a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="col-sm-6 col-lg-3 p-b-50">
-          <h4 class="stext-301 cl0 p-b-30">GET IN TOUCH</h4>
-
-          <p class="stext-107 cl7 size-201">
-            Any questions? Let us know in store at 8th floor, 379 Hudson St,
-            New York, NY 10018 or call us on (+1) 96 716 6879
-          </p>
-
-          <div class="p-t-27">
-            <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-              <i class="fa fa-facebook"></i>
-            </a>
-
-            <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-              <i class="fa fa-instagram"></i>
-            </a>
-
-            <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-              <i class="fa fa-pinterest-p"></i>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-sm-6 col-lg-3 p-b-50">
-          <h4 class="stext-301 cl0 p-b-30">Newsletter</h4>
-
-          <form>
-            <div class="wrap-input1 w-full p-b-4">
-              <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email"
-                placeholder="email@example.com" />
-              <div class="focus-input1 trans-04"></div>
-            </div>
-
-            <div class="p-t-18">
-              <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-                Subscribe
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <div class="p-t-40">
-        <div class="flex-c-m flex-w p-b-18">
-          <a href="#" class="m-all-1">
-            <img src="images/icons/icon-pay-01.png" alt="ICON-PAY" />
-          </a>
-
-          <a href="#" class="m-all-1">
-            <img src="images/icons/icon-pay-02.png" alt="ICON-PAY" />
-          </a>
-
-          <a href="#" class="m-all-1">
-            <img src="images/icons/icon-pay-03.png" alt="ICON-PAY" />
-          </a>
-
-          <a href="#" class="m-all-1">
-            <img src="images/icons/icon-pay-04.png" alt="ICON-PAY" />
-          </a>
-
-          <a href="#" class="m-all-1">
-            <img src="images/icons/icon-pay-05.png" alt="ICON-PAY" />
-          </a>
-        </div>
-
-        <!-- <p class="stext-107 cl6 txt-center">
-                 Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. 
-                Copyright &copy;
-                <script>document.write(new Date().getFullYear());</script> All rights reserved |Made with <i
-                    class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
-                    target="_blank">Colorlib</a> &amp; distributed by <a href="https://themewagon.com"
-                    target="_blank">ThemeWagon</a>
-                 Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
-
-            </p> -->
-      </div>
-    </div>
-  </footer>
-
-  <!-- Back to top -->
-  <div class="btn-back-to-top" id="myBtn">
-    <span class="symbol-btn-back-to-top">
-      <i class="zmdi zmdi-chevron-up"></i>
-    </span>
-  </div>
-
-  <!--===============================================================================================-->
-  <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-  <!--===============================================================================================-->
-  <script src="vendor/animsition/js/animsition.min.js"></script>
-  <!--===============================================================================================-->
-  <script src="vendor/bootstrap/js/popper.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-  <!--===============================================================================================-->
-  <script src="vendor/select2/select2.min.js"></script>
-  <!-- ============================================================================================= -->
-
-  <script>
-    var timerSeconds = 60;
-    var timerInterval;
-
-    function startTimer() {
-      document.getElementById("resendContainer").style.display = "none";
-      document.getElementById("otpForm").style.display = "block";
-
-      var timerDisplay = document.getElementById("timer");
-      timerDisplay.textContent = timerSeconds;
-
-      timerInterval = setInterval(function () {
-        timerSeconds--;
-
-        if (timerSeconds <= 0) {
-          clearInterval(timerInterval);
-          document.getElementById("otpForm").style.display = "none";
-          document.getElementById("resendContainer").style.display = "block";
-        } else {
-          timerDisplay.textContent = timerSeconds;
-        }
-      }, 1000);
-    }
-
-    // Initial start of timer (you can call this when the page loads)
-    startTimer();
-  </script>
-  <!-- ========================================================================================= -->
-  <script>
-    $(".js-select2").each(function () {
-      $(this).select2({
-        minimumResultsForSearch: 20,
-        dropdownParent: $(this).next(".dropDownSelect2"),
-      });
-    });
-  </script>
-  <!--===============================================================================================-->
-  <script src="vendor/daterangepicker/moment.min.js"></script>
-  <script src="vendor/daterangepicker/daterangepicker.js"></script>
-  <!--===============================================================================================-->
-  <script src="vendor/slick/slick.min.js"></script>
-  <script src="js/slick-custom.js"></script>
-  <!--===============================================================================================-->
-  <script src="vendor/parallax100/parallax100.js"></script>
-  <script>
-    $(".parallax100").parallax100();
-  </script>
-  <!--===============================================================================================-->
-  <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
-  <script>
-    $(".gallery-lb").each(function () {
-      // the containers for all your galleries
-      $(this).magnificPopup({
-        delegate: "a", // the selector for gallery item
-        type: "image",
-        gallery: {
-          enabled: true,
-        },
-        mainClass: "mfp-fade",
-      });
-    });
-  </script>
-  <!--===============================================================================================-->
-  <script src="vendor/isotope/isotope.pkgd.min.js"></script>
-  <!--===============================================================================================-->
-  <script src="vendor/sweetalert/sweetalert.min.js"></script>
-  <script>
-    $(".js-addwish-b2, .js-addwish-detail").on("click", function (e) {
-      e.preventDefault();
-    });
-
-    $(".js-addwish-b2").each(function () {
-      var nameProduct = $(this).parent().parent().find(".js-name-b2").html();
-      $(this).on("click", function () {
-        swal(nameProduct, "is added to wishlist !", "success");
-
-        $(this).addClass("js-addedwish-b2");
-        $(this).off("click");
-      });
-    });
-
-    $(".js-addwish-detail").each(function () {
-      var nameProduct = $(this)
-        .parent()
-        .parent()
-        .parent()
-        .find(".js-name-detail")
-        .html();
-
-      $(this).on("click", function () {
-        swal(nameProduct, "is added to wishlist !", "success");
-
-        $(this).addClass("js-addedwish-detail");
-        $(this).off("click");
-      });
-    });
-
-    /*---------------------------------------------*/
-
-    $(".js-addcart-detail").each(function () {
-      var nameProduct = $(this)
-        .parent()
-        .parent()
-        .parent()
-        .parent()
-        .find(".js-name-detail")
-        .html();
-      $(this).on("click", function () {
-        swal(nameProduct, "is added to cart !", "success");
-      });
-    });
-  </script>
-  <!--===============================================================================================-->
-  <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-  <script>
-    $(".js-pscroll").each(function () {
-      $(this).css("position", "relative");
-      $(this).css("overflow", "hidden");
-      var ps = new PerfectScrollbar(this, {
-        wheelSpeed: 1,
-        scrollingThreshold: 1000,
-        wheelPropagation: false,
-      });
-
-      $(window).on("resize", function () {
-        ps.update();
-      });
-    });
-  </script>
-  <!--===============================================================================================-->
-  <script src="js/main.js"></script>
-</body>
-
-</html>
+        </html>

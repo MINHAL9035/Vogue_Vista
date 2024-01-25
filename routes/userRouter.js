@@ -1,5 +1,6 @@
 const express = require("express");
 const userRoute = express();
+
 const userController = require("../controller/userController");
 const cartController = require("../controller/cartController");
 const checkoutController = require("../controller/checkoutController");
@@ -7,39 +8,52 @@ const orderController = require("../controller/orderController");
 const couponController = require("../controller/couponController");
 const auth = require("../middleware/auth");
 
-// load ejs
+// ===============SETTING VEIW ENGINE====================
 userRoute.set("view engine", "ejs");
 userRoute.set("views", "./views/user");
 
-userRoute.get("/", auth.isLogout, userController.loadhome);
-
-userRoute.get("/home",auth.isBlocked, auth.isLogin, userController.loadhome);
-
-userRoute.get("/login", auth.isLogout, userController.loadlogin);
-
-userRoute.post("/login", userController.verifyLogin);
-
+// ==================USER REGISTER========================
 userRoute.get("/signup", auth.isLogout, userController.loadsignup);
-
 userRoute.post("/signup", userController.verifySignup);
 
+// =================USER OTP VERIFYING====================
 userRoute.get("/Otp", auth.isLogout, userController.loadOtp);
-
 userRoute.post("/Otp", userController.verifyOtp);
 
-userRoute.get("/loginOtp", auth.isLogout, userController.loginOtp);
+// =================USER LOGIN=============================
+userRoute.get("/login", auth.isLogout, userController.loadlogin);
+userRoute.post("/login", userController.verifyLogin);
 
+// ================USER LOGIN OTP=========================
+userRoute.get("/loginOtp", auth.isLogout, userController.loginOtp);
 userRoute.post("/loginOtp", userController.verifyLoginOtp);
 
+// ===============FORGOT PASSWORD========================
+userRoute.get('/forget', auth.isLogout, userController.loadForgetPassword)
+userRoute.post('/forget', userController.verifyForget)
+userRoute.get('/resetForgetPass', auth.isLogout, userController.loadResetForgetPass)
+userRoute.post('/resetForgetPass', userController.verifyForgetPass)
+
+// =================USER LOAD HOME=========================
+userRoute.get("/", auth.isLogout, userController.loadhome);
+userRoute.get("/home", auth.isBlocked, auth.isLogin, userController.loadhome);
+userRoute.get("/about", userController.loadAbout);
+userRoute.get("/contact", userController.loadContact);
 userRoute.get("/logout", auth.isLogin, userController.logout);
 
-userRoute.get("/shop",auth.isBlocked, userController.loadShop);
+
+
+
+
+
+
+
+
+userRoute.get("/shop", auth.isBlocked, userController.loadShop);
 
 userRoute.get("/productDetails", userController.loadProduct);
 
-userRoute.get("/about", userController.loadAbout);
 
-userRoute.get("/contact", userController.loadContact);
 
 userRoute.get("/cart", auth.isLogin, auth.isBlocked, cartController.loadCart);
 
@@ -87,20 +101,14 @@ userRoute.get("/changePassword", auth.isLogin, userController.loadChangePassword
 
 userRoute.post("/changePassword", userController.changePassword);
 
-userRoute.get('/forget', auth.isLogout, userController.loadForgetPassword)
 
-userRoute.post('/forget', userController.verifyForget)
-
-userRoute.get('/resetForgetPass', auth.isLogout, userController.loadResetForgetPass)
-
-userRoute.post('/resetForgetPass', userController.verifyForgetPass)
 
 userRoute.get('/invoice', auth.isLogin, orderController.loadInvoice)
 
 userRoute.get('/blocked-user', auth.isLogin, userController.loadBlockedUser)
 
-userRoute.post('/apply-coupon',auth.isLogin,couponController.applyCoupon)
+userRoute.post('/apply-coupon', auth.isLogin, couponController.applyCoupon)
 
-userRoute.get('/wallet',auth.isLogin,userController.loadWallet)
+userRoute.get('/wallet', auth.isLogin, userController.loadWallet)
 
 module.exports = userRoute; 

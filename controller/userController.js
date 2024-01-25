@@ -10,6 +10,8 @@ const Randomstring = require("randomstring");
 const userOTPVerification = require("../model/userOTPVerification");
 dotenv.config();
 
+// ================hash Password==========================
+
 const securePassword = async (password) => {
   try {
     const passwordHash = await bcrypt.hash(password, 10);
@@ -19,62 +21,7 @@ const securePassword = async (password) => {
   }
 };
 
-const loadhome = async (req, res) => {
-  try {
-    const userData = await User.findOne({ _id: req.session.user_id });
-    const product = await Products.find({})
-    res.render("home", { user: userData, product });
-  } catch (error) {
-    console.error(error);
-
-  }
-};
-
-const loadlogin = async (req, res) => {
-  try {
-    res.render("userLogin");
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const verifyLogin = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email: email });
-
-    if (!user) {
-      req.flash("message", "User not found");
-      return res.redirect("/login");
-    }
-
-    const passwordMatch = await bcrypt.compare(password, user.password);
-
-    if (!passwordMatch) {
-      req.flash("message", "Password does not match");
-      return res.redirect("/login");
-    }
-
-    if (user.is_blocked) {
-      req.flash(
-        "message",
-        "You have been blocked. Contact the website for assistance."
-      );
-      return res.redirect("/login");
-    }
-
-    if (!user.verified) {
-      req.flash("message", "User not verified. Please verify your account.");
-      return res.redirect("/login");
-    }
-
-    req.session.user_id = user._id;
-    res.redirect("/home");
-
-  } catch (error) {
-    console.error(error);
-  }
-};
+// ================Load SignUp==========================
 
 const loadsignup = async (req, res) => {
   try {
@@ -84,6 +31,7 @@ const loadsignup = async (req, res) => {
   }
 };
 
+// ================SignUp Post==========================
 
 const verifySignup = async (req, res) => {
   const { username, email, mobileNumber, password, confirmPassword } = req.body;
@@ -104,10 +52,13 @@ const verifySignup = async (req, res) => {
       ],
     });
 
+
+
     if (existingUser) {
-      req.flash("message", "User with the same credentials already exists");
-      return res.redirect("/signup");
+      const message = 'User credentials already used'
+      return res.render('userSignup', { message, username, email, mobileNumber, password, confirmPassword })
     }
+
     // hash password
     const hashedPassword = await securePassword(password);
 
@@ -129,6 +80,8 @@ const verifySignup = async (req, res) => {
     res.redirect("/signup");
   }
 };
+
+// ================Send Otp==========================
 
 const sendOTPVerificationEmail = async ({ email }, res) => {
   try {
@@ -166,11 +119,11 @@ const sendOTPVerificationEmail = async ({ email }, res) => {
         `,
     };
 
-
     const newOtpVerification = new userOTPVerification({
       email,
       otp: hashedOtp,
       createdAt: new Date(),
+      expiresAt: 1*60*100
     });
 
     // save otp record
@@ -184,25 +137,41 @@ const sendOTPVerificationEmail = async ({ email }, res) => {
   }
 };
 
+// ===========Load OtpPage=============================
+
 const loadOtp = async (req, res) => {
   try {
     const email = req.query.email;
+
     res.render("otp", { email: email });
   } catch (error) {
     console.log(error);
   }
 };
 
+// ===========verify otp=============================
+
 const verifyOtp = async (req, res) => {
   try {
     const email = req.body.email;
     const otp = req.body.one + req.body.two + req.body.three + req.body.four;
 
+    if (!email) {
+      req.flash('message', 'please do the login/signup procedure')
+      return res.redirect('/Otp')
+    }
+
     const user = await userOTPVerification.findOne({ email });
     console.log("user:", user);
 
     if (!user) {
-      res.render("otp", { message: "otp expired" });
+      res.render("otp", { message: "user not found" });
+    }
+
+    const currentTimestamp = new Date();
+    if (user.expiresAt && currentTimestamp > user.expiresAt) {
+      await userOTPVerification.deleteOne({ email });
+      return res.render("otp", { message: "OTP expired" });
     }
 
     const { otp: hashedOtp } = user;
@@ -224,6 +193,51 @@ const verifyOtp = async (req, res) => {
   }
 };
 
+// =================load login===========================
+
+const loadlogin = async (req, res) => {
+  try {
+    res.render("userLogin");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// ====================login post=========================
+
+const verifyLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+      return res.render('userLogin', { message: 'User not found', email, password })
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.render('userLogin', { message: 'Password is incorrect', email, password })
+    }
+
+    if (user.is_blocked) {
+      return res.render('userLogin', { message: 'You have been blocked. Contact the website for assistance.', email, password })
+    }
+
+    if (!user.verified) {
+      return res.render('userLogin', { message: 'User not verified. Please verify your account', email, password })
+    }
+
+    req.session.user_id = user._id;
+    res.redirect("/home");
+
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// ================login otpload==================
+
 const loginOtp = async (req, res) => {
   try {
     res.render("loginOtp");
@@ -231,6 +245,8 @@ const loginOtp = async (req, res) => {
     console.log(error);
   }
 };
+
+// ===================login otpverify===============================
 
 const verifyLoginOtp = async (req, res) => {
   try {
@@ -248,9 +264,24 @@ const verifyLoginOtp = async (req, res) => {
   }
 };
 
+// ==============load home=============================
+
+const loadhome = async (req, res) => {
+  try {
+    const userData = await User.findOne({ _id: req.session.user_id });
+    const product = await Products.find({})
+    res.render("home", { user: userData, product });
+  } catch (error) {
+    console.error(error);
+
+  }
+};
+
+// ================logout=======================
+
 const logout = async (req, res) => {
   try {
-    req.session.user_id=null
+    req.session.user_id = null
     res.redirect("/");
   } catch (error) {
     console.log(error);
@@ -292,8 +323,6 @@ const loadShop = async (req, res) => {
         category.name === product.category.name && category.is_listed
       )
     );
-
-
 
     res.render('shop', {
       Categories: listedCategory,
@@ -650,16 +679,16 @@ const loadWallet = async (req, res) => {
 }
 
 module.exports = {
-  loadhome,
-  loadlogin,
   loadsignup,
   verifySignup,
   sendOTPVerificationEmail,
   loadOtp,
   verifyOtp,
+  loadlogin,
   verifyLogin,
   loginOtp,
   verifyLoginOtp,
+  loadhome,
   logout,
   loadShop,
   loadProduct,

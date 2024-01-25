@@ -2,14 +2,14 @@
 <html lang="en">
 
 <head>
-  <title>Login 04</title>
+  <title>Login</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
   <!-- temp -->
 
   <!--===============================================================================================-->
-  <link rel="icon" type="image/png" href="images/icons/favicon.png" />
+  <link rel="icon" type="image/png" href="images/icons/logoVV.png" />
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css" />
   <!--===============================================================================================-->
@@ -38,52 +38,59 @@
   <link rel="stylesheet" type="text/css" href="css/util.css" />
   <link rel="stylesheet" type="text/css" href="css/main.css" />
   <!--===============================================================================================-->
-  <!-- /temp -->
-
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-
   <link rel="stylesheet" href="/login-form/css/style.css" />
+  <!-- ============================================================================================== -->
+  <style>
+    .inner-logo {
+      text-align: center !important;
+      margin-left: 25%;
+      margin-top: -7%;
+    }
+
+    .btn.btn-primary {
+      background: #020202 !important;
+      border: 1px solid #000000 !important;
+      color: #fff !important;
+    }
+
+    a {
+      -webkit-transition: .3s all ease;
+      -o-transition: .3s all ease;
+      transition: .3s all ease;
+      color: #0800f7;
+    }
+
+    .error-message {
+      color: red;
+      font-size: small;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+  </style>
 </head>
 
 <body>
-  <!-- -------------------------------------------- -->
   <!-- Header -->
   <header class="header-v2">
     <!-- Header desktop -->
     <div class="container-menu-desktop trans-03">
       <div class="wrap-menu-desktop">
         <nav class="limiter-menu-desktop p-l-45">
-          <!-- Logo desktop -->
-          <a href="#" class="logo">
-            <img src="images/icons/logo-01.png" alt="IMG-LOGO" />
+          <a href="/" class="logo">
+            <img src="images/icons/newlogo.png" alt="IMG-LOGO" />
           </a>
-
           <!-- Menu desktop -->
           <div class="menu-desktop">
             <ul class="main-menu">
               <li class="active-menu">
                 <a href="/">Home</a>
-                <!-- <ul class="sub-menu">
-									<li><a href="index.html">Homepage 1</a></li>
-									<li><a href="home-02.html">Homepage 2</a></li>
-									<li><a href="home-03.html">Homepage 3</a></li>
-								</ul> -->
               </li>
-
               <li>
                 <a href="/shop">Shop</a>
               </li>
-
-              <!-- <li class="label1" data-label1="hot">
-								<a href="shoping-cart.html">Features</a>
-							</li> -->
-
-              <!-- <li>
-								<a href="blog.html">Blog</a>
-							</li> -->
-
               <li>
                 <a href="/about">About</a>
               </li>
@@ -92,32 +99,27 @@
                 <a href="/contact">Contact</a>
               </li>
               <div class="dropdown">
-                <!-- Profile link -->
                 <li>
                   <a id="login" href="#">Profile</a>
                 </li>
-                <!-- Dropdown content -->
                 <div class="dropdown-content">
-                  <!-- User Profile link -->
                   <a href="#">User Profile</a>
-                  <!-- Login link -->
                   <a href="/login">Login</a>
                 </div>
               </div>
             </ul>
           </div>
-
           <!-- Icon header -->
           <div class="wrap-icon-header flex-w flex-r-m h-full">
             <div class="flex-c-m h-full p-r-24">
-              <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search">
+              <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 ">
                 <i class="zmdi zmdi-search"></i>
               </div>
             </div>
 
             <div class="flex-c-m h-full p-l-18 p-r-25 bor5">
-              <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
-                <a href="/cart"><i class="zmdi zmdi-shopping-cart"></i></a>
+              <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-cart" data-notify="2">
+                <a style="color: black;text-decoration: none;" href="/cart"><i class="zmdi zmdi-shopping-cart"></i></a>
               </div>
             </div>
 
@@ -135,19 +137,21 @@
     <div class="wrap-header-mobile">
       <!-- Logo moblie -->
       <div class="logo-mobile">
-        <a href="/"><img src="images/icons/logo-01.png" alt="IMG-LOGO" /></a>
+        <a href="/" class="logo">
+          <img src="images/icons/newlogo.png" alt="IMG-LOGO" />
+        </a>
       </div>
 
       <!-- Icon header -->
       <div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
         <div class="flex-c-m h-full p-r-10">
-          <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search">
+          <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 ">
             <i class="zmdi zmdi-search"></i>
           </div>
         </div>
 
         <div class="flex-c-m h-full p-lr-10 bor5">
-          <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
+          <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11  js-show-cart" data-notify="2">
             <i class="zmdi zmdi-shopping-cart"></i>
           </div>
         </div>
@@ -166,18 +170,13 @@
       <ul class="main-menu-m">
         <li>
           <a href="/">Home</a>
-          <span class="arrow-main-menu-m">
-            <i class="fa fa-angle-right" aria-hidden="true"></i>
-          </span>
         </li>
-
         <li>
           <a href="/shop">Shop</a>
         </li>
         <li>
           <a href="/about">About</a>
         </li>
-
         <li>
           <a href="/contact">Contact</a>
         </li>
@@ -201,32 +200,34 @@
     </div>
   </header>
 
-  <!-- -------------------------------------------- -->
+  <!--============================================== login form=============================================-->
   <section class="ftco-section">
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-md-6 text-center mb-5">
-          <h2 class="heading-section">VOGUE VISTA</h2>
+        <div class="col-md-6 text-center inner-logo">
+          <a href="#" class="logo">
+            <img src="images/icons/newlogo.png" alt="IMG-LOGO" />
+          </a>
         </div>
       </div>
       <div class="row justify-content-center">
         <div class="col-md-12 col-lg-10">
           <div class="wrap d-md-flex">
-            <div class="img" style="background-image: url(/images/limage1.png)"></div>
+            <div class="img" style="background-image: url(/images/singupPic2.jpg)"></div>
             <div class="login-wrap p-4 p-md-5">
               <div class="d-flex">
                 <div class="w-100">
-                  <h3 class="mb-4">Sign In</h3>
+                  <h3 class="mb-4">SIGN IN</h3>
                 </div>
               </div>
-              <form method="post" class="signin-form">
+              <form method="post" class="signin-form" onsubmit="return validateForm()">
                 <div class="form-group mb-3">
-                  <label class="label" for="name">Email</label>
-                  <input type="email" class="form-control" placeholder="Email" name="email" required />
+                  <input type="email" class="form-control" placeholder="Email" name="email" id="email" value="<%= locals.email%>">
+                  <span class="error-message" id="email-error"></span>
                 </div>
                 <div class="form-group mb-3">
-                  <label class="label" for="password">Password</label>
-                  <input type="password" class="form-control" placeholder="Password" name="password" required />
+                  <input type="password" class="form-control" placeholder="Password" name="password" id="password" value="<%= locals.password%>">
+                  <span class="error-message" id="password-error"></span>
                 </div>
                 <div class="form-group">
                   <button type="submit" class="form-control btn btn-primary rounded submit px-3">
@@ -234,20 +235,15 @@
                   </button>
                 </div>
                 <span><a href="/loginOtp">Login with Otp</a></span>
-                <div class="form-group d-md-flex">
-                  <div class="w-50 text-left"></div>
-                  <div class="w-50 text-md-right mb-5">
-                    <a href="/forget">Forgot Password</a>
-                  </div>
-                </div>
               </form>
-              <% if( messages.message ) { %>
-                <p style="color: red">
-                  <%=messages.message %>
-                </p>
-                <%}%>
+              <span> <a href="/forget">Forgot Password</a></span>
+              <% if (typeof message !=='undefined' ) { %>
+                <h6 style="color: red;">
+                    <%= message %>
+                </h6>
+                <% } %>
                   <p class="text-center">
-                    Not a member? <a data-toggle="tab" href="/signup">Sign Up</a>
+                    Not a member? <a href="/signup">Sign Up</a>
                   </p>
             </div>
           </div>
@@ -255,11 +251,43 @@
       </div>
     </div>
   </section>
-
-  <script src="js/jquery.min.js"></script>
-  <script src="js/popper.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/main.js"></script>
+  <!-- ===========================/singup form==================================================== -->
+  <%- include('../layouts/userLayout/page-footer.ejs') -%>
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/daterangepicker/moment.min.js"></script>
+    <script src="vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/slick/slick.min.js"></script>
+    <script src="js/slick-custom.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/parallax100/parallax100.js"></script>
+    <script>
+      $('.parallax100').parallax100();
+    </script>
+    <!--===============================================================================================-->
+    <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/isotope/isotope.pkgd.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/sweetalert/sweetalert.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="js/loginValidation.js"></script>
+    <!-- ============================================================================================= -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

@@ -1443,19 +1443,19 @@ pre {
 .table-warning,
 .table-warning > th,
 .table-warning > td {
-  background-color: #ffeeba; }
+  background-color: #000000; }
 
 .table-warning th,
 .table-warning td,
 .table-warning thead th,
 .table-warning tbody + tbody {
-  border-color: #ffdf7e; }
+  border-color: #070707; }
 
 .table-hover .table-warning:hover {
-  background-color: #ffe8a1; }
+  background-color: #111110; }
   .table-hover .table-warning:hover > td,
   .table-hover .table-warning:hover > th {
-    background-color: #ffe8a1; }
+    background-color: #0c0c0c; }
 
 .table-danger,
 .table-danger > th,
