@@ -8,6 +8,7 @@ const Category = require("../model/category");
 const Products = require("../model/product");
 const Randomstring = require("randomstring");
 const userOTPVerification = require("../model/userOTPVerification");
+const category = require("../model/category");
 dotenv.config();
 
 // ================hash Password==========================
@@ -123,7 +124,7 @@ const sendOTPVerificationEmail = async ({ email }, res) => {
       email,
       otp: hashedOtp,
       createdAt: new Date(),
-      expiresAt: 1*60*100
+      expiresAt: 1 * 60 * 100
     });
 
     // save otp record
@@ -156,10 +157,10 @@ const verifyOtp = async (req, res) => {
     const email = req.body.email;
     const otp = req.body.one + req.body.two + req.body.three + req.body.four;
 
-    if (!email) {
-      req.flash('message', 'please do the login/signup procedure')
-      return res.redirect('/Otp')
-    }
+    // if (!email) {
+    //   req.flash('message', 'please do the login/signup procedure')
+    //   return res.redirect('/Otp')
+    // }
 
     const user = await userOTPVerification.findOne({ email });
     console.log("user:", user);
@@ -168,11 +169,11 @@ const verifyOtp = async (req, res) => {
       res.render("otp", { message: "user not found" });
     }
 
-    const currentTimestamp = new Date();
-    if (user.expiresAt && currentTimestamp > user.expiresAt) {
-      await userOTPVerification.deleteOne({ email });
-      return res.render("otp", { message: "OTP expired" });
-    }
+    // const currentTimestamp = new Date();
+    // if (user.expiresAt && currentTimestamp > user.expiresAt) {
+    //   await userOTPVerification.deleteOne({ email });
+    //   return res.render("otp", { message: "OTP expired" });
+    // }
 
     const { otp: hashedOtp } = user;
     const validOtp = await bcrypt.compare(otp, hashedOtp);
@@ -317,13 +318,18 @@ const loadShop = async (req, res) => {
 
     const Categdata = await Category.find({});
     const listedCategory = Categdata.filter((categ) => categ.is_listed === true);
-
     const listedProduct = products.filter((product) =>
       product.is_listed && listedCategory.some((category) =>
         category.name === product.category.name && category.is_listed
       )
     );
+    let categName = null; 
 
+    if (categId) {
+      categName = await Category.findOne({ _id: categId });
+    }
+    
+    console.log(categName + "jaba");
     res.render('shop', {
       Categories: listedCategory,
       products: listedProduct,
@@ -332,7 +338,8 @@ const loadShop = async (req, res) => {
       currentPage: page,
       totalPages,
       sort,
-      categId
+      categId,
+      categName: categName ? categName.name : "All Products",
     });
   } catch (error) {
     console.log(error);

@@ -95,7 +95,7 @@ const loadEditProduct = async (req, res) => {
   try {
     const productId = req.query.productId;
     const categories = await Category.find({ is_listed: true });
-    const productData = await product.findOne({ _id: productId });
+    const productData = await product.findOne({ _id: productId }).populate("category");
 
     if (!productData) {
       req.flash("message", "product not found");

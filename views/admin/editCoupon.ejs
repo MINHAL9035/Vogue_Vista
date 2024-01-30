@@ -1,57 +1,76 @@
 <%- include('../layouts/adminLayout/header.ejs') -%>
     <%- include('../layouts/adminLayout/navbar.ejs') -%>
 
+        <style>
+            .error-message {
+                color: red;
+                font-size: small;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            }
+        </style>
 
         <div class="col-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Basic form elements</h4>
                     <p class="card-description"> Basic form elements </p>
-                    <form class="forms-sample" method="post">
+                    <form class="forms-sample" method="post" onsubmit="return validateForm()">
                         <div class="form-group">
                             <label for="exampleInputName1">Coupon Name</label>
                             <input type="text" class="form-control" name="couponName" id="couponName"
-                                placeholder="coupon Name" value="<%= coupon.couponName%>">
-
+                                placeholder="Coupon Name" value="<%= coupon.couponName%>" oninput="removeSpaces(this)">
+                            <span id="couponNameError" class="error-message"></span>
                         </div>
+
                         <div class="form-group">
                             <label for="exampleInputEmail3">Coupon Code</label>
                             <input type="text" class="form-control" name="Code" id="Code" placeholder="Coupon Code"
-                                value="<%= coupon.couponCode%>">
-
+                                value="<%= coupon.couponCode%>" oninput="removeSpaces(this)">
+                            <span id="codeError" class="error-message"></span>
                         </div>
+
                         <div class="form-group">
                             <label for="quantity">Description</label>
                             <input type="text" class="form-control" name="description" id="description"
-                                placeholder="Description" value="<%= coupon.couponDescription%>">
-
+                                placeholder="Description" value="<%= coupon.couponDescription%>"
+                                oninput="removeSpaces(this)">
+                            <span id="descriptionError" class="error-message"></span>
                         </div>
+
                         <div class="form-group">
                             <label for="price">Availability</label>
                             <input type="text" class="form-control" name="availability" id="availability"
-                                placeholder="Availability" value="<%= coupon.availability%>">
-
+                                placeholder="Availability" value="<%= coupon.availability%>"
+                                oninput="removeSpaces(this)">
+                            <span id="availabilityError" class="error-message"></span>
                         </div>
+
                         <div class="form-group">
                             <label for="exampleInputCity1">Minimum Amount</label>
                             <input type="text" class="form-control" name="Minimum" id="Minimum"
-                                placeholder="Enter Minimum amount" value="<%= coupon.minAmount%>">
-
+                                placeholder="Enter Minimum amount" value="<%= coupon.minAmount%>"
+                                oninput="removeSpaces(this)">
+                            <span id="minimumError" class="error-message"></span>
                         </div>
+
                         <div class="form-group">
                             <label for="exampleTextarea1">Discount Amount</label>
                             <input type="text" class="form-control" name="discount" id="discount"
-                                placeholder="Enter Discount Amount" value="<%= coupon.discountAmount%>">
+                                placeholder="Enter Discount Amount" value="<%= coupon.discountAmount%>"
+                                oninput="removeSpaces(this)">
+                            <span id="discountError" class="error-message"></span>
                         </div>
+
                         <div class="form-group">
                             <label for="exampleTextarea1">Expiry Date</label>
                             <input type="date" class="form-control" name="Expiry" id="Expiry" placeholder="Expiry Date"
-                                value="<%= coupon.expiryDate%>">
+                                value="<%= coupon.expiryDate.toISOString().split('T')[0] %>">
+                            <span id="expiryError" class="error-message"></span>
                         </div>
+
                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
                         <button class="btn btn-dark">Cancel</button>
                     </form>
-
                     <% if (typeof message !=='undefined' ) { %>
                         <p style="text-align: center; font-size: smaller; color: red">
                             <%- message %>
@@ -60,3 +79,88 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            function validateForm() {
+                // Get form values
+                let couponName = document.getElementById("couponName").value.trim();
+                let code = document.getElementById("Code").value.trim();
+                let description = document.getElementById("description").value.trim();
+                let availability = document.getElementById("availability").value.trim();
+                let minimum = document.getElementById("Minimum").value.trim();
+                let discount = document.getElementById("discount").value.trim();
+                let expiry = document.getElementById("Expiry").value.trim();
+
+                // Clear previous error messages
+                document.getElementById("couponNameError").innerHTML = "";
+                document.getElementById("codeError").innerHTML = "";
+                document.getElementById("descriptionError").innerHTML = "";
+                document.getElementById("availabilityError").innerHTML = "";
+                document.getElementById("minimumError").innerHTML = "";
+                document.getElementById("discountError").innerHTML = "";
+                document.getElementById("expiryError").innerHTML = "";
+
+                // Validation logic
+                let isValid = true;
+
+                if (couponName === "") {
+                    document.getElementById("couponNameError").innerHTML = "Coupon Name is required";
+                    isValid = false;
+                } else if (!/^[a-zA-Z0-9]+$/.test(couponName)) {
+                    document.getElementById("couponNameError").innerHTML = "Coupon Name should only contain alphabets and numbers";
+                    isValid = false;
+                }
+
+                if (code === "") {
+                    document.getElementById("codeError").innerHTML = "Coupon Code is required";
+                    isValid = false;
+                }
+
+                if (description === "") {
+                    document.getElementById("descriptionError").innerHTML = "Description is required";
+                    isValid = false;
+                }
+
+                if (availability === "") {
+                    document.getElementById("availabilityError").innerHTML = "Availability is required";
+                    isValid = false;
+                }
+
+                if (minimum === "") {
+                    document.getElementById("minimumError").innerHTML = "Minimum Discount is required";
+                    isValid = false;
+                } else if (isNaN(minimum) || parseFloat(minimum) < 0) {
+                    document.getElementById("minimumError").innerHTML = "Minimum amount should be a non-negative number";
+                    isValid = false;
+                }
+
+                if (discount === "") {
+                    document.getElementById("discountError").innerHTML = "Discount Amount is required";
+                    isValid = false;
+                } else if (parseFloat(discount) <= 0) {
+                    document.getElementById("discountError").innerHTML = "Discount Amount should be greater than zero";
+                    isValid = false;
+                }
+
+                if (expiry === "") {
+                    document.getElementById("expiryError").innerHTML = "Expiry Date is required";
+                    isValid = false;
+                }
+
+                // Add any additional validation for other fields here
+
+                if (!isValid) {
+                    return false;
+                }
+
+                return true;
+            }
+
+            // Remove white spaces from the input value
+            function removeSpaces(element) {
+                element.value = element.value.replace(/\s/g, '');
+            }
+        </script>
+
+
+        <%- include('../layouts/adminLayout/footer.ejs') -%>

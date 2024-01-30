@@ -70,7 +70,7 @@ const loadPlaceOrder = async (req, res) => {
   try {
     const userid = req.session.user_id;
     const id = req.params.id;
-    const orders = await orderModel.findOne({ _id: id });
+    const orders = await orderModel.findOne({ _id: id }).populate('user_id');
     const coupons = await coupon.find({});
     const user = await User.findOne({ _id: userid });
 

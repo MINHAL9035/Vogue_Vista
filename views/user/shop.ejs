@@ -37,6 +37,14 @@
             transition: box-shadow 0.3s ease;
             /* Optional: Add transition for a smoother effect */
         }
+
+        .active-category {
+            background-color: #3498db;
+            /* Set your desired background color */
+            color: #ffffff;
+            /* Set your desired text color */
+            /* Add any other styling you want for the active state */
+        }
     </style>
 
     <%- include('../layouts/userLayout/center.ejs') -%>
@@ -131,35 +139,41 @@
                                                     class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1"
                                                     data-filter="*">
                                                     All Products
-                                                </button></a>
+                                                </button>
+                                            </a>
                                         </li>
 
-                                        <li class="p-b-6">
-                                            <% if(Categories.length> 0){ %>
-                                                <% for(let i=0;i<Categories.length;i++) { %>
-                                                    <a href="/shop?categid=<%=Categories[i]._id %>&sort=<%=sort%>">
-
+                                        <% if (Categories.length> 0) { %>
+                                            <% for (let i=0; i < Categories.length; i++) { %>
+                                                <li class="p-b-6">
+                                                    <a href="/shop?categid=<%= Categories[i]._id %>&sort=<%= sort %>">
                                                         <button
                                                             class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1"
                                                             data-filter="*">
-                                                            <%=Categories[i].name%>
-                                                        </button></a>
-                                                    <% } %>
-                                                        <% } else { %>
+                                                            <%= Categories[i].name %>
+                                                        </button>
+                                                    </a>
+                                                </li>
+                                                <% } %>
+                                                    <% } else { %>
+                                                        <li class="p-b-6">
                                                             <button
                                                                 class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1"
                                                                 data-filter="*">
                                                                 There are no categories
                                                             </button>
-                                                            <% } %>
-                                        </li>
+                                                        </li>
+                                                        <% } %>
                                     </ul>
                                 </div>
+
                             </div>
                         </div>
                     </div>
 
-
+                    <h3 style="color: black;font-family:'Times New Roman', Times, serif; margin-bottom:3%; text-decoration: underline;">
+                        <%=categName%>
+                    </h3>
                     <div class="row isotope-grid">
                         <% if(products.length> 0){ %>
                             <% for(let i=0;i<products.length;i++){ %>

@@ -14,10 +14,6 @@ const orderSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  user_name: {
-    type: String,
-    required: true,
-  },
   total_amount: {
     type: Number,
     required: true,
@@ -40,11 +36,11 @@ const orderSchema = mongoose.Schema({
   total: {
     type: Number,
   },
-  discount:{
-    type:Number
+  discount: {
+    type: Number
   },
-  couponCode:{
-    type:String
+  couponCode: {
+    type: String
 
   },
   items: [
@@ -70,15 +66,17 @@ const orderSchema = mongoose.Schema({
         type: String,
         default: "pending",
       },
-      discountPerItem:{
-        type:Number
+      discountPerItem: {
+        type: Number,
+        default:0
       },
       cancellationReason: {
         type: String,
       },
     },
   ],
-});
+
+}, { timestamps: true });
 
 const order = mongoose.model("order", orderSchema);
 module.exports = order;

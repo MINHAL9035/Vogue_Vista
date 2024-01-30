@@ -47,7 +47,7 @@ const loadSingleOrderDetails = async (req, res) => {
 
 const loadAdminOrders = async (req, res) => {
   try {
-    const orders = await orderModel.find().populate("items.product_id").sort({ _id: 1 });
+    const orders = await orderModel.find().populate("items.product_id").populate('user_id').sort({ _id: 1 });
     res.render("orders", { orders, moment });
   } catch (error) {
     console.log(error);
@@ -57,12 +57,11 @@ const loadAdminOrders = async (req, res) => {
 const updateOrderStatus = async (req, res) => {
   try {
     const { orderId, itemId, newStatus } = req.body;
-    const user_id=req.session.user_id
+    const user_id = req.session.user_id
     const update = {
       "items.$.ordered_status": newStatus,
       "items.$.status": newStatus,
     };
-
     const order = await orderModel.findById(orderId);
     const item = order.items.find((item) => item._id.toString() === itemId);
 
@@ -71,21 +70,21 @@ const updateOrderStatus = async (req, res) => {
       const { product_id, quantity } = item;
       await product.findByIdAndUpdate(product_id, { $inc: { quantity } });
 
-      const discountAmount=item.discountPerItem || 0
-      const finalAmount=item.total_price - discountAmount
+      const discountAmount = item.discountPerItem || 0
+      const finalAmount = item.total_price - discountAmount
 
-      const user=await User.findById(user_id)
+      const user = await User.findById(user_id)
       user.wallet += finalAmount
 
       user.walletHistory.push({
-        date:new Date(),
-        amount:finalAmount,
-        reason:"refund for order"
+        date: new Date(),
+        amount: finalAmount,
+        reason: "refund for order"
 
       })
 
       await user.save()
- 
+
     }
 
 
