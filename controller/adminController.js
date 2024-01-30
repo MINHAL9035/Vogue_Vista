@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const category = require("../model/category");
 const product = require('../model/product')
 const moment = require('moment')
+const offer = require('../model/offerModel')
 
 const adminLogin = async (req, res) => {
   try {
@@ -484,8 +485,9 @@ const updateUserStatus = async (req, res) => {
 
 const loadCategory = async (req, res) => {
   try {
-    const categData = await category.find({});
-    res.render("category", { categ: categData });
+    const categData = await category.find({}).populate('offer');
+    const avialableOffers = await offer.find({ expiryDate: { $gte: new Date() } })
+    res.render("category", { categ: categData,offers:avialableOffers,moment });
   } catch (error) {
     console.log(error);
   }

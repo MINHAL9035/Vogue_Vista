@@ -1,0 +1,46 @@
+<%- include('../layouts/adminLayout/header.ejs') -%>
+    <%- include('../layouts/adminLayout/navbar.ejs') -%>
+
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Basic form elements</h4>
+                    <p class="card-description"> Basic form elements </p>
+                    <form class="forms-sample" method="post">
+                        <div class="form-group">
+                            <label for="exampleInputName1">Offer Name</label>
+                            <input type="text" class="form-control" name="name" id="offer-name"
+                                placeholder="Offer Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail3">Starting Date</label>
+                            <input type="date" class="form-control" name="startingDate" id="starting-Date" placeholder="Starting Date ">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantity">Expiry Date</label>
+                            <input type="date" class="form-control" name="expiryDate" id="expiry-Date"
+                                placeholder="Expiry Date">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price">Percentage</label>
+                            <input type="number" class="form-control" name="percentage" id="percentage"
+                                placeholder="percentage">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <button class="btn btn-dark">Cancel</button>
+                    </form>
+                    <% if (typeof message !=='undefined' ) { %>
+                        <p style="text-align: center; font-size: smaller; color: red">
+                            <%- message %>
+                        </p>
+                        <% } %>
+                </div>
+            </div>
+        </div>
+
+
+        <%- include('../layouts/adminLayout/footer.ejs') -%>

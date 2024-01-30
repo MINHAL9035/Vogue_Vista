@@ -4,6 +4,7 @@ const adminController = require("../controller/adminController");
 const productController = require("../controller/productController");
 const orderController = require("../controller/orderController");
 const couponController = require('../controller/couponController')
+const offerController = require('../controller/offerController')
 const upload = require("../middleware/upload");
 const adminAuth = require('../middleware/adminAuth')
 
@@ -15,9 +16,9 @@ adminRoute.set("views", "./views/admin");
 adminRoute.get("/adminLogin", adminAuth.isLogout, adminController.adminLogin);
 adminRoute.post("/adminLogin", adminAuth.isLogout, adminController.verifyLogin);
 // =========================DASHBOARD==========================================
-adminRoute.get("/", adminController.admindash);
-adminRoute.get('/salesReport', adminController.salesReport)
-adminRoute.post('/salesReport', adminController.datePicker)
+adminRoute.get("/", adminAuth.isLogin, adminController.admindash);
+adminRoute.get('/salesReport', adminAuth.isLogin, adminController.salesReport)
+adminRoute.post('/salesReport', adminAuth.isLogin, adminController.datePicker)
 adminRoute.get("/logout", adminAuth.isLogin, adminController.logout);
 
 // =============================USER==========================================
@@ -48,11 +49,22 @@ adminRoute.get('/order-details', adminAuth.isLogin, orderController.loadOrderDet
 
 // ==========================COUPON========================================================
 adminRoute.get('/coupons', adminAuth.isLogin, couponController.loadCoupon)
-adminRoute.get('/addCoupon', couponController.loadAddCoupon)
+adminRoute.get('/addCoupon', adminAuth.isLogin, couponController.loadAddCoupon)
 adminRoute.post('/addcoupon', couponController.addCoupon)
-adminRoute.get('/block-coupon', couponController.blockCoupon)
-adminRoute.get('/edit-coupon', couponController.loadEditCoupon)
+adminRoute.get('/block-coupon', adminAuth.isLogin, couponController.blockCoupon)
+adminRoute.get('/edit-coupon', adminAuth.isLogin, couponController.loadEditCoupon)
 adminRoute.post('/edit-coupon', couponController.editCoupon)
 adminRoute.post('/delete-coupon', couponController.deleteCoupon)
+
+
+// =========================offers=============================================================
+adminRoute.get('/offers', adminAuth.isLogin, offerController.loadOffers)
+adminRoute.get('/addOffer', adminAuth.isLogin, offerController.loadAddOffer)
+adminRoute.post('/addOffer', offerController.addOffer)
+adminRoute.patch("/applyProductOffer", offerController.applyProductOffer)
+adminRoute.patch('/removeProductOffer', offerController.removeProductOffer)
+adminRoute.patch('/applyCategoryOffer',offerController.applyCategoryOffer)
+adminRoute.patch('/removeCategoryOffer',offerController.removeCategoryOffer)
+adminRoute.post("/delete-offer", offerController.deleteOffer)
 
 module.exports = adminRoute;

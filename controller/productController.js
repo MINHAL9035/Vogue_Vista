@@ -4,11 +4,14 @@ const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
 const category = require("../model/category");
+const offer = require("../model/offerModel");
+const moment=require('moment')
 
 const loadProducts = async (req, res) => {
   try {
-    const products = await product.find({}).populate('category');
-    res.render("products", { products });
+    const products = await product.find({}).populate('category').populate('offer');
+    const avialableOffers = await offer.find({ expiryDate: { $gte: new Date() } })
+    res.render("products", { products, offers: avialableOffers, moment });
   } catch (error) {
     console.log(error);
   }

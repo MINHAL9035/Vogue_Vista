@@ -311,7 +311,23 @@ const loadShop = async (req, res) => {
       .sort({ price: sort })
       .skip(skip)
       .limit(ITEMS_PER_PAGE)
-      .populate("category");
+      .populate({
+        path: "category",
+        populate: {
+          path: "offer",
+          match: {
+            startingDate: { $lte: new Date() },
+            expiryDate: { $gte: new Date() },
+          },
+        },
+      })
+      .populate({
+        path: "offer",
+        match: {
+          startingDate: { $lte: new Date() },
+          expiryDate: { $gte: new Date() },
+        },
+      });
 
     const totalProductsCount = await Products.countDocuments(query);
     const totalPages = Math.ceil(totalProductsCount / ITEMS_PER_PAGE);
@@ -323,13 +339,11 @@ const loadShop = async (req, res) => {
         category.name === product.category.name && category.is_listed
       )
     );
-    let categName = null; 
+    let categName = null;
 
     if (categId) {
       categName = await Category.findOne({ _id: categId });
     }
-    
-    console.log(categName + "jaba");
     res.render('shop', {
       Categories: listedCategory,
       products: listedProduct,
@@ -350,12 +364,31 @@ const loadShop = async (req, res) => {
 const loadProduct = async (req, res) => {
   try {
     const productId = req.query.productid;
-    const product = await Products.findOne({ _id: productId });
+    const product = await Products.findOne({ _id: productId })
+      .populate({
+        path: "offer",
+        match: {
+          startingDate: { $lte: new Date() },
+          expiryDate: { $gte: new Date() },
+        },
+      })
+      .populate({
+        path: "category",
+        populate: {
+          path: "offer",
+          match: {
+            startingDate: { $lte: new Date() },
+            expiryDate: { $gte: new Date() },
+          },
+        },
+      });
+
     res.render("productDetails", { products: product });
   } catch (error) {
     console.log(error);
   }
 };
+
 
 const loadAbout = async (req, res) => {
   try {

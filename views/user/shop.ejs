@@ -171,7 +171,8 @@
                         </div>
                     </div>
 
-                    <h3 style="color: black;font-family:'Times New Roman', Times, serif; margin-bottom:3%; text-decoration: underline;">
+                    <h3
+                        style="color: black;font-family:'Times New Roman', Times, serif; margin-bottom:3%; text-decoration: underline;">
                         <%=categName%>
                     </h3>
                     <div class="row isotope-grid">
@@ -182,12 +183,12 @@
                                     <div class="block2">
                                         <div class="block2-pic hov-img0">
                                             <img src="/sharpimages/<%=products[i].image[0]%>" alt="IMG-PRODUCT">
-
                                             <a href="/productDetails?productid=<%=products[i]._id%>"
                                                 class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
                                                 Quick View
                                             </a>
                                         </div>
+
 
                                         <div class="block2-txt flex-w flex-t p-t-14">
                                             <div class="block2-txt-child1 flex-col-l ">
@@ -195,10 +196,24 @@
                                                     class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                                     <%=products[i].name%>
                                                 </a>
-                                                <span class="stext-105 cl3">
-                                                    ₹ <%=products[i].price%>
+                                                <span class="stext-105 cl3" >
+                                                    <% if (products[i].offer || products[i].category.offer) { %>
+                                                        <span style="text-decoration: line-through; color: red;">
+                                                            ₹ <%= products[i].price %>
+                                                        </span>
+                                                        <span style="color: green;">
+                                                            <b>
+                                                                <%= products[i].offer ? products[i].offer.percentage :
+                                                                    products[i].category.offer.percentage %> off
+                                                            </b>
+                                                        </span>
+                                                        <% } else { %>
+                                                          <b> ₹ <%= products[i].price %></b> 
+                                                                <% } %>
                                                 </span>
+
                                             </div>
+
 
                                             <div class="block2-txt-child2 flex-r p-t-3">
                                                 <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
@@ -208,6 +223,7 @@
                                                         src="images/icons/icon-heart-02.png" alt="ICON">
                                                 </a>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
