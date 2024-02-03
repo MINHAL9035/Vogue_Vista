@@ -56,15 +56,14 @@ adminRoute.get('/edit-coupon', adminAuth.isLogin, couponController.loadEditCoupo
 adminRoute.post('/edit-coupon', couponController.editCoupon)
 adminRoute.post('/delete-coupon', couponController.deleteCoupon)
 
-
 // =========================offers=============================================================
 adminRoute.get('/offers', adminAuth.isLogin, offerController.loadOffers)
 adminRoute.get('/addOffer', adminAuth.isLogin, offerController.loadAddOffer)
 adminRoute.post('/addOffer', offerController.addOffer)
 adminRoute.patch("/applyProductOffer", offerController.applyProductOffer)
 adminRoute.patch('/removeProductOffer', offerController.removeProductOffer)
-adminRoute.patch('/applyCategoryOffer',offerController.applyCategoryOffer)
-adminRoute.patch('/removeCategoryOffer',offerController.removeCategoryOffer)
+adminRoute.patch('/applyCategoryOffer', offerController.applyCategoryOffer)
+adminRoute.patch('/removeCategoryOffer', offerController.removeCategoryOffer)
 adminRoute.post("/delete-offer", offerController.deleteOffer)
 
 module.exports = adminRoute;

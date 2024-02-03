@@ -29,7 +29,7 @@ userRoute.get("/loginOtp", auth.isLogout, userController.loginOtp);
 userRoute.post("/loginOtp", userController.verifyLoginOtp);
 
 // ====================Resend Otp===============================================
-userRoute.post("/resendOtp",auth.isLogout,userController.resendOtp)
+userRoute.post("/resendOtp", auth.isLogout, userController.resendOtp)
 
 // ===============FORGOT PASSWORD=================================================
 userRoute.get('/forget', auth.isLogout, userController.loadForgetPassword)
