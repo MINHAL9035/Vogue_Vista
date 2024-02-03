@@ -35,51 +35,97 @@
       <!-- ==============OTP fORM===================================== -->
       <div class="container height-100 d-flex justify-content-center align-items-center">
         <div class="position-relative">
-          <div class="card p-2 text-center">
-            <h6>Please enter the otp to verify <br> your account</h6>
-            <% if (email) { %>
-              <div>
-                <span>A code has been sent to</span>
-                <small>
-                  <%= email %>
-                </small>
+          <% if (typeof message !=='undefined' ) { %>
+            <h6 style="color: red; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+              <%= message %>
+            </h6>
+            <%}%>
+              <div class="card p-2 text-center">
+                <h6>Please enter the otp to verify <br> your account</h6>
+                <form action="" method="post">
+                  <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
+                    <input class="m-2 text-center form-control rounded" type="hidden" value="<%= locals.email   %>"
+                      name="email" maxlength="1" />
+                    <input class="m-2 text-center form-control rounded otp-input" type="text" id="first" name="one"
+                      maxlength="1" />
+                    <input class="m-2 text-center form-control rounded otp-input" type="text" id="second" name="two"
+                      maxlength="1" />
+                    <input class="m-2 text-center form-control rounded otp-input" type="text" id="third" name="three"
+                      maxlength="1" />
+                    <input class="m-2 text-center form-control rounded otp-input" type="text" id="fourth" name="four"
+                      maxlength="1" />
+                  </div>
+                  <div id="otpTimer" class="otp-timer"></div>
+                  <div class="mt-4">
+                    <button type="submit" class="btn px-4 validate" id="validateButton">Validate</button>
+                  </div>
+                  <div id="resendButton" style="margin-top: 4%;display: none;">
+                    <button style="text-decoration: underline;" onclick="resendOtp()">Resend OTP</button>
+                  </div>
+                </form>
               </div>
-              <% } else { %>
-                <div>
-                  <span> Email not provided.please go for signup/login procedure</span>
-                </div>
-                <% } %>
-                  <form action="" method="post">
-                    <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
-                      <input class="m-2 text-center form-control rounded" type="hidden" value="<%=locals.email%>"
-                        name="email" maxlength="1" />
-                      <input class="m-2 text-center form-control rounded otp-input" type="text" id="first" name="one"
-                        maxlength="1" />
-                      <input class="m-2 text-center form-control rounded otp-input" type="text" id="second" name="two"
-                        maxlength="1" />
-                      <input class="m-2 text-center form-control rounded otp-input" type="text" id="third" name="three"
-                        maxlength="1" />
-                      <input class="m-2 text-center form-control rounded otp-input" type="text" id="fourth" name="four"
-                        maxlength="1" />
-                    </div>
-                    <!-- Add a span element to display the timer -->
-                    <!-- <span id="otpTimer" class="otp-timer"></span> -->
-                    <div class="mt-4">
-                      <button type="submit" class="btn px-4 validate">Validate</button>
-                      <!-- <button type="button" id="resendButton" class="btn px-4 validate" onclick="resendOTP()"
-                        disabled>Resend</button> -->
-                    </div>
-                  </form>
-                  <% if( messages.message ) { %>
-                    <p style="color: red">
-                      <%=messages.message %>
-                    </p>
-                    <%}%>
-          </div>
         </div>
       </div>
 
       <%- include('../layouts/userLayout/page-footer.ejs') -%>
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            let expirationTimestamp = sessionStorage.getItem('otpExpiration');
+
+            if (!expirationTimestamp) {
+              expirationTimestamp = new Date().getTime() + 1 * 60 * 1000;
+              sessionStorage.setItem('otpExpiration', expirationTimestamp);
+            }
+
+            const otpTimerElement = document.getElementById('otpTimer');
+            const resendButtonElement = document.getElementById('resendButton');
+
+            function updateTimer() {
+              const currentTime = new Date();
+              const timeDifference = expirationTimestamp - currentTime;
+
+              if (timeDifference > 0) {
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+                otpTimerElement.innerText = `Resend After: ${minutes}m ${seconds}s`;
+              } else {
+                otpTimerElement.innerText = 'Time expired';
+                resendButtonElement.style.display = 'block';
+              }
+            }
+
+            setInterval(updateTimer, 1000);
+          });
+
+          function resendOtp() {
+            const email = document.querySelector('input[name="email"]').value;
+            console.log(email + " my resend email");
+
+            // Update expiration timestamp on resend
+            let expirationTimestamp = new Date().getTime() + 1 * 60 * 1000;
+            sessionStorage.setItem('otpExpiration', expirationTimestamp);
+
+            fetch('/resendOtp', {
+              method: "post",
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ email })
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data.message);
+              })
+              .catch(error => {
+                console.error(error);
+              });
+
+            console.log('Resend OTP clicked');
+          }
+
+
+        </script>
+
         <!-- ============================================================================================== -->
         <script src="js/otpValidation.js"></script>
         <!--===============================================================================================-->

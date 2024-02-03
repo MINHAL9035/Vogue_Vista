@@ -487,7 +487,7 @@ const loadCategory = async (req, res) => {
   try {
     const categData = await category.find({}).populate('offer');
     const avialableOffers = await offer.find({ expiryDate: { $gte: new Date() } })
-    res.render("category", { categ: categData,offers:avialableOffers,moment });
+    res.render("category", { categ: categData, offers: avialableOffers, moment });
   } catch (error) {
     console.log(error);
   }

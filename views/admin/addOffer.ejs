@@ -1,33 +1,45 @@
 <%- include('../layouts/adminLayout/header.ejs') -%>
     <%- include('../layouts/adminLayout/navbar.ejs') -%>
+    <style>
+        .error-message {
+            color: red;
+            font-size: small;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+    </style>
 
         <div class="col-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Basic form elements</h4>
                     <p class="card-description"> Basic form elements </p>
-                    <form class="forms-sample" method="post">
+                    <form class="forms-sample" method="post" onsubmit="return validateForm()">
                         <div class="form-group">
                             <label for="exampleInputName1">Offer Name</label>
                             <input type="text" class="form-control" name="name" id="offer-name"
                                 placeholder="Offer Name">
+                            <span id="name-error" class="error-message"></span>
                         </div>
 
                         <div class="form-group">
                             <label for="exampleInputEmail3">Starting Date</label>
-                            <input type="date" class="form-control" name="startingDate" id="starting-Date" placeholder="Starting Date ">
+                            <input type="date" class="form-control" name="startingDate" id="starting-Date"
+                                placeholder="Starting Date ">
+                            <span id="startingDate-error" class="error-message"></span>
                         </div>
 
                         <div class="form-group">
                             <label for="quantity">Expiry Date</label>
                             <input type="date" class="form-control" name="expiryDate" id="expiry-Date"
                                 placeholder="Expiry Date">
+                            <span id="expiryDate-error" class="error-message"></span>
                         </div>
 
                         <div class="form-group">
                             <label for="price">Percentage</label>
                             <input type="number" class="form-control" name="percentage" id="percentage"
-                                placeholder="percentage">
+                                placeholder="Percentage">
+                            <span id="percentage-error" class="error-message"></span>
                         </div>
 
                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
@@ -42,5 +54,46 @@
             </div>
         </div>
 
+
+        <script>
+            function validateForm() {
+                // Reset error messages
+                document.getElementById('name-error').innerHTML = '';
+                document.getElementById('startingDate-error').innerHTML = '';
+                document.getElementById('expiryDate-error').innerHTML = '';
+                document.getElementById('percentage-error').innerHTML = '';
+
+                // Validate Name
+                var name = document.getElementById('offer-name').value;
+                if (name.trim() === '') {
+                    document.getElementById('name-error').innerHTML = 'Name is required';
+                    return false;
+                }
+
+                // Validate Starting Date
+                var startingDate = document.getElementById('starting-Date').value;
+                if (startingDate.trim() === '') {
+                    document.getElementById('startingDate-error').innerHTML = 'Starting Date is required';
+                    return false;
+                }
+
+                // Validate Expiry Date
+                var expiryDate = document.getElementById('expiry-Date').value;
+                if (expiryDate.trim() === '') {
+                    document.getElementById('expiryDate-error').innerHTML = 'Expiry Date is required';
+                    return false;
+                }
+
+                // Validate Percentage
+                var percentage = document.getElementById('percentage').value;
+                if (percentage.trim() === '' || parseFloat(percentage) < 0) {
+                    document.getElementById('percentage-error').innerHTML = 'Percentage must be a non-negative number';
+                    return false;
+                }
+
+                // Form is valid
+                return true;
+            }
+        </script>
 
         <%- include('../layouts/adminLayout/footer.ejs') -%>

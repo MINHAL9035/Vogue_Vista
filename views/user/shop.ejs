@@ -1,6 +1,6 @@
 <%- include('../layouts/userLayout/header.ejs') -%>
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="images/icons/favicon.png" />
+    <link rel="icon" type="image/png" href="images/icons/logoVV.png" />
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
@@ -196,7 +196,7 @@
                                                     class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                                     <%=products[i].name%>
                                                 </a>
-                                                <span class="stext-105 cl3" >
+                                                <span class="stext-105 cl3">
                                                     <% if (products[i].offer || products[i].category.offer) { %>
                                                         <span style="text-decoration: line-through; color: red;">
                                                             ₹ <%= products[i].price %>
@@ -204,12 +204,12 @@
                                                         <span style="color: green;">
                                                             <b>
                                                                 <%= products[i].offer ? products[i].offer.percentage :
-                                                                    products[i].category.offer.percentage %> off
+                                                                    products[i].category.offer.percentage %>%off
                                                             </b>
                                                         </span>
                                                         <% } else { %>
-                                                          <b> ₹ <%= products[i].price %></b> 
-                                                                <% } %>
+                                                            <b> ₹ <%= products[i].price %></b>
+                                                            <% } %>
                                                 </span>
 
                                             </div>

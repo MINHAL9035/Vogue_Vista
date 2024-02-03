@@ -5,9 +5,6 @@
   <title>Login</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-  <!-- temp -->
-
   <!--===============================================================================================-->
   <link rel="icon" type="image/png" href="images/icons/logoVV.png" />
   <!--===============================================================================================-->
@@ -34,6 +31,7 @@
   <link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css" />
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="css/util.css" />
   <link rel="stylesheet" type="text/css" href="css/main.css" />
@@ -63,6 +61,19 @@
       transition: .3s all ease;
       color: #0800f7;
     }
+
+    .password-container {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
 
     .error-message {
       color: red;
@@ -180,6 +191,25 @@
         <li>
           <a href="/contact">Contact</a>
         </li>
+        <li class="dropdown">
+          <a class="menu-link" id="login" href="#" style="color: white;">
+            <%= locals.user ? user.username : "Profile" %>
+          </a>
+          <ul class="dropdown-content">
+            <li>
+              <a class="menu-link" href="/userProfile">User Profile</a>
+            </li>
+            <% if (locals.user) { %>
+              <li>
+                <a class="menu-link" href="/logout">Logout</a>
+              </li>
+              <% } else { %>
+                <li>
+                  <a class="menu-link" href="/login">Login</a>
+                </li>
+                <% } %>
+          </ul>
+        </li>
       </ul>
     </div>
 
@@ -222,11 +252,16 @@
               </div>
               <form method="post" class="signin-form" onsubmit="return validateForm()">
                 <div class="form-group mb-3">
-                  <input type="email" class="form-control" placeholder="Email" name="email" id="email" value="<%= locals.email%>">
+                  <input type="email" class="form-control" placeholder="Email" name="email" id="email"
+                    value="<%= locals.email%>">
                   <span class="error-message" id="email-error"></span>
                 </div>
                 <div class="form-group mb-3">
-                  <input type="password" class="form-control" placeholder="Password" name="password" id="password" value="<%= locals.password%>">
+                  <div class="password-container">
+                    <input type="password" class="form-control" placeholder="Password" name="password" id="password"
+                      value="<%= locals.password%>">
+                    <i class="toggle-password fas fa-eye-slash" onclick="togglePassword('password')"></i>
+                  </div>
                   <span class="error-message" id="password-error"></span>
                 </div>
                 <div class="form-group">
@@ -236,12 +271,13 @@
                 </div>
                 <span><a href="/loginOtp">Login with Otp</a></span>
               </form>
+
               <span> <a href="/forget">Forgot Password</a></span>
               <% if (typeof message !=='undefined' ) { %>
                 <h6 style="color: red;">
-                    <%= message %>
+                  <%= message %>
                 </h6>
-                <% } %>
+                         <% } %>
                   <p class="text-center">
                     Not a member? <a href="/signup">Sign Up</a>
                   </p>
@@ -288,6 +324,24 @@
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+      function togglePassword(inputId) {
+        var passwordInput = document.getElementById(inputId);
+        var eyeIcon = document.querySelector(".toggle-password");
+
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          eyeIcon.classList.remove("fa-eye-slash");
+          eyeIcon.classList.add("fa-eye");
+        } else {
+          passwordInput.type = "password";
+          eyeIcon.classList.remove("fa-eye");
+          eyeIcon.classList.add("fa-eye-slash");
+        }
+      }
+    </script>
+
+
 </body>
 
 </html>

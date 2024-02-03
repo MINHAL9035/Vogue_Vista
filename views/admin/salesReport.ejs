@@ -180,19 +180,18 @@
                             .filter((item) => item.ordered_status === "delivered")
                             .map((item) => `
                 <tr>
-                    <tr>
-          <td>${order.user[0].email}</td>
-          <td>${order.user[0].mobileNumber}</td>
-          <td>${order.delivery_address}</td>
-          <td>${order.order_id}</td>
-          <td>${moment(order.date).format('DD/MM/YYYY')}</td>
-          <td>${order.payment}</td>
-          <td>${(item.price * item.quantity) - item.discountPerItem}</td>
-          <td>${item.ordered_status}</td>
-          <td>${item.quantity}</td>
-          <td>${item.product.name}</td>
-        </tr>`
-                            ).join("")
+                     <td>${order.user[0].email}</td>
+                     <td>${order.user[0].mobileNumber}</td>
+                     <td>${order.delivery_address}</td>
+                     <td>${order.order_id}</td>
+                     <td>${moment(order.date).format('DD/MM/YYYY')}</td>
+                     <td>${order.payment}</td>
+                     <td>${(item.price * item.quantity) - item.discountPerItem}</td>
+                     <td>${item.ordered_status}</td>
+                     <td>${item.quantity}</td>
+                     <td>${item.product.name}</td>
+                 </tr>`)
+                            .join("")
                     })
                     .join("")
                 const tableHeader = `
@@ -207,7 +206,7 @@
             <th>Status</th>
             <th>Qty</th>
             <th>Product Name</th>
-            </tr>`
+        </tr>`
 
                 const reportHeader = document.getElementById("reportHeader")
                 reportHeader.innerHTML = tableHeader
@@ -239,14 +238,17 @@
                 const table = document.getElementById(divName);
                 const rows = table.getElementsByTagName('tr');
 
-                let csvContent = "data:text/csv;charset=utf-8";
+                let csvContent = "\uFEFF";
 
-                for (const row of rows) {
-                    const cells = row.getElementsByTagName('td');
-                    const cellValues = [];
-                    for (const cell of cells) {
-                        cellValues.push(cell.textContent);
-                    }
+                // Adding table headers
+                const headerCells = table.querySelectorAll('thead th');
+                const headerValues = Array.from(headerCells).map(header => header.textContent.trim());
+                csvContent += headerValues.join(',') + '\n';
+
+                // Adding table data
+                for (let i = 1; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName('td');
+                    const cellValues = Array.from(cells).map(cell => cell.textContent.trim());
                     csvContent += cellValues.join(',') + '\n';
                 }
 
@@ -254,12 +256,10 @@
                 const link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
                 link.setAttribute('download', 'data.csv');
-
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
             }
-
         </script>
 
         <%- include('../layouts/adminLayout/footer.ejs') -%>

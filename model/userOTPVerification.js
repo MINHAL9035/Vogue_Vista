@@ -16,8 +16,6 @@ const userOTPVerificationSchema = new mongoose.Schema({
   },
 });
 
-userOTPVerificationSchema.index({ createdAt: 1 }, { expireAfterSeconds: 10 });
-
 module.exports = mongoose.model(
   "userOTPVerification",
   userOTPVerificationSchema

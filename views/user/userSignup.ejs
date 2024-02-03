@@ -31,6 +31,7 @@
   <link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css" />
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="css/util.css" />
   <link rel="stylesheet" type="text/css" href="css/main.css" />
@@ -59,7 +60,6 @@
       transition: .3s all ease;
       color: #0400ff;
     }
-
     .error-message {
       color: red;
       font-size: small;
@@ -182,7 +182,7 @@
           <a href="/contact">Contact</a>
         </li>
         <li class="dropdown">
-          <a class="menu-link" id="login" href="#">
+          <a class="menu-link" id="login" href="#" style="color: white;">
             <%= locals.user ? user.username : "Profile" %>
           </a>
           <ul class="dropdown-content">
@@ -257,8 +257,15 @@
                   <span class="error-message" id="mno-error"></span>
                 </div>
                 <div class="form-group mb-3">
-                  <input type="password" class="form-control" placeholder="Password" name="password" id="password"
-                    value="<%= locals.password%>">
+                  <div class="input-group">
+                    <input type="password" class="form-control" placeholder="Password" name="password" id="password"
+                      value="<%= locals.password%>">
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                        <i class="toggle-password fas fa-eye-slash" onclick="togglePassword('password')"></i>
+                      </span>
+                    </div>
+                  </div>
                   <span class="error-message" id="password-error"></span>
                 </div>
                 <div class="form-group mb-3">
@@ -273,10 +280,10 @@
                 </div>
               </form>
               <% if (typeof message !=='undefined' ) { %>
-                <h6 style="color: red;">
+                <h6 style="color: red; font-family: 'Times New Roman', Times, serif;">
                   <%= message %>
                 </h6>
-                         <% } %>
+                <%}%>
                   <p class="text-center">
                     Already a Member? <a href="/login">Login</a>
                   </p>
@@ -324,6 +331,22 @@
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+      function togglePassword(inputId) {
+        var passwordInput = document.getElementById(inputId);
+        var eyeIcon = document.querySelector('.toggle-password i');
+
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          eyeIcon.classList.remove('fa-eye-slash');
+          eyeIcon.classList.add('fa-eye');
+        } else {
+          passwordInput.type = 'password';
+          eyeIcon.classList.remove('fa-eye');
+          eyeIcon.classList.add('fa-eye-slash');
+        }
+      }
+    </script>
 </body>
 
 </html>

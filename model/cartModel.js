@@ -25,6 +25,9 @@ const cartSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
+      offerPercentage: {
+        type: Number
+      },
       status: {
         type: String,
         default: "placed",

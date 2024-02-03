@@ -52,9 +52,6 @@ const verifySignup = async (req, res) => {
         { mobileNumber: mobileNumber },
       ],
     });
-
-
-
     if (existingUser) {
       const message = 'User credentials already used'
       return res.render('userSignup', { message, username, email, mobileNumber, password, confirmPassword })
@@ -102,6 +99,8 @@ const sendOTPVerificationEmail = async ({ email }, res) => {
 
     const hashedOtp = await bcrypt.hash(otp, 10);
 
+    const expirationTimestamp = new Date(new Date().getTime() + 1 * 60 * 1000)
+
     const mailOptions = {
       from: process.env.email_user,
       to: email,
@@ -124,7 +123,7 @@ const sendOTPVerificationEmail = async ({ email }, res) => {
       email,
       otp: hashedOtp,
       createdAt: new Date(),
-      expiresAt: 1 * 60 * 100
+      expiresAt: expirationTimestamp
     });
 
     // save otp record
@@ -144,6 +143,7 @@ const loadOtp = async (req, res) => {
   try {
     const email = req.query.email;
 
+
     res.render("otp", { email: email });
   } catch (error) {
     console.log(error);
@@ -156,24 +156,16 @@ const verifyOtp = async (req, res) => {
   try {
     const email = req.body.email;
     const otp = req.body.one + req.body.two + req.body.three + req.body.four;
-
-    // if (!email) {
-    //   req.flash('message', 'please do the login/signup procedure')
-    //   return res.redirect('/Otp')
-    // }
+    console.log("my body otp", otp);
 
     const user = await userOTPVerification.findOne({ email });
-    console.log("user:", user);
 
-    if (!user) {
-      res.render("otp", { message: "user not found" });
+    // Check if the OTP has expired
+    const currentTime = new Date();
+    if (!user || currentTime > user.expiresAt) {
+      res.render("otp", { message: "user not found or OTP has expired. Please request a new OTP." });
+      return;
     }
-
-    // const currentTimestamp = new Date();
-    // if (user.expiresAt && currentTimestamp > user.expiresAt) {
-    //   await userOTPVerification.deleteOne({ email });
-    //   return res.render("otp", { message: "OTP expired" });
-    // }
 
     const { otp: hashedOtp } = user;
     const validOtp = await bcrypt.compare(otp, hashedOtp);
@@ -186,13 +178,14 @@ const verifyOtp = async (req, res) => {
       req.session.user_id = userData._id;
       res.redirect("/home");
     } else {
-      req.flash("message", "otp is inncorrect");
+      req.flash("message", "OTP is incorrect");
       res.redirect(`/Otp?email=${email}`);
     }
   } catch (error) {
     console.log(error);
   }
 };
+
 
 // =================load login===========================
 
@@ -264,6 +257,30 @@ const verifyLoginOtp = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
+
+// ====================resend otp====================
+const resendOtp = async (req, res) => {
+  try {
+    const email = req.body.email;
+
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    const user = await User.findOne({ email: email.trim().toLowerCase() });
+    
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await userOTPVerification.deleteOne({ email: email });
+    await sendOTPVerificationEmail(user, res);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 // ==============load home=============================
 
@@ -383,11 +400,28 @@ const loadProduct = async (req, res) => {
         },
       });
 
-    res.render("productDetails", { products: product });
+    let discountedPrice = 0;
+    let discountPercentage = 0;
+
+    if (product.offer) {
+      discountedPrice = product.price - (product.price * product.offer.percentage / 100);
+      discountPercentage = product.offer.percentage;
+    } else if (product.category && product.category.offer) {
+      discountedPrice = product.price - (product.price * product.category.offer.percentage / 100);
+      discountPercentage = product.category.offer.percentage;
+    }
+
+    res.render("productDetails", {
+      products: product,
+      discountedPrice: discountedPrice.toFixed(0),
+      discountPercentage: discountPercentage,
+    });
   } catch (error) {
     console.log(error);
+    res.status(500).send("Internal Server Error");
   }
 };
+
 
 
 const loadAbout = async (req, res) => {
@@ -728,6 +762,7 @@ module.exports = {
   verifyLogin,
   loginOtp,
   verifyLoginOtp,
+  resendOtp,
   loadhome,
   logout,
   loadShop,

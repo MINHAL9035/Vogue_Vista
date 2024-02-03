@@ -146,6 +146,7 @@
                                     <table class="table table-bordered table-contextual" id="cati">
                                         <thead>
                                             <tr>
+                                                <th>NO</th>
                                                 <th>Name</th>
                                                 <th>Description</th>
                                                 <th>offers</th>
@@ -158,6 +159,9 @@
                                             <% if(categ.length> 0) { %>
                                                 <% for(let i=0;i<categ.length;i++){ %>
                                                     <tr>
+                                                        <td>
+                                                            <%= i + 1 %>
+                                                        </td>
                                                         <td>
                                                             <%= categ[i].name%>
                                                         </td>

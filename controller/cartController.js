@@ -6,14 +6,53 @@ const { productStatus } = require("./productController");
 const loadCart = async (req, res) => {
   try {
     const userData = req.session.user_id;
-    const cartDetails = await cart.findOne({ user_id: userData }).populate({ path: "items.product_id", model: "product" });
+    const cartDetails = await cart.findOne({ user_id: userData })
+      .populate({
+        path: "items.product_id",
+        model: "product",
+        populate: [
+          {
+            path: "offer"
+          },
+          {
+            path: "category",
+            populate: {
+              path: "offer"
+            }
+          }
+        ]
+      });
+
     const user = await User.findOne({ _id: userData });
 
-    let subTotal = 0;
+    let total = 0
+    let discountAmnt = 0
+    let orginalAmt = 0
+
+
     if (cartDetails) {
-      subTotal = cartDetails.items.reduce((total, cartItem) => total + cartItem.price * cartItem.quantity, 0);
+      cartDetails.items.forEach((product) => {
+        let itemPrice = product.product_id.price;
+        orginalAmt += itemPrice * product.quantity
+
+        // check if there is offer on product
+        if (product.product_id.offer) {
+          const { percentage } = product.product_id.offer
+          itemPrice += (itemPrice * percentage) / 100
+        }
+
+        // Check if there's an offer on the category
+        else if (product.product_id.category.offer) {
+          const { percentage } = product.product_id.category.offer;
+          itemPrice -= (itemPrice * percentage) / 100;
+        }
+
+        total += itemPrice * product.quantity
+        discountAmnt = orginalAmt - total
+
+      })
     }
-    res.render("cart", { cartDetails, user, subTotal });
+    res.render("cart", { cartDetails, user, subTotal: orginalAmt, total, discountAmnt });
 
   } catch (error) {
     console.log(error);
@@ -28,7 +67,18 @@ const addCart = async (req, res) => {
     if (!user_id) {
       res.redirect("/login");
     } else {
-      const productData = await product.findOne({ _id: productId });
+      const productData = await product.findOne({ _id: productId })
+        .populate({
+          path: "offer",
+          match: { startingDate: { $lte: new Date() }, expiryDate: { $gte: new Date() } }
+        })
+        .populate({
+          path: "category",
+          populate: {
+            path: "offer",
+            match: { startingDate: { $lte: new Date() }, expiryDate: { $gte: new Date() } }
+          }
+        })
       const cartData = await cart.findOne({ user_id: user_id });
 
       if (cartData) {
@@ -37,16 +87,41 @@ const addCart = async (req, res) => {
         );
 
         if (existProduct) {
+
+          let itemPrice = productData.price
+
+          if (productData.offer) {
+            const { percentage } = productData.offer
+            itemPrice -= (itemPrice * percentage) / 100
+          }
+          else if (productData.category.offer) {
+            const { percentage } = productData.category.offer
+            itemPrice -= (itemPrice * percentage) / 100
+          }
+
+
           await cart.findOneAndUpdate(
             { user_id: user_id, "items.product_id": productId },
             {
               $inc: {
                 "items.$.quantity": quantity,
-                "items.$.total_price": quantity * existProduct.price,
+                "items.$.total_price": quantity * productData.price,
               },
             }
           );
         } else {
+
+          let itemPrice = productData.price
+
+          if (productData.offer) {
+            const { percentage } = productData.offer
+            itemPrice -= (itemPrice * percentage) / 100
+          }
+          else if (productData.category.offer) {
+            const { percentage } = productData.category.offer
+            itemPrice -= (itemPrice * percentage) / 100
+          }
+
           // add a new product to cart
           await cart.findOneAndUpdate(
             { user_id: user_id },
@@ -57,12 +132,32 @@ const addCart = async (req, res) => {
                   quantity: quantity,
                   price: productData.price,
                   total_price: quantity * productData.price,
+                  offerPercentage: productData.offer
+                    ? productData.offer.percentage
+                    : productData.category && productData.category.offer
+                      ? productData.category.offer.percentage
+                      : 0,
                 },
               },
             }
           );
         }
       } else {
+
+        let itemPrice = productData.price
+
+        if (productData.offer) {
+          const { percentage } = productData.offer
+          itemPrice -= (itemPrice * percentage) / 100
+        }
+        else if (productData.category.offer) {
+          const { percentage } = productData.category.offer
+          itemPrice -= (itemPrice * percentage) / 100
+        }
+
+
+
+
         // create a new cart and add product
         const newCart = new cart({
           user_id: user_id,
@@ -72,6 +167,11 @@ const addCart = async (req, res) => {
               quantity: quantity,
               price: productData.price,
               total_price: quantity * productData.price,
+              offerPercentage: productData.offer
+                ? productData.offer.percentage
+                : productData.category && productData.category.offer
+                  ? productData.category.offer.percentage
+                  : 0,
             },
           ],
         });

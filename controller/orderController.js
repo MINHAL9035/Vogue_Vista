@@ -47,7 +47,7 @@ const loadSingleOrderDetails = async (req, res) => {
 
 const loadAdminOrders = async (req, res) => {
   try {
-    const orders = await orderModel.find().populate("items.product_id").populate('user_id').sort({ _id: 1 });
+    const orders = await orderModel.find().populate("items.product_id").populate('user_id').sort({ _id: -1 });
     res.render("orders", { orders, moment });
   } catch (error) {
     console.log(error);

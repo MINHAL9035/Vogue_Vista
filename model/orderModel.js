@@ -41,7 +41,6 @@ const orderSchema = mongoose.Schema({
   },
   couponCode: {
     type: String
-
   },
   items: [
     {
@@ -68,7 +67,7 @@ const orderSchema = mongoose.Schema({
       },
       discountPerItem: {
         type: Number,
-        default:0
+        default: 0
       },
       cancellationReason: {
         type: String,

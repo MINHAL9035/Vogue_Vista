@@ -5,75 +5,96 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Forgot Password</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-
-    .container {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    button {
-      background-color: #4caf50;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-  </style>
+  <!-- =========================================================================================== -->
+  <link rel="icon" type="image/png" href="images/icons/logoVV.png" />
+  <!--===============================================================================================-->
+  <link rel="icon" type="image/png" href="images/icons/logoVV.png" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="vendor/slick/slick.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="css/util.css" />
+  <link rel="stylesheet" type="text/css" href="css/main.css" />
+  <link rel="stylesheet" href="css/forgetPass.css">
+  <!-- ============================================================================================== -->
 </head>
 
 <body>
-  <div class="container">
-    <h2>Forgot Password</h2>
-    <form action="" method="post">
-      <p>Please enter your email to receive a reset link.</p>
+  <%- include('../layouts/userLayout/navbar.ejs') -%>
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required />
+    <div class="custom-container">
+      <h2 class="heading">
+        <b>Forgot Password <i class="fa-solid fa-lock fa-bounce"></i></b>
+      </h2>
+      <form class="custom-form" action="" method="post">
+        <p style="color: black;">Please enter the email address you used to create your account, and we'll send you a
+          link to reset your
+          password.</p>
+        <input type="email" id="email" name="email" placeholder="Email" />
 
-      <% if( messages.message ) { %>
-        <p style="color: red">
-          <%= messages.message %>
-        </p>
-        <% } %>
+        <% if( messages.message ) { %>
+          <p style="color: red">
+            <%= messages.message %>
+          </p>
+          <% } %>
 
-          <button type="submit">Send Reset Link</button>
-    </form>
-  </div>
+            <button type="submit">Send Reset Link</button>
+      </form>
+    </div>
+    <%- include('../layouts/userLayout/page-footer.ejs') -%>
+      <!--===============================================================================================-->
+      <script src="js/preloader.js"></script>
+      <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+      <!--===============================================================================================-->
+      <script src="vendor/animsition/js/animsition.min.js"></script>
+      <!--===============================================================================================-->
+      <script src="vendor/bootstrap/js/popper.js"></script>
+      <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+      <!--===============================================================================================-->
+      <script src="vendor/select2/select2.min.js"></script>
+      <!--===============================================================================================-->
+      <script src="vendor/daterangepicker/moment.min.js"></script>
+      <script src="vendor/daterangepicker/daterangepicker.js"></script>
+      <!--===============================================================================================-->
+      <script src="vendor/slick/slick.min.js"></script>
+      <script src="js/slick-custom.js"></script>
+      <!--===============================================================================================-->
+      <script src="vendor/parallax100/parallax100.js"></script>
+      <script>
+        $('.parallax100').parallax100();
+      </script>
+      <!--===============================================================================================-->
+      <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+      <!--===============================================================================================-->
+      <script src="vendor/isotope/isotope.pkgd.min.js"></script>
+      <!--===============================================================================================-->
+      <script src="vendor/sweetalert/sweetalert.min.js"></script>
+      <!--===============================================================================================-->
+      <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+      <!--===============================================================================================-->
+      <script src="js/main.js"></script>
 </body>
 
 </html>

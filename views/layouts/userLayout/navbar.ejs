@@ -1,5 +1,5 @@
 <!-- Header -->
-<header class="header-v2">
+<header class="header-v2" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
     <!-- Header desktop -->
     <div class="container-menu-desktop trans-03">
         <div class="wrap-menu-desktop">
@@ -75,7 +75,9 @@
     <div class="wrap-header-mobile">
         <!-- Logo moblie -->
         <div class="logo-mobile">
-            <a href="#"><img src="images/icons/logo-01.png" alt="IMG-LOGO" /></a>
+            <a href="#" class="logo">
+                <img src="images/icons/newlogo.png" alt="IMG-LOGO" />
+            </a>
         </div>
 
         <!-- Icon header -->
@@ -118,6 +120,25 @@
             <li>
                 <a class="menu-link" href="/contact">Contact</a>
             </li>
+            <li class="dropdown">
+                <a class="menu-link" id="login" href="#" style="color: white ;">
+                  <%= locals.user ? user.username : "Profile" %>
+                </a>
+                <ul class="dropdown-content">
+                  <li>
+                    <a class="menu-link" href="/userProfile">User Profile</a>
+                  </li>
+                  <% if (locals.user) { %>
+                    <li>
+                      <a class="menu-link" href="/logout">Logout</a>
+                    </li>
+                    <% } else { %>
+                      <li>
+                        <a class="menu-link" href="/login">Login</a>
+                      </li>
+                      <% } %>
+                </ul>
+              </li>
         </ul>
     </div>
 

@@ -113,52 +113,23 @@
                                     <h4 class="mtext-105 cl2 js-name-detail p-b-14">
                                         <%=products.name%>
                                     </h4>
+                                    <!-- offer  -->
                                     <div class="pricing">
-                                        <% var discount=0 %>
-                                            <% if(products.offer) {%>
-                                                <% discount=(products.price * products.offer.percentage /
-                                                    100).toFixed(0) %>
-                                                    <% } else if(products.category.offer) {%>
-                                                        <% discount=(products.price * products.category.offer.percentage
-                                                            / 100).toFixed(0);%>
-                                                            <% } %>
-                                                                <% if(products.offer){ %>
-                                                                    <p class="mb-0"><del style="color: red;">₹ <%=
-                                                                                products.price%></del>
-                                                                    </p>
-                                                                    <b>₹ <%= products.price-discount%>
-                                                                    </b>
-                                                                    <span class="badge badge" style="font-size: large; color: green;">
-                                                                        <%= products.offer.percentage%>% off
-                                                                    </span>
-                                                                    <span style="font-size: large;"
-                                                                        class="badge badge-success">
-                                                                        save ₹ <%= discount %>
-                                                                    </span>
-                                                                    <% } else if(products.category.offer) { %>
-                                                                        <p class="mb-0"><del style="color: red;">₹ <%=
-                                                                                    products.price%>
-                                                                            </del></p>
-                                                                        <b>₹ <%= products.price- discount %>
-                                                                        </b>
-                                                                        <span class="badge badge"
-                                                                            style="font-size: large;color: green;" >
-                                                                            <%= products.category.offer.percentage%>%
-                                                                                off
-                                                                        </span>
-                                                                        <span style="font-size: large;"
-                                                                            class="badge badge-success">
-                                                                            save ₹ <%= discount %>
-                                                                        </span>
-                                                                        <% }else{ %>
-                                                                            <span class="mtext-106 cl2">
-                                                                                <b> ₹ <%=products.price%></b>
-                                                                            </span>
-                                                                            <% } %>
-
-
+                                        <% if (discountedPrice> 0) { %>
+                                            <p class="mb-0"><del style="color: red;">₹ <%= products.price %></del></p>
+                                            <b>₹ <%= discountedPrice %></b>
+                                            <span class="badge badge" style="font-size: large; color: green;">
+                                                <%= discountPercentage %>% off
+                                            </span>
+                                            <span style="font-size: large;" class="badge badge-success">
+                                                save ₹ <%= products.price - discountedPrice %>
+                                            </span>
+                                            <% } else { %>
+                                                <span class="mtext-106 cl2">
+                                                    <b> ₹ <%= products.price %></b>
+                                                </span>
+                                                <% } %>
                                     </div>
-
                                     <p style="font-weight: bold;" class="stext-102 cl3 p-t-23">
                                         <%=products.description%>
                                     </p>

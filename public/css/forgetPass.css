@@ -1,0 +1,78 @@
+  .custom-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .custom-form {
+      width: 100%;
+      margin-top: 2%;
+      max-width: 400px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      background-color: #fff;
+      animation: slideIn 0.5s ease-in-out, scaleIn 0.5s ease-in-out;
+    }
+
+    .heading {
+      font-family: 'Times New Roman', Times, serif;
+      color: black;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #101010;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 70%;
+      margin-left: 35%;
+    }
+
+    button:hover {
+      background-color: #0e0e0e;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-20px);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.9);
+      }
+
+      to {
+        transform: scale(1);
+      }
+    }
