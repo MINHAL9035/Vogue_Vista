@@ -23,7 +23,7 @@ const loadOrders = async (req, res) => {
 
     res.render("orderList", { orders: data, moment, totalPages, currentPage: page });
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -39,7 +39,7 @@ const loadSingleOrderDetails = async (req, res) => {
 
     res.render("singleOrder", { order, user, moment });
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -50,7 +50,7 @@ const loadAdminOrders = async (req, res) => {
     const orders = await orderModel.find().populate("items.product_id").populate('user_id').sort({ _id: -1 });
     res.render("orders", { orders, moment });
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -96,39 +96,9 @@ const updateOrderStatus = async (req, res) => {
 
     res.json({ success: true, updatedOrder });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
+    res.redirect('/500')
   }
 };
-
-// const cancelOrder = async (req, res) => {
-//   try {
-//     const { orderId, itemId, reason, returnReason } = req.body;
-
-//     if (reason || returnReason) {
-//       const updateFields = {
-//         "items.$.ordered_status": reason ? "request_cancellation" : "request_return",
-//         "items.$.cancellationReason": reason || returnReason,
-//       };
-
-//       const updatedOrder = await orderModel.findOneAndUpdate(
-//         { _id: orderId, "items._id": itemId },
-//         { $set: updateFields },
-//         { new: true }
-//       );
-
-//       const message =
-//         reason
-//           ? "Order cancellation requested"
-//           : "Order return requested";
-
-//       res.status(200).json({ message, order: updatedOrder });
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// };
 
 const cancelOrder = async (req, res) => {
   try {
@@ -169,8 +139,8 @@ const cancelOrder = async (req, res) => {
       res.status(200).json({ message, order: updatedOrder });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.redirect('/500')
+
   }
 };
 
@@ -196,7 +166,7 @@ const loadOrderDetails = async (req, res) => {
 
 
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
 
   }
 }
@@ -240,7 +210,7 @@ const loadInvoice = async (req, res) => {
     }).send(pdfBuffer);
 
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 
 }

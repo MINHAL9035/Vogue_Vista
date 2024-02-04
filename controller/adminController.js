@@ -10,7 +10,7 @@ const adminLogin = async (req, res) => {
   try {
     res.render("adminLogin");
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -45,7 +45,7 @@ const verifyLogin = async (req, res) => {
     }
 
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -436,7 +436,7 @@ const admindash = async (req, res) => {
     });
 
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -447,7 +447,7 @@ const logout = async (req, res) => {
     req.session.admin = null;
     res.redirect("/admin/adminLogin");
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -456,7 +456,7 @@ const loadUser = async (req, res) => {
     const usersData = await User.find({ is_admin: 0 });
     res.render("userManagement", { users: usersData });
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -477,8 +477,7 @@ const updateUserStatus = async (req, res) => {
 
     res.send({ status: "success", user: updatedUser });
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
+    res.redirect('/500')
   }
 };
 
@@ -489,7 +488,7 @@ const loadCategory = async (req, res) => {
     const avialableOffers = await offer.find({ expiryDate: { $gte: new Date() } })
     res.render("category", { categ: categData, offers: avialableOffers, moment });
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -497,7 +496,7 @@ const loadAddCateg = async (req, res) => {
   try {
     res.render("addCateg");
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -520,7 +519,7 @@ const addCateg = async (req, res) => {
       res.redirect("/admin/categ");
     }
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -542,8 +541,8 @@ const categoryStatus = async (req, res) => {
 
     res.json({ status: "success", categories: updatedCategory });
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Internal Server Error");
+    res.redirect('/500')
+
   }
 };
 
@@ -560,7 +559,7 @@ const loadEditCateg = async (req, res) => {
 
     res.render("editCateg", { categories: data });
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -584,7 +583,7 @@ const editCateg = async (req, res) => {
     );
     res.redirect("/admin/categ");
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -608,7 +607,7 @@ const salesReport = async (req, res) => {
     })
 
   } catch (error) {
-    console.error(error);
+    res.redirect('/500')
 
   }
 }
@@ -668,7 +667,7 @@ const datePicker = async (req, res) => {
 
     res.status(200).json({ selectedDate: selectedDate });
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
 
   }
 

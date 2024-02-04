@@ -18,7 +18,7 @@ const securePassword = async (password) => {
     const passwordHash = await bcrypt.hash(password, 10);
     return passwordHash;
   } catch (error) {
-    console.log(error.message);
+    res.redirect('/500')
   }
 };
 
@@ -28,7 +28,7 @@ const loadsignup = async (req, res) => {
   try {
     res.render("userSignup");
   } catch (err) {
-    console.log(err);
+    res.redirect('/500')
   }
 };
 
@@ -73,9 +73,7 @@ const verifySignup = async (req, res) => {
 
     sendOTPVerificationEmail(newUser, res);
   } catch (error) {
-    console.log(error);
-    req.flash("message", "Internal server Error");
-    res.redirect("/signup");
+    res.redirect('/500')
   }
 };
 
@@ -132,8 +130,7 @@ const sendOTPVerificationEmail = async ({ email }, res) => {
 
     res.redirect(`/Otp?email=${email}`);
   } catch (error) {
-    console.error(error);
-    return res.status(500).send("Internal Server Error");
+    res.redirect('/500')
   }
 };
 
@@ -146,7 +143,7 @@ const loadOtp = async (req, res) => {
 
     res.render("otp", { email: email });
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -182,7 +179,7 @@ const verifyOtp = async (req, res) => {
       res.redirect(`/Otp?email=${email}`);
     }
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -193,7 +190,7 @@ const loadlogin = async (req, res) => {
   try {
     res.render("userLogin");
   } catch (err) {
-    console.log(err);
+    res.redirect('/500')
   }
 };
 
@@ -226,7 +223,7 @@ const verifyLogin = async (req, res) => {
     res.redirect("/home");
 
   } catch (error) {
-    console.error(error);
+    res.redirect('/500')
   }
 };
 
@@ -236,7 +233,7 @@ const loginOtp = async (req, res) => {
   try {
     res.render("loginOtp");
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -253,8 +250,7 @@ const verifyLoginOtp = async (req, res) => {
     }
     sendOTPVerificationEmail(user, res);
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
+    res.redirect('/500')
   }
 };
 
@@ -268,7 +264,7 @@ const resendOtp = async (req, res) => {
     }
 
     const user = await User.findOne({ email: email.trim().toLowerCase() });
-    
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -276,8 +272,7 @@ const resendOtp = async (req, res) => {
     await userOTPVerification.deleteOne({ email: email });
     await sendOTPVerificationEmail(user, res);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.redirect('/500')
   }
 };
 
@@ -290,7 +285,7 @@ const loadhome = async (req, res) => {
     const product = await Products.find({})
     res.render("home", { user: userData, product });
   } catch (error) {
-    console.error(error);
+    res.redirect('/500')
 
   }
 };
@@ -302,7 +297,7 @@ const logout = async (req, res) => {
     req.session.user_id = null
     res.redirect("/");
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -371,10 +366,10 @@ const loadShop = async (req, res) => {
       sort,
       categId,
       categName: categName ? categName.name : "All Products",
+      selectedCategoryId: categId,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).send('Internal Server Error');
+    res.redirect('/500')
   }
 };
 
@@ -417,8 +412,7 @@ const loadProduct = async (req, res) => {
       discountPercentage: discountPercentage,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Internal Server Error");
+    res.redirect('/500')
   }
 };
 
@@ -428,7 +422,7 @@ const loadAbout = async (req, res) => {
   try {
     res.render("about");
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -437,7 +431,7 @@ const loadContact = async (req, res) => {
   try {
     res.render("contact");
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -447,7 +441,7 @@ const loadUserProfile = async (req, res) => {
     const userData = await User.findOne({ _id: userId });
     res.render("userProfile", { user: userData });
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -458,7 +452,7 @@ const loadUpdateProfile = async (req, res) => {
     const userData = await User.findOne({ _id: userId });
     res.render("userEditProfile", { user: userData });
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -480,8 +474,7 @@ const updateUserProfile = async (req, res) => {
     }
     res.redirect("/userProfile");
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.redirect('/500')
   }
 };
 
@@ -491,7 +484,7 @@ const loadUserAddress = async (req, res) => {
     const user = await User.findOne({ _id: user_id });
     res.render("userAddress", { user });
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -526,10 +519,10 @@ const userprofileAddAddress = async (req, res) => {
 
       res.redirect("/userAddress");
     } catch (error) {
-      console.log(error);
+      res.redirect('/500')
     }
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -554,7 +547,7 @@ const editAddress = async (req, res) => {
     console.log(updatedUser, "here is your updated user");
     res.json({ edited: true });
   } catch (err) {
-    console.log(err.message);
+    res.redirect('/500')
   }
 };
 
@@ -565,7 +558,7 @@ const deleteAddress = async (req, res) => {
     await User.updateOne({ _id: userId }, { $pull: { address: { _id: Addid } } });
     res.json({ deleted: true });
   } catch (err) {
-    console.log(err.message);
+    res.redirect('/500')
   }
 };
 
@@ -573,7 +566,7 @@ const loadChangePassword = async (req, res) => {
   try {
     res.render("changePassword");
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -607,7 +600,7 @@ const changePassword = async (req, res) => {
     res.redirect("/userProfile");
 
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -615,7 +608,7 @@ const loadForgetPassword = async (req, res) => {
   try {
     res.render("forget");
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -638,7 +631,7 @@ const verifyForget = async (req, res) => {
     res.redirect("/forget");
 
   } catch (error) {
-    console.log(error.message);
+    res.redirect('/500')
   }
 };
 
@@ -681,7 +674,7 @@ const sendResetLink = async (username, email, token) => {
     await transporter.sendMail(mailOptions);
 
   } catch (error) {
-    console.log(error.message);
+    res.redirect('/500')
   }
 };
 
@@ -697,7 +690,7 @@ const loadResetForgetPass = async (req, res) => {
     res.render("resetPassword", { user_id: tokenData._id });
 
   } catch (error) {
-    console.log(error.message);
+    res.redirect('/500')
   }
 };
 
@@ -726,7 +719,7 @@ const verifyForgetPass = async (req, res) => {
 
     res.redirect("/login");
   } catch (error) {
-    console.log(error.message);
+    res.redirect('/500')
   }
 };
 
@@ -736,7 +729,7 @@ const loadBlockedUser = async (req, res) => {
     res.render('blocked-user')
 
   } catch (error) {
-    console.error(error)
+    res.redirect('/500')
 
   }
 }
@@ -747,7 +740,7 @@ const loadWallet = async (req, res) => {
     res.render('wallet', { user, moment })
 
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
 
   }
 }

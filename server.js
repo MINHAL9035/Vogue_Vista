@@ -39,11 +39,18 @@ const adminRoute = require("./routes/adminRouter");
 app.use("/admin", adminRoute);
 
 app.set('view engine', 'ejs')
-app.set('views', "./views")
+app.set('views', "./views/user")
+
+
+app.get('/500', (req, res) => {
+  res.status(500).render('500')
+})
 
 app.get('*', (req, res) => {
-  res.status(404).render('error')
+  res.status(404).render('404')
 })
+
+
 
 app.listen(port, () => {
   console.log(`server is running on http://localhost:${port}`);

@@ -5,7 +5,7 @@ const path = require("path");
 const fs = require("fs");
 const category = require("../model/category");
 const offer = require("../model/offerModel");
-const moment=require('moment')
+const moment = require('moment')
 
 const loadProducts = async (req, res) => {
   try {
@@ -13,7 +13,7 @@ const loadProducts = async (req, res) => {
     const avialableOffers = await offer.find({ expiryDate: { $gte: new Date() } })
     res.render("products", { products, offers: avialableOffers, moment });
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -22,7 +22,7 @@ const loadAddProduct = async (req, res) => {
     const category = await Category.find({ is_listed: true });
     res.render("addProduct", { category });
   } catch (error) {
-    console.error(error);
+    res.redirect('/500')
   }
 };
 
@@ -66,8 +66,7 @@ const addProduct = async (req, res) => {
     res.redirect("/admin/product");
 
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Internal Server Error");
+    res.redirect('/500')
   }
 };
 
@@ -89,8 +88,7 @@ const productStatus = async (req, res) => {
 
     res.json({ status: "success", products: updatedProduct });
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Internal Server Error");
+    res.redirect('/500')
   }
 };
 
@@ -106,8 +104,7 @@ const loadEditProduct = async (req, res) => {
     }
     res.render("editProduct", { products: productData, categ: categories });
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Internal Server Error");
+    res.redirect('/500')
   }
 };
 
@@ -158,8 +155,7 @@ const editProduct = async (req, res) => {
     res.redirect("/admin/product");
 
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Internal Server Error");
+    res.redirect('/500')
   }
 
 };
@@ -176,8 +172,7 @@ const deleteImg = async (req, res) => {
 
     res.send({ success: true });
   } catch (error) {
-    console.error(error.message);
-    res.status(500).send({ success: false, error: error.message });
+    res.redirect('/500')
   }
 };
 

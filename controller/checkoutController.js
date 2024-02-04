@@ -28,7 +28,7 @@ const loadCheckout = async (req, res) => {
     res.render("checkout", { cartDetails, user, subTotal, coupon: couponData });
 
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -62,7 +62,7 @@ const addAddress = async (req, res) => {
       res.status(400).json({ success: false, message: "User not found" });
     }
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -80,123 +80,9 @@ const loadPlaceOrder = async (req, res) => {
 
     res.render("order", { user, orders, moment, coupons, discountAmount });
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
-
-
-// const orderPlacement = async (req, res) => {
-//   try {
-//     const date = new Date();
-//     const user_id = req.session.user_id;
-//     const { address, paymentMethod } = req.body;
-//     const cartData = await cart.findOne({ user_id: user_id });
-//     const userData = await User.findById(user_id);
-//     const cartProducts = cartData.items;
-//     const status = paymentMethod === "COD" || paymentMethod==="Wallet" ? "placed" : "pending";
-//     const delivery = new Date(date.getTime() + 10 * 24 * 60 * 60 * 1000);
-//     const deliveryDate = delivery.toLocaleString("en-US", { year: "numeric", month: "short", day: "2-digit", }).replace(/\//g, "-");
-//     const totalPrice = cartData.items.reduce((total, item) => total + item.total_price, 0);
-//     let discountPerItem;
-//     const randomNum = Math.floor(10000 + Math.random() * 90000);
-//     const orderRand = "MFTS" + randomNum;
-//     const code = req.body.couponCode;
-
-//     const couponDetails = await coupon.findOne({ couponCode: code })
-
-//     // User limit decreasing
-//     if (code) {
-//       await coupon.updateOne({ couponCode: code }, { $inc: { availability: -1 }, $push: { userUsed: { user_id: mongoose.Types.ObjectId.createFromHexString(user_id) } } });
-
-//     }
-
-//     if (!userData) {
-//       return res.status(404).json({ success: false, message: 'User not found.' });
-//     }
-
-//     // Calculate total amount after coupon (if applied)
-//     let totalAfterCoupon = totalPrice;  
-
-//     if (code) {
-//       const coupons = await coupon.findOne({ couponCode: code });
-//       const disAmount = coupons.discountAmount;
-//       totalAfterCoupon -= disAmount;
-//       const numberOfProducts = cartData.items.length
-//       discountPerItem = disAmount / numberOfProducts
-
-//     }
-
-//     const updatedItems = cartProducts.map(item => {
-//       const updatedItem = { ...item, ordered_status: status, discountPerItem: discountPerItem }
-//       return updatedItem
-//     })
-
-//     // Create order
-//     const orderData = new orderModel({
-//       user_id: user_id,
-//       order_id: orderRand,
-//       delivery_address: address,
-//       user_name: userData.username,
-//       total_amount: totalAfterCoupon,
-//       date: Date.now(),
-//       expected_delivery: deliveryDate,
-//       payment: paymentMethod,
-//       items: updatedItems,
-//       discount: couponDetails ? couponDetails.discountAmount : 0,
-//       couponCode: code || null,
-//     });
-
-//     let orders = await orderData.save();
-//     const orderId = orders._id;
-
-//     // check quantity
-//     for (const cartItem of cartProducts) {
-//       const productId = cartItem.product_id;
-//       const Product = await product.findById(productId);
-
-//       if (!Product || cartItem.quantity > Product.quantity) {
-//         return res.json({ outOfStock: true })
-//       }
-//     }
-
-//     // ============cash on delivery====================
-//     if (orders.items.some(item => item.ordered_status === 'placed')) {
-//       await cart.deleteOne({ user_id: user_id });
-//       for (let i = 0; i < cartData.items.length; i++) {
-//         const productId = cartProducts[i].product_id;
-//         const count = cartProducts[i].quantity;
-
-//         await product.updateOne(
-//           { _id: productId },
-//           { $inc: { quantity: -count } }
-//         );
-//       }
-
-//       return res.json({ success: true, params: orderId });
-
-
-
-//     } else {
-//       // Razorpay
-//       const total = totalAfterCoupon; // Use the adjusted total amount
-//       console.log("razorpay total:", total);
-
-//       var options = {
-//         amount: total * 100,
-//         currency: "INR",
-//         receipt: "" + orderId,
-//       };
-
-//       instance.orders.create(options, function (err, order) {
-//         console.log(order);
-//         return res.json({ success: false, order: order });
-//       });
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };h
-
 
 const orderPlacement = async (req, res) => {
   try {
@@ -316,7 +202,7 @@ const orderPlacement = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -376,7 +262,7 @@ const verifyPayment = async (req, res) => {
     }
 
   } catch (error) {
-    console.error(error)
+    res.redirect('/500')
 
   }
 }

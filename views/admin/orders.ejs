@@ -1,161 +1,158 @@
 <%- include('../layouts/adminLayout/header.ejs') -%>
-<%- include('../layouts/adminLayout/navbar.ejs') -%>
+    <%- include('../layouts/adminLayout/navbar.ejs') -%>
 
-
-
-            <div class="main-panel">
-                <div class="content-wrapper">
-                    <div class="col-lg-12 stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                </p>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-contextual" id="example">
-                                        <thead>
-                                            <tr>
-                                                <th>Order ID</th>
-                                                <th>Product</th>
-                                                <th>Customer</th>
-                                                <th>Total Price</th>
-                                                <th>Order Date</th>
-                                                <th>Payment Method</th>
-                                                <th>Status</th>
-                                                <th>Items</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <% orders.forEach(order=> { %>
-                                                <% if (order.items && order.items.length> 0) { %>
-                                                    <tr>
-                                                        <td rowspan="<%= order.items.length %>">
-                                                            <%= order.order_id %>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="col-lg-12 stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            </p>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-contextual" id="example">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Product</th>
+                                            <th>Customer</th>
+                                            <th>Total Price</th>
+                                            <th>Order Date</th>
+                                            <th>Payment Method</th>
+                                            <th>Status</th>
+                                            <th>Items</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% orders.forEach(order=> { %>
+                                            <% if (order.items && order.items.length> 0) { %>
+                                                <tr>
+                                                    <td rowspan="<%= order.items.length %>">
+                                                        <%= order.order_id %>
+                                                    </td>
+                                                    <% order.items.forEach((item, index)=> { %>
+                                                        <% if (index> 0) { %>
+                                                </tr>
+                                                <tr>
+                                                    <% } %>
+                                                        <td>
+                                                            <a class="itemside" href="#">
+                                                                <div class="left">
+                                                                    <img style="width: 20px;"
+                                                                        src="/sharpimages/<%= item.product_id.image[0] %>"
+                                                                        class="img-sm img-thumbnail" alt="" />
+                                                                </div>
+                                                                <div class="info">
+                                                                    <h6 class="mb-0 " style="font-size: 70%;">
+                                                                        <%= item.product_id.name %>
+                                                                    </h6>
+                                                                </div>
+                                                            </a>
                                                         </td>
-                                                        <% order.items.forEach((item, index)=> { %>
-                                                            <% if (index> 0) { %>
-                                                    </tr>
+                                                        <td>
+                                                            <%= order.user_id.username %>
+                                                        </td>
+                                                        <td>
+                                                            <%= order.total_amount %>
+                                                        </td>
+                                                        <td>
+                                                            <%= moment(order.date).format('DD/MM/YYYY') %>
+                                                        </td>
+                                                        <td>
+                                                            <%= order.payment %>
+                                                        </td>
+                                                        <td>
+                                                            <select class="form-select statusSelector"
+                                                                name="statusSelector"
+                                                                onchange="updateOrderStatus(this.value,'<%=order._id%>','<%=item._id%>')">
+                                                                <option value="placed" <%=item.ordered_status==='placed'
+                                                                    ? 'selected' : '' %>>Placed</option>
+                                                                <option value="shipped"
+                                                                    <%=item.ordered_status==='shipped' ? 'selected' : ''
+                                                                    %>>Shipped</option>
+                                                                <option value="out_for_delivery"
+                                                                    <%=item.ordered_status==='out_for_delivery'
+                                                                    ? 'selected' : '' %>>Out for Delivery</option>
+                                                                <option value="delivered"
+                                                                    <%=item.ordered_status==='delivered' ? 'selected'
+                                                                    : '' %>>Delivered</option>
+                                                                <option value="request_return"
+                                                                    <%=item.ordered_status==='request_return'
+                                                                    ? 'selected' : '' %>>request Return</option>
+                                                                <option value="returned"
+                                                                    <%=item.ordered_status==='returned' ? 'selected'
+                                                                    : '' %>>Returned</option>
+                                                                <option value="request_cancellation"
+                                                                    <%=item.ordered_status==='request_cancellation'
+                                                                    ? 'selected' : '' %>>Request Cancellation
+                                                                </option>
+                                                                <option value="cancelled"
+                                                                    <%=item.ordered_status==='cancelled' ? 'selected'
+                                                                    : '' %>>cancelled</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <a
+                                                                href="/admin/order-details?orderId=<%=order._id%>&&itemId=<%=item._id%>">
+                                                                <button class="btn btn-outline-light">
+                                                                    Details
+                                                                </button>
+                                                            </a>
+                                                        </td>
+                                                        <% }); %>
+                                                </tr>
+                                                <% } else { %>
                                                     <tr>
-                                                        <% } %>
-                                                            <td>
-                                                                <a class="itemside" href="#">
-                                                                    <div class="left">
-                                                                        <img style="width: 20px;"
-                                                                            src="/sharpimages/<%= item.product_id.image[0] %>"
-                                                                            class="img-sm img-thumbnail" alt="" />
-                                                                    </div>
-                                                                    <div class="info">
-                                                                        <h6 class="mb-0 " style="font-size: 70%;">
-                                                                            <%= item.product_id.name %>
-                                                                        </h6>
-                                                                    </div>
-                                                                </a>
-                                                            </td>
-                                                            <td>
-                                                                <%= order.user_id.username %>
-                                                            </td>
-                                                            <td>
-                                                                <%= order.total_amount %>
-                                                            </td>
-                                                            <td>
-                                                                <%= moment(order.date).format('DD/MM/YYYY') %>
-                                                            </td>
-                                                            <td>
-                                                                <%= order.payment %>
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-select statusSelector"
-                                                                    name="statusSelector"
-                                                                    onchange="updateOrderStatus(this.value,'<%=order._id%>','<%=item._id%>')">
-                                                                    <option value="placed"
-                                                                        <%=item.ordered_status==='placed' ? 'selected'
-                                                                        : '' %>>Placed</option>
-                                                                    <option value="shipped"
-                                                                        <%=item.ordered_status==='shipped' ? 'selected'
-                                                                        : '' %>>Shipped</option>
-                                                                    <option value="out_for_delivery"
-                                                                        <%=item.ordered_status==='out_for_delivery'
-                                                                        ? 'selected' : '' %>>Out for Delivery</option>
-                                                                    <option value="delivered"
-                                                                        <%=item.ordered_status==='delivered'
-                                                                        ? 'selected' : '' %>>Delivered</option>
-                                                                    <option value="request_return"
-                                                                        <%=item.ordered_status==='request_return'
-                                                                        ? 'selected' : '' %>>request Return</option>
-                                                                    <option value="returned"
-                                                                        <%=item.ordered_status==='returned' ? 'selected'
-                                                                        : '' %>>Returned</option>
-                                                                    <option value="request_cancellation"
-                                                                        <%=item.ordered_status==='request_cancellation'
-                                                                        ? 'selected' : '' %>>Request Cancellation
-                                                                    </option>
-                                                                    <option value="cancelled"
-                                                                        <%=item.ordered_status==='cancelled'
-                                                                        ? 'selected' : '' %>>cancelled</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <a
-                                                                    href="/admin/order-details?orderId=<%=order._id%>&&itemId=<%=item._id%>">
-                                                                    <button class="btn btn-outline-light">
-                                                                        Details
-                                                                    </button>
-                                                                </a>
-                                                            </td>
-                                                            <% }); %>
+                                                        <td colspan="8">No items found for this order</td>
                                                     </tr>
-                                                    <% } else { %>
-                                                        <tr>
-                                                            <td colspan="8">No items found for this order</td>
-                                                        </tr>
-                                                        <% } %>
-                                                            <% }); %>
-                                        </tbody>
-                                    </table>
+                                                    <% } %>
+                                                        <% }); %>
+                                    </tbody>
+                                </table>
 
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- include jquery -->
-            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        </div>
+        <!-- include jquery -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-            <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
 
-            <script>
+        <script>
 
-                $(document).ready(function () {
-                    $('#example').DataTable();
-                });
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
 
-                function updateOrderStatus(newStatus, orderId, itemId) {
-                    console.log('fhnvkdld', orderId);
-                    console.log('uuuuuu', itemId);
-                    // Send a request to update the order status
-                    fetch('/admin/updateOrderStatus', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            orderId: orderId,
-                            itemId: itemId, // Add itemId to the request
-                            newStatus: newStatus,
-                        }),
+            function updateOrderStatus(newStatus, orderId, itemId) {
+                console.log('fhnvkdld', orderId);
+                console.log('uuuuuu', itemId);
+                // Send a request to update the order status
+                fetch('/admin/updateOrderStatus', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        orderId: orderId,
+                        itemId: itemId, // Add itemId to the request
+                        newStatus: newStatus,
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                        // Optionally update the UI or perform additional actions
                     })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log('Success:', data);
-                            // Optionally update the UI or perform additional actions
-                        })
-                        .catch((error) => {
-                            console.error('Error:', error);
-                        });
-                }
-            </script>
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            }
+        </script>
 
 
-            <%- include('../layouts/adminLayout/footer.ejs') -%>
+        <%- include('../layouts/adminLayout/footer.ejs') -%>

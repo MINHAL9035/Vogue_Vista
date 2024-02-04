@@ -10,7 +10,7 @@ const loadOffers = async (req, res) => {
         res.render('offers', { offers, moment })
 
     } catch (error) {
-        console.error(error);
+        res.redirect('/500')
 
     }
 }
@@ -20,7 +20,7 @@ const loadAddOffer = async (req, res) => {
         res.render('addOffer')
 
     } catch (error) {
-        console.error(error);
+        res.redirect('/500')
 
     }
 }
@@ -46,7 +46,7 @@ const addOffer = async (req, res) => {
         }
 
     } catch (error) {
-        console.error(error);
+        res.redirect('/500')
 
     }
 }
@@ -60,7 +60,7 @@ const applyProductOffer = async (req, res) => {
         res.json({ success: true })
 
     } catch (error) {
-        console.error(error);
+        res.redirect('/500')
 
     }
 }
@@ -72,7 +72,7 @@ const removeProductOffer = async (req, res) => {
         res.json({ success: true })
 
     } catch (error) {
-        console.error(error);
+        res.redirect('/500')
 
     }
 }
@@ -85,7 +85,7 @@ const applyCategoryOffer = async (req, res) => {
         res.json({ success: true })
 
     } catch (error) {
-        console.error(error);
+        res.redirect('/500')
 
     }
 }
@@ -97,7 +97,7 @@ const removeCategoryOffer = async (req, res) => {
         res.json({ success: true })
 
     } catch (error) {
-        console.error(error);
+        res.redirect('/500')
 
     }
 }
@@ -111,7 +111,7 @@ const deleteOffer = async (req, res) => {
         res.json({ success: true })
 
     } catch (error) {
-        console.error(error);
+        res.redirect('/500')
 
     }
 

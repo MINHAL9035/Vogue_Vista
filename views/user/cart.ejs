@@ -33,6 +33,7 @@
   <!--===============================================================================================-->
   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet" />
 
+
   <%- include('../layouts/userLayout/center.ejs') -%>
 
     <%- include('../layouts/userLayout/navbar.ejs') -%>
@@ -56,13 +57,13 @@
       </div>
 
       <!-- Shoping Cart -->
-      <form class="bg0 p-t-75 p-b-85" id="reloadDiv">
+      <form class="bg0 p-t-75 p-b-85">
         <div class="container">
           <div class="row">
             <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
               <div class="m-l-25 m-r--38 m-lr-0-xl">
                 <div class="wrap-table-shopping-cart">
-                  <table class="table-shopping-cart">
+                  <table class="table-shopping-cart" id="reloadDiv">
                     <tr class="table_head">
                       <th class="column-1">Product</th>
                       <th class="column-2">Product Name</th>
@@ -150,17 +151,16 @@
                         </tr>
                         <% }) %>
                           <% } else { %>
-                            <tr class="text-center" style="height:30% ;">
-                              <td colspan="3" class="column-4">No products</td>
+                            <tr class="text-center">
+                              <td colspan="3" class="column-4" style="color:red;">There is no products in your <strong>Vogue Vista Cart</strong></td>
                             </tr>
                             <% } %>
                   </table>
                 </div>
-
                 <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-                  <div class="flex-c-m stext-101 cl2 size-119 bg8 bor11  p-lr-15 trans-02 pointer m-tb-10"
-                    style="background-color: black;">
-                    <a href="/shop" style="text-decoration: none; color: white;"> Update Cart</a>
+                  <div class="flex-c-m stext-101 cl2 size-119 bor11 p-lr-15 trans-02 pointer m-tb-10"
+                    style="border: 2px solid black; border-radius: 8px;">
+                    <a href="/shop" style="text-decoration: none; color: black;">Update Cart</a>
                   </div>
                 </div>
               </div>
@@ -207,9 +207,11 @@
                     <span class="mtext-110 cl2"> ₹<%=total.toFixed(0)%> </span>
                   </div>
                 </div>
-                <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14  p-lr-15 trans-04 pointer">
-                  <a href="/checkout" style="text-decoration: none; color: white">Proceed to Checkout</a>
+                <button class="flex-c-m stext-101 cl0 size-116 bor14 p-lr-15 trans-04 pointer"
+                  style="border: 2px solid black; border-radius: 8px;">
+                  <a href="/checkout" style="text-decoration: none; color: black;">Proceed to Checkout</a>
                 </button>
+
               </div>
             </div>
           </div>

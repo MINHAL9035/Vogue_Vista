@@ -55,7 +55,7 @@ const loadCart = async (req, res) => {
     res.render("cart", { cartDetails, user, subTotal: orginalAmt, total, discountAmnt });
 
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -180,7 +180,7 @@ const addCart = async (req, res) => {
       res.json({ success: true });
     }
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 
@@ -254,8 +254,7 @@ const increaseQuantity = async (req, res) => {
       }
     }
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: "Internal server error." });
+    res.redirect('/500')
   }
 };
 
@@ -275,7 +274,7 @@ const deleteCartItem = async (req, res) => {
     }
     res.json({ success: true });
   } catch (error) {
-    console.log(error);
+    res.redirect('/500')
   }
 };
 

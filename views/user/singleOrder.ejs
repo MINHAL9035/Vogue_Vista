@@ -249,9 +249,9 @@
       <div style="width: 20%; height: auto">
         <img src="/sharpimages/<%=item.product_id.image[0]%>" class="card-img-top" alt="image" />
       </div>
-      <p>Product Name: <%=item.product_id.name%>
+      <p><b>Product Name: </b><%=item.product_id.name%>
       </p>
-      <p>Quantity: <%=item.quantity%>
+      <p><b>Quantity:</b> <%=item.quantity%>
       </p>
       <!-- ORDER STATUS -->
 
@@ -276,11 +276,11 @@
                 </p>
                 <% } else { %>
                   <p>
-                    <b>Status:</b>
+                    <b>Status: </b>
                     <%= item.ordered_status %>
                   </p>
                   <% } %>
-                    <p>₹<%= item.price * item.quantity %>
+                    <p><b>item price :</b>  ₹<%= item.price * item.quantity %>
                     </p>
                     <!-- return and cancel -->
                     <% if(!['request_cancellation','cancelled','request_return','returned'].includes(item.ordered_status))

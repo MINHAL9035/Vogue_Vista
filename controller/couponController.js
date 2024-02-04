@@ -8,7 +8,7 @@ const loadCoupon = async (req, res) => {
         const coupons = await coupon.find({})
         res.render('coupon', { coupons: coupons })
     } catch (error) {
-        console.log(error);
+        res.redirect('/500')
 
     }
 }
@@ -17,7 +17,7 @@ const loadAddCoupon = async (req, res) => {
     try {
         res.render('addCoupon')
     } catch (error) {
-        console.error(error)
+        res.redirect('/500')
 
     }
 }
@@ -42,7 +42,7 @@ const addCoupon = async (req, res) => {
         res.redirect('/admin/coupons')
 
     } catch (error) {
-        console.error(error);
+        res.redirect('/500')
 
     }
 }
@@ -60,8 +60,7 @@ const blockCoupon = async (req, res) => {
         res.json({ success: true })
 
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.redirect('/500')
 
 
     }
@@ -75,8 +74,7 @@ const loadEditCoupon = async (req, res) => {
         res.render('editCoupon', { coupon: couponData })
 
     } catch (error) {
-        console.error(error)
-        res.status(500).json({ error: 'Internal server error' });
+        res.redirect('/500')
 
     }
 }
@@ -105,8 +103,7 @@ const editCoupon = async (req, res) => {
         res.redirect('/admin/coupons')
 
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.redirect('/500')
 
     }
 }
@@ -121,8 +118,7 @@ const deleteCoupon = async (req, res) => {
         res.json({ success: true })
 
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.redirect('/500')
     }
 }
 
@@ -165,8 +161,7 @@ const applyCoupon = async (req, res) => {
         return res.json({ amountOkey: true, disAmount, disTotal });
 
     } catch (error) {
-        console.error('Error applying coupon:', error);
-        return res.json({ success: false, message: 'Internal server error.' });
+        res.redirect('/500')
     }
 };
 
