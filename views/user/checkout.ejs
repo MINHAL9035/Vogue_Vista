@@ -104,21 +104,25 @@
 
           <div class="header-cart-content flex-w js-pscroll">
             <ul class="header-cart-wrapitem w-full">
-              <% cartDetails.items.forEach(item=> { %>
-                <li class="header-cart-item flex-w flex-t m-b-12">
-                  <div class="header-cart-item-img">
-                    <img src="/sharpimages/<%= item.product_id.image[0] %>" alt="IMG" />
-                  </div>
-                  <div class="header-cart-item-txt p-t-8">
-                    <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                      <%=item.product_id.name%>
-                    </a>
-                    <span class="header-cart-item-info">
-                      <%=item.quantity%> x <%=item.product_id.price%>
-                    </span>
-                  </div>
-                </li>
-                <%})%>
+              <% if (cartDetails && cartDetails.items) { %>
+                <% cartDetails.items.forEach(item=> { %>
+                  <li class="header-cart-item flex-w flex-t m-b-12">
+                    <div class="header-cart-item-img">
+                      <img src="/sharpimages/<%= item.product_id.image[0] %>" alt="IMG" />
+                    </div>
+                    <div class="header-cart-item-txt p-t-8">
+                      <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                        <%= item.product_id.name %>
+                      </a>
+                      <span class="header-cart-item-info">
+                        <%= item.quantity %> x <%= item.product_id.price %>
+                      </span>
+                    </div>
+                  </li>
+                  <% }); %>
+                    <% } else { %>
+                      <li class="header-cart-item">Your cart is empty</li>
+                      <% } %>
             </ul>
             <div class="w-full">
               <div class="header-cart-total w-full p-tb-40"></div>
@@ -136,6 +140,7 @@
           </div>
         </div>
       </div>
+
       <!-- breadcrumb -->
       <div class="container">
         <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
