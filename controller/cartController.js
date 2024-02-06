@@ -63,9 +63,9 @@ const addCart = async (req, res) => {
   try {
     const { productId, quantity } = req.body;
     const { user_id } = req.session;
-
+      
     if (!user_id) {
-      res.redirect("/login");
+      return res.json({ loginRequired: true });
     } else {
       const productData = await product.findOne({ _id: productId })
         .populate({

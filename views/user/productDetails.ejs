@@ -315,15 +315,14 @@
                 <script>
                     async function addToCart() {
                         try {
-                            const productId = document.getElementById('productId').value
-                            const quantity = document.getElementById('quantity').value
+                            const productId = document.getElementById('productId').value;
+                            const quantity = document.getElementById('quantity').value;
                             const data = {
                                 productId: productId,
                                 quantity: quantity
-                            }
-                            console.log("data:", data);
+                            };
 
-                            const response = await axios.post('/cart', data)
+                            const response = await axios.post('/cart', data);
 
                             if (response.data.success) {
                                 Swal.fire({
@@ -339,8 +338,10 @@
                                     } else if (result.dismiss === Swal.DismissReason.cancel) {
                                         window.location.href = '/shop';
                                     }
-                                })
-                            } else if (response.data.limited) {
+                                });
+                            } else {
+                                console.log("Login required block");
+                                console.log(response.data);
                                 Swal.fire({
                                     title: "Error adding to cart",
                                     text: "Please login to continue",
@@ -350,16 +351,17 @@
                                     cancelButtonText: "Cancel", // Text for the cancel button
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        window.location.href = '/login'
+                                        window.location.href = '/login';
                                     } else if (result.dismiss === Swal.DismissReason.cancel) {
                                         // Handle cancel action if needed
                                     }
-                                })
+                                });
                             }
                         } catch (error) {
                             console.log(error);
                         }
                     }
+
                 </script>
 
                 <%- include('../layouts/userLayout/footer.ejs') -%>
