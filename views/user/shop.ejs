@@ -60,7 +60,7 @@
     <%- include('../layouts/userLayout/center.ejs') -%>
 
         <%- include('../layouts/userLayout/navbar.ejs') -%>
-        
+
             <!-- Modal Search -->
             <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
                 <div class="container-search-header">
@@ -128,6 +128,12 @@
                                     </div>
 
                                     <ul>
+                                        <li class="p-b-6">
+                                            <a href="/shop?sort=0&categId=<%=categId%>"
+                                                class="filter-link stext-106 trans-04">
+                                                Latest Products
+                                            </a>
+                                        </li>
                                         <li class="p-b-6">
                                             <a href="/shop?sort=1&categId=<%=categId%>"
                                                 class="filter-link stext-106 trans-04">

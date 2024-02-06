@@ -342,14 +342,14 @@ const logout = async (req, res) => {
 };
 
 const loadShop = async (req, res) => {
-  const ITEMS_PER_PAGE = 8
+  const ITEMS_PER_PAGE = 8;
   try {
-    const user = await User.findOne({ _id: req.session.user_id })
-    const categId = req.query.categid ? req.query.categid : ""
-    const search = req.query.search || ''
+    const user = await User.findOne({ _id: req.session.user_id });
+    const categId = req.query.categid ? req.query.categid : "";
+    const search = req.query.search || '';
     const page = parseInt(req.query.page) || 1;
     const skip = (page - 1) * ITEMS_PER_PAGE;
-    const sort = Number(req.query.sort) || 1;
+    const sort = Number(req.query.sort);
 
     const query = {
       is_listed: true,
@@ -359,8 +359,19 @@ const loadShop = async (req, res) => {
     if (categId) {
       query.category = new mongoose.Types.ObjectId(categId);
     }
+
+    let sortOption;
+
+    if (sort === 1) {
+      sortOption = { price: 1 }; // Low to High
+    } else if (sort === -1) {
+      sortOption = { price: -1 }; // High to Low
+    } else {
+      sortOption = { createdAt: -1 }; // Latest products
+    }
+
     const products = await Products.find(query)
-      .sort({ price: sort })
+      .sort(sortOption)
       .skip(skip)
       .limit(ITEMS_PER_PAGE)
       .populate({
@@ -396,6 +407,7 @@ const loadShop = async (req, res) => {
     if (categId) {
       categName = await Category.findOne({ _id: categId });
     }
+
     res.render('shop', {
       Categories: listedCategory,
       products: listedProduct,
@@ -409,9 +421,10 @@ const loadShop = async (req, res) => {
       selectedCategoryId: categId,
     });
   } catch (error) {
-    res.redirect('/500')
+    res.redirect('/500');
   }
 };
+
 
 const loadProduct = async (req, res) => {
   try {
