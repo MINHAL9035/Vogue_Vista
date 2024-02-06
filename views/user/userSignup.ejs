@@ -60,6 +60,7 @@
       transition: .3s all ease;
       color: #0400ff;
     }
+
     .error-message {
       color: red;
       font-size: small;
@@ -229,68 +230,72 @@
           </a>
         </div>
       </div>
-      <div class="row justify-content-center">
-        <div class="col-md-12 col-lg-10">
-          <div class="wrap d-md-flex">
-            <div class="img" style="background-image: url(/images/signupPic.jpg)"></div>
-            <div class="login-wrap p-4 p-md-5">
-              <div class="d-flex">
-                <div class="w-100">
-                  <h3 class="mb-4">SIGN UP</h3>
-                </div>
-              </div>
-
-              <form method="post" class="signin-form" onsubmit="return validateForm()">
-                <div class="form-group mb-3">
-                  <input type="text" class="form-control" placeholder="Username" name="username" id="username"
-                    value="<%= locals.username%>">
-                  <span class="error-message" id="username-error"></span>
-                </div>
-                <div class="form-group mb-3">
-                  <input type="text" class="form-control" placeholder="Email" name="email" id="email"
-                    value="<%= locals.email%>">
-                  <span class="error-message" id="email-error"></span>
-                </div>
-                <div class="form-group mb-3">
-                  <input type="tel" class="form-control" placeholder="Mobile" name="mobileNumber" id="mno"
-                    value="<%= locals.mobileNumber%>">
-                  <span class="error-message" id="mno-error"></span>
-                </div>
-                <div class="form-group mb-3">
-                  <div class="input-group">
-                    <input type="password" class="form-control" placeholder="Password" name="password" id="password"
-                      value="<%= locals.password%>">
-                    <div class="input-group-append">
-                      <span class="input-group-text">
-                        <i class="toggle-password fas fa-eye-slash" onclick="togglePassword('password')"></i>
-                      </span>
-                    </div>
+        <div class="row justify-content-center">
+          <div class="col-md-12 col-lg-10">
+            <div class="wrap d-md-flex">
+              <div class="img" style="background-image: url(/images/signupPic.jpg)"></div>
+              <div class="login-wrap p-4 p-md-5">
+                <div class="d-flex">
+                  <div class="w-100">
+                    <h3 class="mb-4">SIGN UP</h3>
                   </div>
-                  <span class="error-message" id="password-error"></span>
                 </div>
-                <div class="form-group mb-3">
-                  <input type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword"
-                    id="confirmPassword" value="<%= locals.confirmPassword%>">
-                  <span class="error-message" id="confirmPassword-error"></span>
-                </div>
-                <div class="form-group">
-                  <button type="submit" class="form-control btn btn-primary rounded submit px-3">
-                    Sign Up
-                  </button>
-                </div>
-              </form>
-              <% if (typeof message !=='undefined' ) { %>
-                <h6 style="color: red; font-family: 'Times New Roman', Times, serif;">
-                  <%= message %>
-                </h6>
-                <%}%>
-                  <p class="text-center">
-                    Already a Member? <a href="/login">Login</a>
-                  </p>
+
+                <form method="post" class="signin-form" onsubmit="return validateForm()">
+                  <div class="form-group mb-3">
+                    <% if (locals.referralCode) { %>
+                      <input type="hidden" name="referralCode" id="referralCode" value="<%= referralCode%>">
+                      <% } else{%>
+                        <%}%>
+                          <input type="text" class="form-control" placeholder="Username" name="username" id="username"
+                            value="<%= locals.username%>">
+                          <span class="error-message" id="username-error"></span>
+                  </div>
+                  <div class="form-group mb-3">
+                    <input type="text" class="form-control" placeholder="Email" name="email" id="email"
+                      value="<%= locals.email%>">
+                    <span class="error-message" id="email-error"></span>
+                  </div>
+                  <div class="form-group mb-3">
+                    <input type="tel" class="form-control" placeholder="Mobile" name="mobileNumber" id="mno"
+                      value="<%= locals.mobileNumber%>">
+                    <span class="error-message" id="mno-error"></span>
+                  </div>
+                  <div class="form-group mb-3">
+                    <div class="input-group">
+                      <input type="password" class="form-control" placeholder="Password" name="password" id="password"
+                        value="<%= locals.password%>">
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <i class="toggle-password fas fa-eye-slash" onclick="togglePassword('password')"></i>
+                        </span>
+                      </div>
+                    </div>
+                    <span class="error-message" id="password-error"></span>
+                  </div>
+                  <div class="form-group mb-3">
+                    <input type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword"
+                      id="confirmPassword" value="<%= locals.confirmPassword%>">
+                    <span class="error-message" id="confirmPassword-error"></span>
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="form-control btn btn-primary rounded submit px-3">
+                      Sign Up
+                    </button>
+                  </div>
+                </form>
+                <% if (typeof message !=='undefined' ) { %>
+                  <h6 style="color: red; font-family: 'Times New Roman', Times, serif;">
+                    <%= message %>
+                  </h6>
+                  <%}%>
+                    <p class="text-center">
+                      Already a Member? <a href="/login">Login</a>
+                    </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
     </div>
   </section>
 

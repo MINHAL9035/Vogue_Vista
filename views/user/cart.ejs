@@ -222,6 +222,8 @@
       <%- include('../layouts/userLayout/page-footer.ejs') -%>
 
         <!--===============================================================================================-->
+        <script src="js/cart.js"></script>
+        <!--===============================================================================================-->
         <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
         <!--===============================================================================================-->
         <script src="vendor/animsition/js/animsition.min.js"></script>
@@ -258,100 +260,6 @@
           });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        <!-- ==============================================================================================-->
-        <!-- increase quantity -->
-        <script>
-          function increaseQuantity(cartId, productId, count) {
-            $.ajax({
-              url: "/changeQuantity",
-              method: "post",
-              data: {
-                cartId: cartId,
-                productId: productId,
-                count: count,
-              },
-              success: (response) => {
-                if (response.success) {
-                  $("#reloadDiv").load("/cart #reloadDiv");
-                } else {
-                  Swal.fire({
-                    title: "Error",
-                    icon: "error",
-                    text: response.message,
-                    timer: 3000,
-                  });
-                }
-              },
-              error: (error) => [
-                Swal.fire({
-                  title: "Error",
-                  icon: "error",
-                  text: error.message,
-                  timer: 2000,
-                }),
-              ],
-            });
-          }
-        </script>
-
-        <!-- delete Product -->
-        <script>
-          function deleteCartItem(productId, event) {
-            event.preventDefault();
-            console.log("Delete button clicked with productId:", productId);
-            Swal.fire({
-              title: "Are you sure?",
-              text: "You want to delete!",
-              icon: "warning",
-              showCancelButton: true,
-              confirmButtonColor: "#dbcc8f",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "Yes, remove!",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                $.ajax({
-                  url: "/deleteCartProduct",
-                  data: {
-                    productOgId: productId,
-                  },
-                  method: "post",
-                  success: (response) => {
-                    console.log("AJAX request successful:", response);
-                    if (response.success === true) {
-                      Swal.fire({
-                        title: "Deleted!",
-                        text: "Your item has been deleted.",
-                        icon: "success",
-                        timer: 1500,
-                        showConfirmButton: false,
-                      });
-                      setTimeout(() => {
-                        location.reload();
-                      }, 1000);
-                    } else {
-                      Swal.fire({
-                        title: "Error!",
-                        text: "Failed to delete item.",
-                        icon: "error",
-                        showConfirmButton: false,
-                      });
-                    }
-                  },
-                  error: (error) => {
-                    console.log("AJAX request failed:", error);
-                    console.log(error);
-                    Swal.fire({
-                      title: "Error!",
-                      text: "An error occurred while deleting the item.",
-                      icon: "error",
-                      showConfirmButton: false,
-                    });
-                  },
-                });
-              }
-            });
-          }
-        </script>
         <!--===============================================================================================-->
         <script src="js/main.js"></script>
         </body>
