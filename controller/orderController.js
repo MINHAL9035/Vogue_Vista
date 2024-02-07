@@ -210,6 +210,7 @@ const loadInvoice = async (req, res) => {
     }).send(pdfBuffer);
 
   } catch (error) {
+    console.error('Error in loadInvoice:', error);
     res.redirect('/500')
   }
 
