@@ -45,13 +45,12 @@
                                         onclick="deleteImage(event,'<%=products.image[i]%>','<%=products._id%>','<%=i%>')">Delete</a>
 
                                     <% } %>
+                                        <span id="imagePreview" class="mt-2 "></span>
                                         <input type="file" name="image" class="form-control file-upload-info" multiple
                                             placeholder="Upload Image" onchange="viewImage(event)"
-                                            accept="image/jpeg, image/png">
+                                            accept="image/jpeg, image/png" id="productImage">
 
                                 </div>
-
-
                         </div>
 
                         <div class="form-group">
@@ -133,6 +132,34 @@
                     Swal.fire('Error!', 'An error occurred while deleting the image. Check console for details.', 'error');
                 }
             }
+        </script>
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Get the file input element
+                const fileInput = document.getElementById('productImage');
+
+                // Get the image preview container
+                const imagePreviewContainer = document.getElementById('imagePreview');
+
+                // Add an event listener to the file input
+                fileInput.addEventListener('change', function () {
+                    // Remove existing preview images
+                    imagePreviewContainer.innerHTML = '';
+
+                    // Loop through selected files and create image previews
+                    for (const file of fileInput.files) {
+                        const img = document.createElement('img');
+                        img.src = URL.createObjectURL(file);
+                        img.className = 'img-sm img-thumbnail mr-2';
+                        img.alt = 'Image Preview';
+                        img.style.width = '80px';
+                        img.style.height = '80px';
+                        imagePreviewContainer.appendChild(img);
+                    }
+                });
+            });
         </script>
 
 

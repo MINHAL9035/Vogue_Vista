@@ -118,6 +118,7 @@
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
@@ -131,6 +132,7 @@
             function updateOrderStatus(newStatus, orderId, itemId) {
                 console.log('fhnvkdld', orderId);
                 console.log('uuuuuu', itemId);
+
                 // Send a request to update the order status
                 fetch('/admin/updateOrderStatus', {
                     method: 'POST',
@@ -146,12 +148,33 @@
                     .then(response => response.json())
                     .then(data => {
                         console.log('Success:', data);
+
+                        // Show SweetAlert2 success notification
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Order status updated successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
                         // Optionally update the UI or perform additional actions
                     })
                     .catch((error) => {
                         console.error('Error:', error);
+
+                        // Show SweetAlert2 error notification
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Error updating order status',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                     });
             }
+
+
         </script>
 
 
