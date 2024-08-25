@@ -8,7 +8,8 @@ const Category = require("../model/category");
 const Products = require("../model/product");
 const Randomstring = require("randomstring");
 const userOTPVerification = require("../model/userOTPVerification");
-const category = require("../model/category");
+const Cart = require('../model/cartModel')
+const Order = require('../model/orderModel')
 dotenv.config();
 
 // ================hash Password==========================
@@ -98,8 +99,8 @@ const sendOTPVerificationEmail = async ({ email }, res) => {
       port: 587,
       secure: true,
       auth: {
-        user: process.env.email_user,
-        pass: "ugxm urgo eoap dpxd",
+        user: process.env.EMAIL_USER,
+        pass: process.env.USERT_PASS,
       },
     });
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
@@ -322,13 +323,43 @@ const resendOtp = async (req, res) => {
 const loadhome = async (req, res) => {
   try {
     const userData = await User.findOne({ _id: req.session.user_id });
-    const product = await Products.find({})
-    res.render("home", { user: userData, product });
-  } catch (error) {
-    res.redirect('/500')
+    const cartCount = await Cart.countDocuments({ user_id: req.session.user_id });
+    const products = await Products.find({});
 
+    // Get top 10 most sold products
+    const result = await Order.aggregate([
+      { $unwind: '$items' },
+      {
+        $group: {
+          _id: '$items.product_id',
+          totalQuantity: { $sum: '$items.quantity' }
+        }
+      },
+      { $sort: { totalQuantity: -1 } },
+      { $limit: 10 }
+    ]);
+
+    if (result.length === 0) {
+      return res.render("home", { user: userData, products, cartCount, topSoldProducts: [] });
+    }
+
+    const productIds = result.map(item => item._id);
+    const topSoldProducts = await Products.find({ _id: { $in: productIds } });
+
+
+    const recentProducts = await Products.find({})
+      .sort({ date: -1 })
+      .limit(4);
+
+
+
+    res.render("home", { user: userData, products, cartCount, topSoldProducts, recentProducts });
+  } catch (error) {
+    console.error('Error in loadhome:', error);
+    res.redirect('/500');
   }
 };
+
 
 // ================logout=======================
 
@@ -698,7 +729,7 @@ const sendResetLink = async (username, email, token) => {
       secure: true,
       auth: {
         user: "mhdminhal44@gmail.com",
-        pass: "ugxm urgo eoap dpxd",
+        pass: "suie nejw yksp ogll",
       },
     });
 
@@ -727,7 +758,7 @@ const sendResetLink = async (username, email, token) => {
     await transporter.sendMail(mailOptions);
 
   } catch (error) {
-    res.redirect('/500')
+    console.log(error);
   }
 };
 

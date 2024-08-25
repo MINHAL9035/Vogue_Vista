@@ -32,6 +32,7 @@ function increaseQuantity(cartId, productId, count) {
 }
 
 
+
 // ===================delete item==================================
 function deleteCartItem(productId, event) {
     event.preventDefault();

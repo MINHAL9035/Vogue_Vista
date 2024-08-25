@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User profile</title>
+<%- include('../layouts/userLayout/header.ejs') -%>
   <!--===============================================================================================-->
   <link rel="stylesheet" href="/user/style.css" />
   <link rel="icon" type="image/png" href="images/icons/logoVV.png" />
@@ -39,188 +33,133 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <style>
-    body {
-      background: #f5f5f5;
-      margin-top: 20px;
-    }
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- css link here  -->
+  <link rel="stylesheet" href="/userProfile/css/swipper.css">
+  <link rel="stylesheet" href="/userProfile/css/select2.css">
+  <link rel="stylesheet" href="/userProfile/css/tailwind.css">
+  <link rel="stylesheet" href="/userProfile/css/styles.css">
+  <link rel="stylesheet" href="/userProfile/css/responsive.css">
 
-    .ui-w-80 {
-      width: 80px !important;
-      height: auto;
-    }
-
-    .btn-default {
-      border-color: rgba(24, 28, 33, 0.1);
-      background: rgba(0, 0, 0, 0);
-      color: #4e5155;
-    }
-
-    label.btn {
-      margin-bottom: 0;
-    }
-
-    .btn-outline-primary {
-      border-color: #26b4ff;
-      background: transparent;
-      color: #26b4ff;
-    }
-
-    .btn {
-      cursor: pointer;
-    }
-
-    .text-light {
-      color: #babbbc !important;
-    }
-
-    .btn-facebook {
-      border-color: rgba(0, 0, 0, 0);
-      background: #3b5998;
-      color: #fff;
-    }
-
-    .btn-instagram {
-      border-color: rgba(0, 0, 0, 0);
-      background: #000;
-      color: #fff;
-    }
-
-    .card {
-      background-clip: padding-box;
-      box-shadow: 0 1px 4px rgba(24, 28, 33, 0.012);
-    }
-
-    .row-bordered {
-      overflow: hidden;
-    }
-
-    .account-settings-fileinput {
-      position: absolute;
-      visibility: hidden;
-      width: 1px;
-      height: 1px;
-      opacity: 0;
-    }
-
-    .account-settings-links .list-group-item.active {
-      font-weight: bold !important;
-    }
-
-    html:not(.dark-style) .account-settings-links .list-group-item.active {
-      background: transparent !important;
-    }
-
-    .account-settings-multiselect~.select2-container {
-      width: 100% !important;
-    }
-
-    .light-style .account-settings-links .list-group-item {
-      padding: 0.85rem 1.5rem;
-      border-color: rgba(24, 28, 33, 0.03) !important;
-    }
-
-    .light-style .account-settings-links .list-group-item.active {
-      color: #4e5155 !important;
-    }
-
-    .material-style .account-settings-links .list-group-item {
-      padding: 0.85rem 1.5rem;
-      border-color: rgba(24, 28, 33, 0.03) !important;
-    }
-
-    .material-style .account-settings-links .list-group-item.active {
-      color: #4e5155 !important;
-    }
-
-    .dark-style .account-settings-links .list-group-item {
-      padding: 0.85rem 1.5rem;
-      border-color: rgba(255, 255, 255, 0.03) !important;
-    }
-
-    .dark-style .account-settings-links .list-group-item.active {
-      color: #fff !important;
-    }
-
-    .light-style .account-settings-links .list-group-item.active {
-      color: #4e5155 !important;
-    }
-
-    .light-style .account-settings-links .list-group-item {
-      padding: 0.85rem 1.5rem;
-      border-color: rgba(24, 28, 33, 0.03) !important;
-    }
-  </style>
   <%- include('../layouts/userLayout/center.ejs') -%>
 
     <%- include('../layouts/userLayout/navbar.ejs') -%>
+      <!-- ==========================================New ONE========================================================================== -->
+      <!-- Breadcrumb Start -->
+      <div class="breadcrumb">
+        <div class="container">
+          <h2 class="pt-[13.5px] xl:text-2xl text-[18px] font-semibold text-gray-black font-display">Account Details
+          </h2>
+        </div>
+      </div>
+      <!-- Breadcrumb End -->
 
-      <!-- breadcrumbs -->
-      <div class="container">
-        <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-          <a href="/home" class="stext-109 cl8 hov-cl1 trans-04">
-            Home
-            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-          </a>
-          <a href="/editProfile" class="stext-109 cl8 hov-cl1 trans-04">
-            Edit Profile
-            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-          </a>
+      <!-- bar start -->
+      <div class="user bg-red-600">
+        <div class="container">
+          <div class="usermenu flex flex-col md:flex-row justify-between md:items-center">
+            <!-- Tabs -->
+            <ul id="tabs" class="inline-flex flex-col md:flex-row w-full">
+
+              <li class="border-b-2 border-accents">
+                <a id="default-tab" href="/userProfile"
+                  class="text-[#636270] font-medium p-5 border-b border-transparent hover:text-gray-black font-display">Account
+                  Settings</a>
+              </li>
+              <li >
+                <a id="default-tab" href="/editProfile"
+                  class="text-[#636270] font-medium p-5 border-b border-transparent hover:text-gray-black font-display">Edit Details</a>
+              </li>
+              <li>
+                <a id="default-tab" href="/changePassword"
+                  class="text-[#636270] font-medium p-5 border-b border-transparent hover:text-gray-black font-display">Change
+                  Password</a>
+              </li>
+
+              <li>
+                <a href="#order_history"
+                  class="text-[#636270] font-medium p-5 border-b border-transparent hover:text-gray-black font-display">Order
+                  History</a>
+              </li>
+
+              <li>
+                <a href="#order_details"
+                  class="text-[#636270] font-medium p-5 border-b border-transparent hover:text-gray-black">Order
+                  Details</a>
+              </li>
+
+              <li>
+                <a href="#wishlist"
+                  class="text-[#636270] font-medium p-5 border-b border-transparent hover:text-gray-black font-display">Wishlist</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      <div class="container light-style flex-grow-1 border rounded container-p-y mt-5 w-75" style="
-        background-color: rgb(250, 249, 246);
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.455);
-      ">
-        <div class="py-3 mb-4 display-6 text-primary">User Profile</div>
-        <div class="card overflow-hidden mb-5 border border-light">
-          <div class="row no-gutters row-bordered row-border-light">
-            <div class="col-md-3 pt-0">
-              <div class="list-group list-group-flush account-settings-links"
-                style="background-color: rgb(34, 170, 170)">
-                <a class="list-group-item list-group-item-action" href="/editProfile">EDIT PROFILE</a>
-                <a class="list-group-item list-group-item-action" href="/order">ORDERS</a>
-                <a class="list-group-item list-group-item-action" href="/userAddress">MANAGE ADDRESS</a>
-                <a class="list-group-item list-group-item-action" href="/changePassword">Change Password</a>
-                <a class="list-group-item list-group-item-action" href="/wallet">Wallet</a>
-              </div>
-            </div>
-            <div class="col-md-9">
-              <div class="tab-content">
-                <div class="tab-pane fade active show" id="account-general">
-                  <div class="card-body media align-items-center">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt class="d-block ui-w-80" />
+
+
+      <div class="container">
+        <!-- Tab Contents -->
+        <div id="tab-contents">
+
+          <!-- Account Setting Start -->
+          <div id="account_settings">
+            <div class="container px-3 md:px-5 xl:px-0 py-10">
+              <div class="accout-setting flex flex-col xl:flex-row gap-6">
+                <div class="box xl:w-[312px]">
+                  <div class="">
+                    <div class="p-6">
+                      <h2
+                        class="xl:text-2xl acc-title text-[22px]  text-[#272343] font-medium mb-6 font-display text-center">
+                        WELCOME, <%= user.username%>
+                      </h2>
+
+                      <div class="pb-[26px] mx-auto">
+                        <img class="w-[150px] h-[150px] rounded-full mx-auto object-cover"
+                          src="/userProfile/assets/images/all-img/profile-photo.png" alt="image description" id="blah">
+                      </div>
+
+                      <div class="flex justify-center pb-3">
+                      </div>
+                    </div>
                   </div>
-                  <hr class="border-light m-0" />
-                  <div class="card-body">
-                    <form action="" method="post">
-                      <div class="form-group">
-                        <label class="form-label">Username</label>
-                        <input type="hidden" class="form-control mb-1" name="id" value="<%= user._id%>" />
-                        <input type="text" class="form-control mb-1" name="username" value="<%=user.username%>"
-                          readonly />
-                      </div>
-                      <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" value="<%= user.email%>" readonly />
-                      </div>
-                      <div class="form-group">
-                        <label class="form-label">Phone</label>
-                        <input type="text" class="form-control mb-1" name="mobileNumber" value="<%= user.mobileNumber%>"
-                          readonly />
-                      </div>
-                    </form>
-                    <div class="form-group">
-                      <label class="form-label">Referral Link</label>
-                      <div class="input-group">
-                        <input type="text" class="form-control"
-                          value="http://localhost:3001/signup?referralCode=<%= user.referralCode%>" id="referralLink"
-                          readonly />
-                        <div class="input-group-append">
-                          <button class="btn btn-primary" onclick="copyReferralLink()">Copy</button>
+                </div>
+                <!-- account inforamation start -->
+                <div class="box xl:w-[536px]">
+                  <div class="w-full ">
+                    <div class="p-6">
+                      <h2
+                        class="text-start xl:text-2xl acc-title text-[22px] text-[#272343] font-medium mb-6 font-display">
+                        Account Information</h2>
+                      <div class="flex flex-col sm:flex-row gap-5 items-center mb-5">
+                        <div class="w-full">
+                          <input type="text" placeholder="username" value="<%= user.username %>" readonly
+                            class="input-box focus:outline-none focus:ring-2 focus:ring-accents transition duration-300 ease-in-out">
                         </div>
                       </div>
+
+                      <div class="w-full mb-5">
+                        <input type="text" placeholder="Email" value="<%= user.email %>" readonly
+                          class="input-box focus:outline-none  focus:ring-2 focus:ring-accents font-display transition duration-300 ease-in-out">
+                      </div>
+                      <div class="w-full mb-5">
+                        <input type="text" placeholder="mobile" value="<%= user.mobileNumber %>" readonly
+                          class="input-box focus:outline-none  focus:ring-2 focus:ring-accents font-display transition duration-300 ease-in-out">
+                      </div>
+                      <div class="flex items-center mb-5">
+                        <input type="text" placeholder="ReferralOffer"
+                          value="http://localhost:3001/signup?referralCode=<%= user.referralCode%>" id="referralLink"
+                          readonly
+                          class="input-box focus:outline-none focus:ring-2 focus:ring-accents font-display transition duration-300 ease-in-out flex-grow">
+                        <button class="btn btn-primary ml-2" onclick="copyReferralLink()">Copy</button>
+                      </div>
+                      <a style="text-decoration: none;color: black;" href="/editProfile"><button class="btn btn-outline-primary">Edit</button></a>
+                      
                     </div>
                   </div>
                 </div>
@@ -229,6 +168,9 @@
           </div>
         </div>
       </div>
+
+      <!-- ==========================================New ONE========================================================================== -->
+
 
       <%- include('../layouts/userLayout/page-footer.ejs') -%>
 
@@ -246,20 +188,15 @@
         <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
         <!--===============================================================================================-->
         <script src="vendor/select2/select2.min.js"></script>
-        <script>
-          $(".js-select2").each(function () {
-            $(this).select2({
-              minimumResultsForSearch: 20,
-              dropdownParent: $(this).next(".dropDownSelect2"),
-            });
-          });
-        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
         <script>
           function copyReferralLink() {
             var referralLink = document.getElementById("referralLink");
             referralLink.select();
             document.execCommand("copy");
-            alert("Referral link copied to clipboard!");
+
+            toastr.success("Referral link copied to clipboard!");
           }
         </script>
         <!--===============================================================================================-->
@@ -275,19 +212,6 @@
         </script>
         <!--===============================================================================================-->
         <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
-        <script>
-          $(".gallery-lb").each(function () {
-            // the containers for all your galleries
-            $(this).magnificPopup({
-              delegate: "a", // the selector for gallery item
-              type: "image",
-              gallery: {
-                enabled: true,
-              },
-              mainClass: "mfp-fade",
-            });
-          });
-        </script>
         <!--===============================================================================================-->
         <script src="vendor/isotope/isotope.pkgd.min.js"></script>
         <!--===============================================================================================-->
@@ -296,6 +220,21 @@
         <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
         <!--===============================================================================================-->
         <script src="js/main.js"></script>
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
         </body>
 
-</html>
+        </html>

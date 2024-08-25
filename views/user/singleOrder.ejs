@@ -48,174 +48,175 @@
   </style>
   <%- include('../layouts/userLayout/center.ejs') -%>
 
-  <%- include('../layouts/userLayout/navbar.ejs') -%>
+    <%- include('../layouts/userLayout/navbar.ejs') -%>
 
-  <!-- breadcrumbs -->
-  <div class="container">
-    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-      <a href="/home" class="stext-109 cl8 hov-cl1 trans-04">
-        Home
-        <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-      </a>
-      <a href="/editProfile" class="stext-109 cl8 hov-cl1 trans-04">
-        Edit Profile
-        <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-      </a>
-      <a href="/order" class="stext-109 cl8 hov-cl1 trans-04">
-        Orders
-        <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-      </a>
-      <a href="#" class="stext-109 cl8 hov-cl1 trans-04">
-        single-Orders
-        <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-      </a>
-    </div>
-  </div>
-
-  <button class="btn btn-primary" style="margin-left: 24%; margin-top: 1%">
-    <a href="/order" style="text-decoration: none; color: white"><i class="fa-solid fa-arrow-left"></i></a>
-  </button>
-
-  <div class="card" style="width: 69%; margin-left: 14%">
-    <div class="card-header" style="background-color: lightblue">
-      <b>Order Details</b>
-    </div>
-
-    <div class="card-body">
-      <h3 class="card-title">
-        <strong style="color: black">Order ID :</strong>
-        <%=order.order_id%>
-      </h3>
-      <br />
-      <p class="card-text">
-        Order Date: <%= moment(order.date).format('DD/MM/YYYY')%>
-          &nbsp;&nbsp;&nbsp; items: <%=order.items.length%>
-      </p>
-
-      <p class="card-text">Expected Delivery: <%=order.expected_delivery%>
-      </p>
-
-      <p class="card-text">Delivery Address: <%=order.delivery_address%>
-      </p>
-
-      <p class="card-text">Order Total: ₹<%=order.total_amount%>
-      </p>
-    </div>
-    <hr />
-    <% order.items.forEach(item=>{%>
-      <div style="width: 20%; height: auto">
-        <img src="/sharpimages/<%=item.product_id.image[0]%>" class="card-img-top" alt="image" />
+      <!-- breadcrumbs -->
+      <div class="container">
+        <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+          <a href="/home" class="stext-109 cl8 hov-cl1 trans-04">
+            Home
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+          </a>
+          <a href="/editProfile" class="stext-109 cl8 hov-cl1 trans-04">
+            Edit Profile
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+          </a>
+          <a href="/order" class="stext-109 cl8 hov-cl1 trans-04">
+            Orders
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="stext-109 cl8 hov-cl1 trans-04">
+            single-Orders
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+          </a>
+        </div>
       </div>
-      <p><b>Product Name: </b>
-        <%=item.product_id.name%>
-      </p>
-      <p><b>Quantity:</b>
-        <%=item.quantity%>
-      </p>
-      <!-- ORDER STATUS -->
 
-      <% if (item.ordered_status==='cancelled' ) { %>
-        <p style="color: red">
-          <b>Status:</b>
-          <%= item.ordered_status %>
-        </p>
-        <% }else if(item.ordered_status==='request_cancellation' ){ %>
-          <p style="color: red"><b>Status:</b>cancellation Requested</p>
-          <%} else if (item.ordered_status==='request_return' ) { %>
-            <p style="color: red"><b>Status:</b>return requested</p>
-            <%} else if (item.ordered_status==='returned' ) { %>
-              <p style="color: red">
-                <b>Status:</b>
-                <%= item.ordered_status %>
-              </p>
-              <%} else if (item.ordered_status==='delivered' ) { %>
-                <p style="color: green">
-                  <b>Status:</b>
-                  <%= item.ordered_status %>
-                </p>
-                <% } else { %>
-                  <p>
-                    <b>Status: </b>
+      <button class="btn btn-primary" style="margin-left: 24%; margin-top: 1%">
+        <a href="/order" style="text-decoration: none; color: white"><i class="fa-solid fa-arrow-left"></i></a>
+      </button>
+
+      <div class="card" style="width: 69%; margin-left: 14%">
+        <div class="card-header" style="background-color: lightblue">
+          <b>Order Details</b>
+        </div>
+
+        <div class="card-body">
+          <h3 class="card-title">
+            <strong style="color: black">Order ID :</strong>
+            <%=order.order_id%>
+          </h3>
+          <br />
+          <p class="card-text">
+            Order Date: <%= moment(order.date).format('DD/MM/YYYY')%>
+              &nbsp;&nbsp;&nbsp; items: <%=order.items.length%>
+          </p>
+
+          <p class="card-text">Expected Delivery: <%=order.expected_delivery%>
+          </p>
+
+          <p class="card-text">Delivery Address: <%=order.delivery_address%>
+          </p>
+
+          <p class="card-text">Order Total: ₹<%=order.total_amount%>
+          </p>
+        </div>
+        <hr />
+        <% order.items.forEach(item=>{%>
+          <div style="width: 20%; height: auto">
+            <img src="/sharpimages/<%=item.product_id.image[0]%>" class="card-img-top" alt="image" />
+          </div>
+          <p><b>Product Name: </b>
+            <%=item.product_id.name%>
+          </p>
+          <p><b>Quantity:</b>
+            <%=item.quantity%>
+          </p>
+          <!-- ORDER STATUS -->
+
+          <% if (item.ordered_status==='cancelled' ) { %>
+            <p style="color: red">
+              <b>Status:</b>
+              <%= item.ordered_status %>
+            </p>
+            <% }else if(item.ordered_status==='request_cancellation' ){ %>
+              <p style="color: red"><b>Status:</b>cancellation Requested</p>
+              <%} else if (item.ordered_status==='request_return' ) { %>
+                <p style="color: red"><b>Status:</b>return requested</p>
+                <%} else if (item.ordered_status==='returned' ) { %>
+                  <p style="color: red">
+                    <b>Status:</b>
                     <%= item.ordered_status %>
                   </p>
-                  <% } %>
-                    <p><b>item price :</b> ₹<%= item.price * item.quantity %>
+                  <%} else if (item.ordered_status==='delivered' ) { %>
+                    <p style="color: green">
+                      <b>Status:</b>
+                      <%= item.ordered_status %>
                     </p>
-                    <!-- return and cancel -->
-                    <% if(!['request_cancellation','cancelled','request_return','returned'].includes(item.ordered_status))
-                      { %>
-                      <% if(item.ordered_status==='delivered' ){ %>
-                        <% const currentDate=new Date(); %>
-                          <% const returnPolicyDays=10 %>
+                    <% } else { %>
+                      <p>
+                        <b>Status: </b>
+                        <%= item.ordered_status %>
+                      </p>
+                      <% } %>
+                        <p><b>item price :</b> ₹<%= item.price * item.quantity %>
+                        </p>
+                        <!-- return and cancel -->
+                        <% if(!['request_cancellation','cancelled','request_return','returned'].includes(item.ordered_status))
+                          { %>
+                          <% if(item.ordered_status==='delivered' ){ %>
+                            <% const currentDate=new Date(); %>
+                              <% const returnPolicyDays=10 %>
 
-                            <!-- calculate return expiry date based on the current date -->
-                            <% const returnExpiryDate=new Date(order.date) %>
-                              <% returnExpiryDate.setDate(returnExpiryDate.getDate() + returnPolicyDays) %>
-                                <% if(currentDate <=returnExpiryDate){ %>
-                                  <button class="btn btn-danger" style="width: 10%"
-                                    onclick="returnOrder(' <%=order._id%>','<%=item._id%>')">
-                                    Return
-                                  </button>
-                                  <p class="text-muted mt-3" id="return-text">
-                                    Please note that order returns are only possible within <%= returnPolicyDays%> days
-                                      from the delivery date.
-                                  </p>
-                                  <% } else { %>
-                                    <p class="text-muted mt-3">Return expired</p>
-                                    <% } %>
+                                <!-- calculate return expiry date based on the current date -->
+                                <% const returnExpiryDate=new Date(order.date) %>
+                                  <% returnExpiryDate.setDate(returnExpiryDate.getDate() + returnPolicyDays) %>
+                                    <% if(currentDate <=returnExpiryDate){ %>
+                                      <button class="btn btn-danger" style="width: 10%"
+                                        onclick="returnOrder(' <%=order._id%>','<%=item._id%>')">
+                                        Return
+                                      </button>
+                                      <p class="text-muted mt-3" id="return-text">
+                                        Please note that order returns are only possible within <%= returnPolicyDays%>
+                                          days
+                                          from the delivery date.
+                                      </p>
                                       <% } else { %>
-                                        <button class="btn btn-danger" style="width: 10%"
-                                          onclick="cancelOrder(' <%=order._id%>','<%=item._id%>')">
-                                          cancel
-                                        </button>
+                                        <p class="text-muted mt-3">Return expired</p>
                                         <% } %>
-                                          <% } %>
-                                            <% }) %>
-  </div>
+                                          <% } else { %>
+                                            <button class="btn btn-danger" style="width: 10%"
+                                              onclick="cancelOrder(' <%=order._id%>','<%=item._id%>')">
+                                              cancel
+                                            </button>
+                                            <% } %>
+                                              <% } %>
+                                                <% }) %>
+      </div>
 
-  <%- include('../layouts/userLayout/page-footer.ejs') -%>
+      <%- include('../layouts/userLayout/page-footer.ejs') -%>
 
-  <!--===============================================================================================-->
-  <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-  <!--===============================================================================================-->
-  <script src="js/singleOrder.js"></script>
-  <!--===============================================================================================-->
-  <script src="vendor/animsition/js/animsition.min.js"></script>
-  <!--===============================================================================================-->
-  <script src="vendor/bootstrap/js/popper.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-  <!--===============================================================================================-->
-  <script src="vendor/select2/select2.min.js"></script>
-  <script>
-    $(".js-select2").each(function () {
-      $(this).select2({
-        minimumResultsForSearch: 20,
-        dropdownParent: $(this).next(".dropDownSelect2"),
-      });
-    });
-  </script>
-  <!--===============================================================================================-->
-  <script src="vendor/daterangepicker/moment.min.js"></script>
-  <script src="vendor/daterangepicker/daterangepicker.js"></script>
-  <!--===============================================================================================-->
-  <script src="vendor/slick/slick.min.js"></script>
-  <script src="js/slick-custom.js"></script>
-  <!--===============================================================================================-->
-  <script src="vendor/parallax100/parallax100.js"></script>
-  <script>
-    $(".parallax100").parallax100();
-  </script>
-  <!--===============================================================================================-->
-  <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
-  <!--===============================================================================================-->
-  <script src="vendor/isotope/isotope.pkgd.min.js"></script>
-  <!--===============================================================================================-->
-  <script src="vendor/sweetalert/sweetalert.min.js"></script>
-  <!--===============================================================================================-->
-  <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
-  <!--===============================================================================================-->
-  <script src="js/main.js"></script>
-</body>
+        <!--===============================================================================================-->
+        <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="js/singleOrder.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/animsition/js/animsition.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/bootstrap/js/popper.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/select2/select2.min.js"></script>
+        <script>
+          $(".js-select2").each(function () {
+            $(this).select2({
+              minimumResultsForSearch: 20,
+              dropdownParent: $(this).next(".dropDownSelect2"),
+            });
+          });
+        </script>
+        <!--===============================================================================================-->
+        <script src="vendor/daterangepicker/moment.min.js"></script>
+        <script src="vendor/daterangepicker/daterangepicker.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/slick/slick.min.js"></script>
+        <script src="js/slick-custom.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/parallax100/parallax100.js"></script>
+        <script>
+          $(".parallax100").parallax100();
+        </script>
+        <!--===============================================================================================-->
+        <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/isotope/isotope.pkgd.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/sweetalert/sweetalert.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="js/main.js"></script>
+        </body>
 
 </html>

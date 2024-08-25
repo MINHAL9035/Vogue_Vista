@@ -225,6 +225,7 @@ const increaseQuantity = async (req, res) => {
               "items.$.total_price": products.price,
             },
           }
+          
         );
         return res.json({ success: true });
       } else {

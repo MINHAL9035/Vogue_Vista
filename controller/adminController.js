@@ -173,6 +173,8 @@ const admindash = async (req, res) => {
     const monthlyEarn = monthlyEarnings.length != 0 ? monthlyEarnings[0].totalSales : 0
     console.log("my monthly sales", monthlyEarnings)
 
+    // graph starting
+
     const currentYear = new Date().getFullYear();
     const yearsToInclude = 7;
     const currentMonth = new Date().getMonth() + 1

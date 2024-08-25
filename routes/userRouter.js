@@ -10,7 +10,7 @@ const auth = require("../middleware/auth");
 
 // ===============SETTING VEIW ENGINE===========================================
 userRoute.set("view engine", "ejs");
-userRoute.set("views", "./views/user");
+userRoute.set("views", "./views/user"); 
 
 // ==================USER REGISTER===============================================
 userRoute.get("/signup", auth.isLogout, userController.loadsignup);

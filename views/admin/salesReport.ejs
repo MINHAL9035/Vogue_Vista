@@ -46,7 +46,7 @@
                             <div class="table-responsive">
                                 <div id="printThisDiv">
                                     <% if(salesReport && salesReport.length> 0 ){ %>
-                                        <table class="table table-bordered table-contextual" id="example">
+                                        <table class="table table-bordered table-contextual">
                                             <thead id="reportHeader">
                                                 <tr>
                                                     <th>Email</th>
@@ -215,6 +215,9 @@
 
         </script>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+
+
         <script>
             function showDownloadOptions(divName) {
                 const choise = confirm("Do you want to download as PDF and Excel?")
@@ -235,31 +238,53 @@
             }
 
             function downloadExcel(divName) {
-                const table = document.getElementById(divName);
-                const rows = table.getElementsByTagName('tr');
+                const table = document.getElementById('example');
+                const rows = table.querySelectorAll('tr');
+                const data = [];
 
-                let csvContent = "\uFEFF";
+                // Extract table headings
+                const headings = [];
+                table.querySelectorAll('thead th').forEach(heading => {
+                    headings.push(heading.innerText);
+                });
+                data.push(headings);
 
-                // Adding table headers
-                const headerCells = table.querySelectorAll('thead th');
-                const headerValues = Array.from(headerCells).map(header => header.textContent.trim());
-                csvContent += headerValues.join(',') + '\n';
+                // Iterate through rows and cells to extract data
+                rows.forEach(row => {
+                    const rowData = [];
+                    row.querySelectorAll('td').forEach(cell => {
+                        rowData.push(cell.innerText);
+                    });
+                    data.push(rowData);
+                });
 
-                // Adding table data
-                for (let i = 1; i < rows.length; i++) {
-                    const cells = rows[i].getElementsByTagName('td');
-                    const cellValues = Array.from(cells).map(cell => cell.textContent.trim());
-                    csvContent += cellValues.join(',') + '\n';
+                // Create a new workbook
+                const workbook = XLSX.utils.book_new();
+
+                // Add the data to a new worksheet
+                const worksheet = XLSX.utils.aoa_to_sheet(data);
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'Sales Report');
+
+                // Generate Excel file and trigger download
+                const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+                const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                const fileName = 'sales_report.xlsx';
+                if (navigator.msSaveBlob) { // IE 10+
+                    navigator.msSaveBlob(blob, fileName);
+                } else {
+                    const link = document.createElement('a');
+                    if (link.download !== undefined) {
+                        const url = URL.createObjectURL(blob);
+                        link.setAttribute('href', url);
+                        link.setAttribute('download', fileName);
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    }
                 }
-
-                const blob = new Blob([csvContent], { type: 'text/csv' });
-                const link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.setAttribute('download', 'data.csv');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
             }
+
+
         </script>
 
         <%- include('../layouts/adminLayout/footer.ejs') -%>

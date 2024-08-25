@@ -160,6 +160,7 @@ const loadOrderDetails = async (req, res) => {
 
     const { items } = orderDetails;
     const orderItems = items.find(item => item._id.toString() === itemId);
+    console.log("skcjk", orderItems);
 
 
     res.render('order-details', { order: orderDetails, item: orderItems, moment })
@@ -195,7 +196,8 @@ const loadInvoice = async (req, res) => {
     const ejsData = await ejs.renderFile(ejsTemplate, data);
 
     // Launch Puppeteer and generate PDF
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: "new" });
+
     const page = await browser.newPage();
     await page.setContent(ejsData, { waitUntil: 'networkidle0' });
     const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });

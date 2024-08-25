@@ -141,6 +141,7 @@ $(function () {
   let nov = document.getElementById("Nov").value
   let dec = document.getElementById("Dec").value
 
+
   // orders
   let Jan = document.getElementById("jan").value
   let Feb = document.getElementById("feb").value
@@ -287,6 +288,8 @@ $(function () {
   let users2022 = document.getElementById("users2022").value
   let users2023 = document.getElementById("users2023").value
   let users2024 = document.getElementById("users2024").value
+
+  console.log("my", year1, year2, year3, year4, year5, year7)
 
 
   var multiAreaData2 = {

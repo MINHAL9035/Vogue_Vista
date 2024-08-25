@@ -89,6 +89,7 @@ const orderPlacement = async (req, res) => {
     const date = new Date();
     const user_id = req.session.user_id;
     const { address, paymentMethod } = req.body;
+    console.log("my adress",req.body.address);
     const cartData = await cart.findOne({ user_id: user_id });
     const userData = await User.findById(user_id);
     const cartProducts = cartData.items;
@@ -190,13 +191,14 @@ const orderPlacement = async (req, res) => {
       const total = totalAfterCoupon; // Use the adjusted total amount
       console.log("razorpay total:", total);
 
+      console.log("my razorpay",orderId);
       var options = {
         amount: total * 100,
         currency: "INR",
         receipt: "" + orderId,
       };
 
-      instance.orders.create(options, function (err, order) {
+      instance.orders.create(options, function (err, order ) {
         console.log(order);
         return res.json({ success: false, order: order });
       });

@@ -29,6 +29,7 @@ function applyCoupon(code) {
 
     const amountElement = document.getElementById('total');
     const amount = parseFloat(amountElement.innerText.replace('₹', '').trim());
+    console.log(amount);
 
     $.ajax({
         url: '/apply-coupon',
@@ -58,7 +59,6 @@ function applyCoupon(code) {
                     position: 'center',
                     icon: 'success',
                     title: 'Discount redeemed',
-
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -115,7 +115,7 @@ async function placeOrder() {
             body: JSON.stringify(orderData),
         })
             .then((response) => {
-                console.log("hjhj:", response);
+                console.log("hjhj:", response)
                 if (response.ok) {
                     return response.json();
                 }
@@ -148,6 +148,7 @@ async function placeOrder() {
                 }
                 else {
                     // Handle coupon-related logic or other actions if needed
+                    console.log(response.order);
                     razorpayPayment(response.order);
                     console.log("my frontend", response.order);
                 }
