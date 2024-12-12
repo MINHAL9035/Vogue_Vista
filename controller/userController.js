@@ -93,14 +93,18 @@ function generateReferralCode() {
 
 const sendOTPVerificationEmail = async ({ email }, res) => {
   try {
+    console.log("pass",process.env.USER_PASS);
+    console.log("user",process.env.EMAIL_USER);
+    
+    
     const transporter = nodemailer.createTransport({
       service: "gmail",
       host: "smtp.gmail.com",
       port: 587,
-      secure: true,
+      secure: false,
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.USERT_PASS,
+        pass: process.env.USER_PASS,
       },
     });
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
@@ -142,6 +146,8 @@ const sendOTPVerificationEmail = async ({ email }, res) => {
 
     res.redirect(`/Otp?email=${email}`);
   } catch (error) {
+    console.log(error);
+
     res.redirect('/500')
   }
 };
@@ -177,7 +183,7 @@ const verifyOtp = async (req, res) => {
     }
 
     const { otp: hashedOtp } = user;
-    const validOtp = await bcrypt.compare(otp, hashedOtp);
+    const validOtp = bcrypt.compare(otp, hashedOtp);
 
     if (validOtp) {
       const userData = await User.findOne({ email });

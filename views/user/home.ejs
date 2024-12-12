@@ -1,140 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('../layouts/userLayout/header.ejs') -%>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>VOGUE VISTA</title>
-  <meta name="keywords" content="HTML5 Template">
-  <meta name="description" content="Molla - Bootstrap eCommerce Template">
-  <meta name="author" content="p-themes">
-  <!-- Favicon -->
-  <link rel="icon" href="images/icons/logoVV.png">
-  <!-- Plugins CSS File -->
-  <link rel="stylesheet" href="newOne/css/bootstrap.min.css">
-  <link rel="stylesheet" href="newOne/css/plugins/owl-carousel/owl.carousel.css">
-  <link rel="stylesheet" href="newOne/css/plugins/magnific-popup/magnific-popup.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <body>
+    <div class="page-wrapper">
+      <header class="header">
+        <div class="header-top">
+          <div class="container">
+            <div class="header-left">
+              <div class="header-dropdown">
+                <a href="#">Usd</a>
+              </div><!-- End .header-dropdown -->
 
-  <!-- Main CSS File -->
-  <link rel="stylesheet" href="newOne/css/style.css">
-</head>
+              <div class="header-dropdown">
+                <a href="#">Eng</a>
+              </div>
+            </div>
 
-<body>
-  <div class="page-wrapper">
-    <header class="header">
-      <div class="header-top">
-        <div class="container">
-          <div class="header-left">
-            <div class="header-dropdown">
-              <a href="#">Usd</a>
-              <div class="header-menu">
-                <ul>
-                  <li><a href="#">Eur</a></li>
-                  <li><a href="#">Usd</a></li>
+            <div class="header-right">
+              <ul class="top-menu">
+                <li>
+                  <a href="#">Links</a>
+                  <ul>
+                    <li><a href="#"><i class="icon-phone"></i>Call:+91 9072299035</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="header-middle sticky-header">
+          <div class="container">
+            <div class="header-left">
+              <button class="mobile-menu-toggler">
+                <span class="sr-only">Toggle mobile menu</span>
+                <i class="icon-bars"></i>
+              </button>
+              <a href="/" class="logo">
+                <img src="newOne/images/newlogo.png" alt="Molla Logo" width="105" height="25">
+              </a>
+              <nav class="main-nav">
+                <ul class="menu">
+                  <li class="megamenu-container active">
+                    <a href="/">Home</a>
+                  </li>
+                  <li>
+                    <a href="/shop">Shop</a>
+                  </li>
+                  <li>
+                    <a href="/about">About</a>
+                  </li>
+                  <li>
+                    <a href="/contact">Contact</a>
+                  </li>
+                  <li>
+                    <a href="#" class="sf-with-ul">
+                      <%= locals.user ? user.username : "Profile" %>
+                    </a>
+                    <% if(locals.user){ %>
+                      <ul>
+                        <li><a href="/userProfile">Account</a></li>
+                        <li><a href="/logout">LogOut</a></li>
+                      </ul>
+                      <%}else{%>
+                        <ul>
+                          <li><a href="/login">Login</a></li>
+                        </ul>
+                        <% } %>
+                  </li>
                 </ul>
-              </div><!-- End .header-menu -->
-            </div><!-- End .header-dropdown -->
-
-            <div class="header-dropdown">
-              <a href="#">Eng</a>
-              <div class="header-menu">
-                <ul>
-                  <li><a href="#">English</a></li>
-                  <li><a href="#">French</a></li>
-                  <li><a href="#">Spanish</a></li>
-                </ul>
+              </nav>
+            </div>
+            <div class="header-right">
+              <div class="dropdown cart-dropdown">
+                <a style="font-size: 170%;" href="/wishlist" class="dropdown-toggle" role="button" aria-haspopup="true"
+                  aria-expanded="false" data-display="static">
+                  <i class="fa-regular fa-heart"></i>
+                  <span class="cart-count">0</span>
+                </a>
+              </div>
+              <div class="dropdown cart-dropdown">
+                <a href="/cart" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"
+                  data-display="static">
+                  <i class="icon-shopping-cart"></i>
+                  <span class="cart-count">
+                    <%= cartCount %>
+                  </span>
+                </a>
               </div>
             </div>
           </div>
-
-          <div class="header-right">
-            <ul class="top-menu">
-              <li>
-                <a href="#">Links</a>
-                <ul>
-                  <li><a href="#"><i class="icon-phone"></i>Call:+91 9072299035</a></li>
-                  <li><a href="/about">About Us</a></li>
-                  <li><a href="/contact">Contact Us</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
         </div>
-      </div>
-      <div class="header-middle sticky-header">
-        <div class="container">
-          <div class="header-left">
-            <button class="mobile-menu-toggler">
-              <span class="sr-only">Toggle mobile menu</span>
-              <i class="icon-bars"></i>
-            </button>
-            <a href="/" class="logo">
-              <img src="newOne/images/newlogo.png" alt="Molla Logo" width="105" height="25">
-            </a>
-            <nav class="main-nav">
-              <ul class="menu">
-                <li class="megamenu-container active">
-                  <a href="/">Home</a>
-                </li>
-                <li>
-                  <a href="/shop">Shop</a>
-                </li>
-                <li>
-                  <a href="/about">About</a>
-                </li>
-                <li>
-                  <a href="/contact">Contact</a>
-                </li>
-                <li>
-                  <a href="#" class="sf-with-ul">
-                    <%= locals.user ? user.username : "Profile" %>
-                  </a>
-                  <% if(locals.user){ %>
-                    <ul>
-                      <li><a href="/userProfile">Account</a></li>
-                      <li><a href="/logout">LogOut</a></li>
-                    </ul>
-                    <%}else{%>
-                      <ul>
-                        <li><a href="/login">Login</a></li>
-                      </ul>
-                      <% } %>
-                </li>
-              </ul>
-            </nav>
-          </div>
-          <div class="header-right">
-            <div class="dropdown cart-dropdown">
-              <a style="font-size: 170%;" href="/wishlist" class="dropdown-toggle" role="button" aria-haspopup="true"
-                aria-expanded="false" data-display="static">
-                <i class="fa-regular fa-heart"></i>
-                <span class="cart-count">0</span>
-              </a>
-            </div>
-            <div class="dropdown cart-dropdown">
-              <a href="/cart" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"
-                data-display="static">
-                <i class="icon-shopping-cart"></i>
-                <span class="cart-count">
-                  <%= cartCount %>
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+      </header>
 
-    <main class="main">
-      <div class="intro-section bg-lighter pt-5 pb-6">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8">
-              <div class="intro-slider-container slider-container-ratio slider-container-1 mb-2 mb-lg-0">
-                <div class="intro-slider intro-slider-1 owl-carousel owl-simple owl-light owl-nav-inside"
-                  data-toggle="owl" data-owl-options='{
+      <main class="main">
+        <div class="intro-section bg-lighter pt-5 pb-6">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="intro-slider-container slider-container-ratio slider-container-1 mb-2 mb-lg-0">
+                  <div class="intro-slider intro-slider-1 owl-carousel owl-simple owl-light owl-nav-inside"
+                    data-toggle="owl" data-owl-options='{
                                         "nav": false, 
                                         "responsive": {
                                             "768": {
@@ -142,129 +108,129 @@
                                             }
                                         }
                                     }'>
-                  <div class="intro-slide">
-                    <figure class="slide-image">
-                      <picture>
-                        <source media="(max-width: 480px)" srcset="newOne/images/slider/slide-1-480w.jpg">
-                        <img src="newOne/images/banners/home/Screenshot (157).png" alt="Image Desc">
-                      </picture>
-                    </figure><!-- End .slide-image -->
+                    <div class="intro-slide">
+                      <figure class="slide-image">
+                        <picture>
+                          <source media="(max-width: 480px)" srcset="newOne/images/slider/slide-1-480w.jpg">
+                          <img src="newOne/images/banners/home/Screenshot (157).png" alt="Image Desc">
+                        </picture>
+                      </figure><!-- End .slide-image -->
 
-                    <div class="intro-content">
-                      <h3 class="intro-subtitle">Womens Collection</h3>
-                      <!-- End .h3 intro-subtitle -->
-                      <h1 class="intro-title">Empower Your <br>Style.</h1>
-                      <!-- End .intro-title -->
+                      <div class="intro-content">
+                        <h3 class="intro-subtitle">Womens Collection</h3>
+                        <!-- End .h3 intro-subtitle -->
+                        <h1 class="intro-title">Empower Your <br>Style.</h1>
+                        <!-- End .intro-title -->
 
-                      <a href="/shop" class="btn btn-outline-white">
-                        <span>SHOP NOW</span>
-                        <i class="icon-long-arrow-right"></i>
-                      </a>
-                    </div><!-- End .intro-content -->
-                  </div><!-- End .intro-slide -->
+                        <a href="/shop" class="btn btn-outline-white">
+                          <span>SHOP NOW</span>
+                          <i class="icon-long-arrow-right"></i>
+                        </a>
+                      </div><!-- End .intro-content -->
+                    </div><!-- End .intro-slide -->
 
-                  <div class="intro-slide">
-                    <figure class="slide-image">
-                      <picture>
-                        <source media="(max-width: 480px)" srcset="newOne/images/slider/slide-2-480w.jpg">
-                        <img src="newOne/images/slider/slide-2.jpg" alt="Image Desc">
-                      </picture>
-                    </figure><!-- End .slide-image -->
+                    <div class="intro-slide">
+                      <figure class="slide-image">
+                        <picture>
+                          <source media="(max-width: 480px)" srcset="newOne/images/slider/slide-2-480w.jpg">
+                          <img src="newOne/images/slider/slide-2.jpg" alt="Image Desc">
+                        </picture>
+                      </figure><!-- End .slide-image -->
 
-                    <div class="intro-content">
-                      <h3 class="intro-subtitle">News and Inspiration</h3>
-                      <!-- End .h3 intro-subtitle -->
-                      <h1 class="intro-title">New Arrivals</h1><!-- End .intro-title -->
+                      <div class="intro-content">
+                        <h3 class="intro-subtitle">News and Inspiration</h3>
+                        <!-- End .h3 intro-subtitle -->
+                        <h1 class="intro-title">New Arrivals</h1><!-- End .intro-title -->
 
-                      <a href="category.html" class="btn btn-outline-white">
-                        <span>SHOP NOW</span>
-                        <i class="icon-long-arrow-right"></i>
-                      </a>
-                    </div><!-- End .intro-content -->
-                  </div><!-- End .intro-slide -->
+                        <a href="category.html" class="btn btn-outline-white">
+                          <span>SHOP NOW</span>
+                          <i class="icon-long-arrow-right"></i>
+                        </a>
+                      </div><!-- End .intro-content -->
+                    </div><!-- End .intro-slide -->
 
-                  <div class="intro-slide">
-                    <figure class="slide-image">
-                      <picture>
-                        <source media="(max-width: 480px)" srcset="newOne/images/slider/slide-3-480w.jpg">
-                        <img src="newOne/images/slider/slide-3.jpg" alt="Image Desc">
-                      </picture>
-                    </figure><!-- End .slide-image -->
+                    <div class="intro-slide">
+                      <figure class="slide-image">
+                        <picture>
+                          <source media="(max-width: 480px)" srcset="newOne/images/slider/slide-3-480w.jpg">
+                          <img src="newOne/images/slider/slide-3.jpg" alt="Image Desc">
+                        </picture>
+                      </figure><!-- End .slide-image -->
 
-                    <div class="intro-content">
-                      <h3 class="intro-subtitle">Outdoor Furniture</h3>
-                      <!-- End .h3 intro-subtitle -->
-                      <h1 class="intro-title">Outdoor Dining <br>Furniture</h1>
-                      <!-- End .intro-title -->
+                      <div class="intro-content">
+                        <h3 class="intro-subtitle">Outdoor Furniture</h3>
+                        <!-- End .h3 intro-subtitle -->
+                        <h1 class="intro-title">Outdoor Dining <br>Furniture</h1>
+                        <!-- End .intro-title -->
 
-                      <a href="category.html" class="btn btn-outline-white">
-                        <span>SHOP NOW</span>
-                        <i class="icon-long-arrow-right"></i>
-                      </a>
-                    </div><!-- End .intro-content -->
-                  </div><!-- End .intro-slide -->
-                </div><!-- End .intro-slider owl-carousel owl-simple -->
+                        <a href="category.html" class="btn btn-outline-white">
+                          <span>SHOP NOW</span>
+                          <i class="icon-long-arrow-right"></i>
+                        </a>
+                      </div><!-- End .intro-content -->
+                    </div><!-- End .intro-slide -->
+                  </div><!-- End .intro-slider owl-carousel owl-simple -->
 
-                <span class="slider-loader"></span><!-- End .slider-loader -->
-              </div><!-- End .intro-slider-container -->
-            </div><!-- End .col-lg-8 -->
-            <div class="col-lg-4">
-              <div class="intro-banners">
-                <div class="row row-sm">
-                  <div class="col-md-6 col-lg-12">
-                    <div class="banner banner-display">
-                      <a href="#">
-                        <img src="newOne/images/onWork/banner2.jpg" alt="Banner">
-                      </a>
+                  <span class="slider-loader"></span><!-- End .slider-loader -->
+                </div><!-- End .intro-slider-container -->
+              </div><!-- End .col-lg-8 -->
+              <div class="col-lg-4">
+                <div class="intro-banners">
+                  <div class="row row-sm">
+                    <div class="col-md-6 col-lg-12">
+                      <div class="banner banner-display">
+                        <a href="#">
+                          <img src="newOne/images/onWork/banner2.jpg" alt="Banner">
+                        </a>
 
-                      <div class="banner-content">
-                        <h4 class="banner-subtitle text-darkwhite"><a href="#">Clearence</a>
-                        </h4><!-- End .banner-subtitle -->
-                        <h3 class="banner-title text-white"><a href="#">Chairs & Chaises <br>Up
-                            to 40% off</a></h3><!-- End .banner-title -->
-                        <a href="#" class="btn btn-outline-white banner-link">Shop Now<i
-                            class="icon-long-arrow-right"></i></a>
-                      </div><!-- End .banner-content -->
-                    </div><!-- End .banner -->
-                  </div><!-- End .col-md-6 col-lg-12 -->
+                        <div class="banner-content">
+                          <h4 class="banner-subtitle text-darkwhite"><a href="#">Clearence</a>
+                          </h4><!-- End .banner-subtitle -->
+                          <h3 class="banner-title text-white"><a href="#">Chairs & Chaises <br>Up
+                              to 40% off</a></h3><!-- End .banner-title -->
+                          <a href="/shop" class="btn btn-outline-white banner-link">Shop Now<i
+                              class="icon-long-arrow-right"></i></a>
+                        </div><!-- End .banner-content -->
+                      </div><!-- End .banner -->
+                    </div><!-- End .col-md-6 col-lg-12 -->
 
-                  <div class="col-md-6 col-lg-12">
-                    <div class="banner banner-display mb-0">
-                      <a href="#">
-                        <img src="newOne/images/onWork/banner3.jpg" alt="Banner">
-                      </a>
+                    <div class="col-md-6 col-lg-12">
+                      <div class="banner banner-display mb-0">
+                        <a href="#">
+                          <img src="newOne/images/onWork/banner3.jpg" alt="Banner">
+                        </a>
 
-                      <div class="banner-content">
-                        <h4 class="banner-subtitle text-darkwhite"><a href="#">New in</a></h4>
-                        <!-- End .banner-subtitle -->
-                        <h3 class="banner-title text-white"><a href="#">Best Lighting
-                            <br>Collection</a></h3><!-- End .banner-title -->
-                        <a href="#" class="btn btn-outline-white banner-link">Discover Now<i
-                            class="icon-long-arrow-right"></i></a>
-                      </div><!-- End .banner-content -->
-                    </div><!-- End .banner -->
-                  </div><!-- End .col-md-6 col-lg-12 -->
-                </div><!-- End .row row-sm -->
-              </div><!-- End .intro-banners -->
-            </div><!-- End .col-lg-4 -->
-          </div><!-- End .row -->
+                        <div class="banner-content">
+                          <h4 class="banner-subtitle text-darkwhite"><a href="#">New in</a></h4>
+                          <!-- End .banner-subtitle -->
+                          <h3 class="banner-title text-white"><a href="#">Best Lighting
+                              <br>Collection</a></h3><!-- End .banner-title -->
+                          <a href="/shop" class="btn btn-outline-white banner-link">Discover Now<i
+                              class="icon-long-arrow-right"></i></a>
+                        </div><!-- End .banner-content -->
+                      </div><!-- End .banner -->
+                    </div><!-- End .col-md-6 col-lg-12 -->
+                  </div><!-- End .row row-sm -->
+                </div><!-- End .intro-banners -->
+              </div><!-- End .col-lg-4 -->
+            </div><!-- End .row -->
 
-          <div class="mb-6"></div><!-- End .mb-6 -->
+            <div class="mb-6"></div><!-- End .mb-6 -->
 
 
 
-          <div class="mb-6"></div><!-- End .mb-6 -->
+            <div class="mb-6"></div><!-- End .mb-6 -->
 
-          <div class="container">
-            <div class="heading heading-center mb-3">
-              <h2 class="title-lg">Trendy Products</h2><!-- End .title -->
-            </div><!-- End .heading -->
+            <div class="container">
+              <div class="heading heading-center mb-3">
+                <h2 class="title-lg">Trendy Products</h2><!-- End .title -->
+              </div><!-- End .heading -->
 
-            <div class="tab-content tab-content-carousel">
-              <div class="tab-pane p-0 fade show active" id="trendy-all-tab" role="tabpanel"
-                aria-labelledby="trendy-all-link">
-                <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
-                  data-owl-options='{
+              <div class="tab-content tab-content-carousel">
+                <div class="tab-pane p-0 fade show active" id="trendy-all-tab" role="tabpanel"
+                  aria-labelledby="trendy-all-link">
+                  <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                    data-owl-options='{
                                 "nav": false, 
                                 "dots": true,
                                 "margin": 20,
@@ -289,270 +255,190 @@
                                     }
                                 }
                             }'>
-                  <% if (topSoldProducts.length> 0) { %>
-                    <% topSoldProducts.forEach(product=> { %>
-                      <div class="product product-11 text-center">
-                        <figure class="product-media">
-                          <a href="#">
-                            <img src="/sharpimages/<%=product.image[0]%>" alt="Product image" class="product-image">
-                            <img src="/sharpimages/<%=product.image[1]%>" alt="Product image"
-                              class="product-image-hover">
-                          </a>
-
-                          <div class="product-action-vertical">
-                            <a href="#" class="btn-product-icon btn-wishlist"><span>add to
-                                wishlist</span></a>
-                          </div><!-- End .product-action-vertical -->
-                        </figure><!-- End .product-media -->
-
-                        <div class="product-body">
-                          <h3 class="product-title"><a href="#">
-                              <%= product.name %>
-                            </a></h3>
-                          <!-- End .product-title -->
-                          <div class="product-price">
-                            ₹<%= product.price.toFixed(2) %>
-                          </div><!-- End .product-price -->
-                        </div><!-- End .product-body -->
-                        <div class="product-action">
-                          <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                        </div><!-- End .product-action -->
-                      </div><!-- End .product -->
-                      <% }); %>
-                        <% } else { %>
-                          <p>No products have been sold yet.</p>
-                          <% } %>
-                </div><!-- End .owl-carousel -->
-              </div><!-- .End .tab-pane -->
-            </div><!-- End .tab-content -->
-          </div><!-- End .container -->
-
-          <div class="container">
-            <div class="heading heading-center mb-6">
-              <h2 class="title">Recent Arrivals</h2><!-- End .title -->
-
-
-            </div><!-- End .heading -->
-
-            <div class="tab-content">
-              <div class="tab-pane p-0 fade show active" id="top-all-tab" role="tabpanel"
-                aria-labelledby="top-all-link">
-                <div class="products">
-                  <div class="row justify-content-center">
-                    <% recentProducts.forEach(product=> { %>
-                      <div class="col-6 col-md-4 col-lg-3">
-                        <div class="product product-11 mt-v3 text-center">
+                    <% if (topSoldProducts.length> 0) { %>
+                      <% topSoldProducts.forEach(product=> { %>
+                        <div class="product product-11 text-center">
                           <figure class="product-media">
-                            <a href="3">
-                              <img src="/sharpimages/<%=product.image[0]%>" alt="<%= product.name %> image"
-                                class="product-image">
-                              <img src="/sharpimages/<%=product.image[1]%>" alt="<%= product.name %> image"
+                            <a href="#">
+                              <img src="/sharpimages/<%=product.image[0]%>" alt="Product image" class="product-image">
+                              <img src="/sharpimages/<%=product.image[1]%>" alt="Product image"
                                 class="product-image-hover">
                             </a>
 
                             <div class="product-action-vertical">
-                              <a href="#" class="btn-product-icon btn-wishlist"><span>Add to wishlist</span></a>
+                              <a href="#" class="btn-product-icon btn-wishlist"><span>add to
+                                  wishlist</span></a>
                             </div><!-- End .product-action-vertical -->
                           </figure><!-- End .product-media -->
 
                           <div class="product-body">
-                            <h3 class="product-title"><a href="/product/<%= product._id %>">
+                            <h3 class="product-title"><a href="#">
                                 <%= product.name %>
                               </a></h3>
                             <!-- End .product-title -->
                             <div class="product-price">
-                              $<%= product.price.toFixed(2) %>
+                              ₹<%= product.price.toFixed(2) %>
                             </div><!-- End .product-price -->
-
-                            <div class="product-nav product-nav-dots">
-                              <!-- Example color options, customize based on actual data -->
-                              <% if (product.colors && product.colors.length> 0) { %>
-                                <% product.colors.forEach(color=> { %>
-                                  <a href="#" style="background: <%= color.hexCode %>;"><span class="sr-only">
-                                      <%= color.name %>
-                                    </span></a>
-                                  <% }); %>
-                                    <% } %>
-                            </div><!-- End .product-nav -->
                           </div><!-- End .product-body -->
                           <div class="product-action">
-                            <a href="#" class="btn-product btn-cart"><span>Add to cart</span></a>
+                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
                           </div><!-- End .product-action -->
                         </div><!-- End .product -->
-                      </div><!-- End .col-6 col-md-4 col-lg-3 -->
-                      <% }); %>
-                  </div><!-- End .row -->
+                        <% }); %>
+                          <% } else { %>
+                            <p>No products have been sold yet.</p>
+                            <% } %>
+                  </div><!-- End .owl-carousel -->
+                </div><!-- .End .tab-pane -->
+              </div><!-- End .tab-content -->
+            </div><!-- End .container -->
 
-                </div><!-- End .products -->
-              </div><!-- .End .tab-pane -->
-            </div><!-- End .tab-content -->
-          </div><!-- End .container -->
+            <div class="container">
+              <div class="heading heading-center mb-6">
+                <h2 class="title">Recent Arrivals</h2><!-- End .title -->
 
-          <div class="container">
-            <hr>
-            <div class="row justify-content-center">
-              <div class="col-lg-4 col-sm-6">
-                <div class="icon-box icon-box-card text-center">
-                  <span class="icon-box-icon">
-                    <i class="icon-rocket"></i>
-                  </span>
-                  <div class="icon-box-content">
-                    <h3 class="icon-box-title">Payment & Delivery</h3><!-- End .icon-box-title -->
-                    <p>Free shipping for orders over $50</p>
-                  </div><!-- End .icon-box-content -->
-                </div><!-- End .icon-box -->
-              </div><!-- End .col-lg-4 col-sm-6 -->
 
-              <div class="col-lg-4 col-sm-6">
-                <div class="icon-box icon-box-card text-center">
-                  <span class="icon-box-icon">
-                    <i class="icon-rotate-left"></i>
-                  </span>
-                  <div class="icon-box-content">
-                    <h3 class="icon-box-title">Return & Refund</h3><!-- End .icon-box-title -->
-                    <p>Free 100% money back guarantee</p>
-                  </div><!-- End .icon-box-content -->
-                </div><!-- End .icon-box -->
-              </div><!-- End .col-lg-4 col-sm-6 -->
+              </div><!-- End .heading -->
 
-              <div class="col-lg-4 col-sm-6">
-                <div class="icon-box icon-box-card text-center">
-                  <span class="icon-box-icon">
-                    <i class="icon-life-ring"></i>
-                  </span>
-                  <div class="icon-box-content">
-                    <h3 class="icon-box-title">Quality Support</h3><!-- End .icon-box-title -->
-                    <p>Alway online feedback 24/7</p>
-                  </div><!-- End .icon-box-content -->
-                </div><!-- End .icon-box -->
-              </div><!-- End .col-lg-4 col-sm-6 -->
-            </div><!-- End .row -->
+              <div class="tab-content">
+                <div class="tab-pane p-0 fade show active" id="top-all-tab" role="tabpanel"
+                  aria-labelledby="top-all-link">
+                  <div class="products">
+                    <div class="row justify-content-center">
+                      <% recentProducts.forEach(product=> { %>
+                        <div class="col-6 col-md-4 col-lg-3">
+                          <div class="product product-11 mt-v3 text-center">
+                            <figure class="product-media">
+                              <a href="3">
+                                <img src="/sharpimages/<%=product.image[0]%>" alt="<%= product.name %> image"
+                                  class="product-image">
+                                <img src="/sharpimages/<%=product.image[1]%>" alt="<%= product.name %> image"
+                                  class="product-image-hover">
+                              </a>
 
-            <div class="mb-2"></div><!-- End .mb-2 -->
-          </div><!-- End .container -->
-    </main><!-- End .main -->
+                              <div class="product-action-vertical">
+                                <a href="#" class="btn-product-icon btn-wishlist"><span>Add to wishlist</span></a>
+                              </div><!-- End .product-action-vertical -->
+                            </figure><!-- End .product-media -->
 
-    <footer class="footer footer-dark">
-      <div class="footer-middle">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-6 col-lg-3">
-              <div class="widget widget-about">
-                <img src="newOne/images/newlogo.png" style="background-color: #fafafa;" class="footer-logo"
-                  alt="Footer Logo" width="105" height="25">
-                <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate
-                  magna eros eu erat. </p>
-                <div class="social-icons">
-                  <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
-                  <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
-                  <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
-                  <a href="#" class="social-icon" title="Youtube" target="_blank"><i class="icon-youtube"></i></a>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-              <div class="widget">
-                <h4 class="widget-title">Useful Links</h4>
+                            <div class="product-body">
+                              <h3 class="product-title"><a href="/product/<%= product._id %>">
+                                  <%= product.name %>
+                                </a></h3>
+                              <!-- End .product-title -->
+                              <div class="product-price">
+                                $<%= product.price.toFixed(2) %>
+                              </div><!-- End .product-price -->
 
-                <ul class="widget-list">
-                  <li><a href="#">About VOGUE VISTA</a></li>
-                  <li><a href="#">Contact us</a></li>
-                  <li><a href="#">Log in</a></li>
+                              <div class="product-nav product-nav-dots">
+                                <!-- Example color options, customize based on actual data -->
+                                <% if (product.colors && product.colors.length> 0) { %>
+                                  <% product.colors.forEach(color=> { %>
+                                    <a href="#"><span class="sr-only">
+                                        <%= color.name %>
+                                      </span></a>
+                                    <% }); %>
+                                      <% } %>
+                              </div><!-- End .product-nav -->
+                            </div><!-- End .product-body -->
+                            <div class="product-action">
+                              <a href="#" class="btn-product btn-cart"><span>Add to cart</span></a>
+                            </div><!-- End .product-action -->
+                          </div><!-- End .product -->
+                        </div><!-- End .col-6 col-md-4 col-lg-3 -->
+                        <% }); %>
+                    </div><!-- End .row -->
+
+                  </div><!-- End .products -->
+                </div><!-- .End .tab-pane -->
+              </div><!-- End .tab-content -->
+            </div><!-- End .container -->
+
+            <div class="container">
+              <hr>
+              <div class="row justify-content-center">
+                <div class="col-lg-4 col-sm-6">
+                  <div class="icon-box icon-box-card text-center">
+                    <span class="icon-box-icon">
+                      <i class="icon-rocket"></i>
+                    </span>
+                    <div class="icon-box-content">
+                      <h3 class="icon-box-title">Payment & Delivery</h3><!-- End .icon-box-title -->
+                      <p>Free shipping for orders over $50</p>
+                    </div><!-- End .icon-box-content -->
+                  </div><!-- End .icon-box -->
+                </div><!-- End .col-lg-4 col-sm-6 -->
+
+                <div class="col-lg-4 col-sm-6">
+                  <div class="icon-box icon-box-card text-center">
+                    <span class="icon-box-icon">
+                      <i class="icon-rotate-left"></i>
+                    </span>
+                    <div class="icon-box-content">
+                      <h3 class="icon-box-title">Return & Refund</h3><!-- End .icon-box-title -->
+                      <p>Free 100% money back guarantee</p>
+                    </div><!-- End .icon-box-content -->
+                  </div><!-- End .icon-box -->
+                </div><!-- End .col-lg-4 col-sm-6 -->
+
+                <div class="col-lg-4 col-sm-6">
+                  <div class="icon-box icon-box-card text-center">
+                    <span class="icon-box-icon">
+                      <i class="icon-life-ring"></i>
+                    </span>
+                    <div class="icon-box-content">
+                      <h3 class="icon-box-title">Quality Support</h3><!-- End .icon-box-title -->
+                      <p>Alway online feedback 24/7</p>
+                    </div><!-- End .icon-box-content -->
+                  </div><!-- End .icon-box -->
+                </div><!-- End .col-lg-4 col-sm-6 -->
+              </div><!-- End .row -->
+
+              <div class="mb-2"></div><!-- End .mb-2 -->
+            </div><!-- End .container -->
+      </main><!-- End .main -->
+
+      <%- include('../layouts/userLayout/footer.ejs') -%>
+    </div>
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    <div class="mobile-menu-container">
+      <div class="mobile-menu-wrapper">
+        <nav class="mobile-nav">
+          <ul class="mobile-menu">
+            <li class="active">
+              <a href="#">Home</a>
+            </li>
+            <li>
+              <a href="#">Shop</a>
+
+            </li>
+            <li>
+              <a href="#">About</a>
+            </li>
+            <li>
+              <a href="#">Contact</a>
+            </li>
+            <li>
+              <a href="/userProfile" class="sf-with-ul">
+                <%= locals.user ? user.username : "Profile" %>
+              </a>
+              <% if(locals.user){ %>
+                <ul>
+                  <li><a href="/userProfile">Account</a></li>
+                  <li><a href="/logout">LogOut</a></li>
                 </ul>
-              </div>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-              <div class="widget">
-                <h4 class="widget-title">Customer Service</h4>
-                <ul class="widget-list">
-                  <li><a href="#">Payment Methods</a></li>
-                  <li><a href="#">Money-back guarantee!</a></li>
-                  <li><a href="#">Returns</a></li>
-                  <li><a href="#">Shipping</a></li>
-                  <li><a href="#">Terms and conditions</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-              <div class="widget">
-                <h4 class="widget-title">My Account</h4>
-                <ul class="widget-list">
-                  <li><a href="#">Sign In</a></li>
-                  <li><a href="#">View Cart</a></li>
-                  <li><a href="#">My Wishlist</a></li>
-                  <li><a href="#">Track My Order</a></li>
-                  <li><a href="#">Help</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <div class="container">
-          <p class="footer-copyright">Copyright © 2019 VOGUE VISTA. All Rights Reserved.</p>
-          <figure class="footer-payments">
-            <img src="newOne/images/payments.png" alt="Payment methods" width="272" height="20">
-          </figure>
-        </div>
-      </div>
-    </footer>
-  </div><!-- End .page-wrapper -->
-  <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
-
-  <!-- Mobile Menu -->
-  <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
-
-  <div class="mobile-menu-container">
-    <div class="mobile-menu-wrapper">
-      <!-- <span class="mobile-menu-close"><i class="icon-close"></i></span>
-            <form action="#" method="get" class="mobile-search">
-                <label for="mobile-search" class="sr-only">Search</label>
-                <input type="search" class="form-control" name="mobile-search" id="mobile-search"
-                    placeholder="Search in..." required>
-                <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-            </form> -->
-
-      <nav class="mobile-nav">
-        <ul class="mobile-menu">
-          <li class="active">
-            <a href="#">Home</a>
-          </li>
-          <li>
-            <a href="#">Shop</a>
-
-          </li>
-          <li>
-            <a href="#">About</a>
-          </li>
-          <li>
-            <a href="#">Contact</a>
-          </li>
-          <li>
-            <a href="$">Profile</a>
-            <ul>
-              <li><a href="#">Account</a></li>
-              <li><a href="#">Login</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-    </div><!-- End .mobile-menu-wrapper -->
-  </div><!-- End .mobile-menu-container -->
-  <!-- Plugins JS File -->
-  <script src="newOne/js/jquery.min.js"></script>
-  <script src="newOne/js/bootstrap.bundle.min.js"></script>
-  <script src="newOne/js/jquery.hoverIntent.min.js"></script>
-  <script src="newOne/js/jquery.waypoints.min.js"></script>
-  <script src="newOne/js/superfish.min.js"></script>
-  <script src="newOne/js/owl.carousel.min.js"></script>
-  <script src="newOne/js/jquery.magnific-popup.min.js"></script>
-  <!-- Main JS File -->
-  <script src="newOne/js/main.js"></script>
-</body>
-
-
-<!-- molla/index-2.html  22 Nov 2019 09:55:42 GMT -->
-
-</html>
+                <%}else{%>
+                  <ul>
+                    <li><a href="/login">Login</a></li>
+                  </ul>
+                  <% } %>
+            </li>
+          </ul>
+        </nav>
+      </div><!-- End .mobile-menu-wrapper -->
+    </div><!-- End .mobile-menu-container -->
+    <%- include('../layouts/userLayout/page-footer.ejs') -%>
